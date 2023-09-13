@@ -1,14 +1,19 @@
-package a23.climoilou.mono2.tp1._LL_IH_FR_AF;
+package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Entity
+@Component
 public class Utilisateur {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nom;
     private LocalDate dateDeNaissance;
