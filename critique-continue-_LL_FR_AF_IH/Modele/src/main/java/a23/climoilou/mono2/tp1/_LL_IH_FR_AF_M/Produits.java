@@ -36,5 +36,5 @@ public class Produits {
     @JoinColumn(name = "Critique_id")
     private Critique listeDeCritique;
 
-    
+
 }
