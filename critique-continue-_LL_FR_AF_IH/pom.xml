@@ -15,12 +15,14 @@
 	<name>critique-continue-_LL_FR_AF_IH</name>
 	<description>tp1_critique_continue</description>
 	<modules>
-		<module>Vue</module>
 		<module>Controlleur</module>
 		<module>Modele</module>
+		<module>Vue</module>
 	</modules>
 	<properties>
 		<java.version>17</java.version>
+		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
