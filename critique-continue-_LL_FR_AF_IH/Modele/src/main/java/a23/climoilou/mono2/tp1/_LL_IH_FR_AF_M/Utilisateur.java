@@ -53,6 +53,10 @@ public class Utilisateur {
         return dateDeNaissance;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     public void setDateDeNaissance(LocalDate dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
     }

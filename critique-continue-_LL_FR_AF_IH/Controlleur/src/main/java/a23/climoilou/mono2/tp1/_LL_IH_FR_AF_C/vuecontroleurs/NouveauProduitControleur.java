@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @FxmlView("NouveauProduitVue.fxml")
 @Component
-public class NouveauProduitControleur implements ControleurInterface{
+public class NouveauProduitControleur {
 
     @FXML
     private Button buttonCreationInput;
@@ -31,6 +31,10 @@ public class NouveauProduitControleur implements ControleurInterface{
     @FXML
     private TextField nomMediaInput;
 
+    /**
+     * Boutton creation de produit
+     * @param event
+     */
     @FXML
     void createMedia(ActionEvent event) {
         System.out.println("Test du fonction du nouveau produit controleur");

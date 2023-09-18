@@ -1,17 +1,22 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 /**
  * Controleur de la vue de navigation NavigationVue.fxml
  */
 @FxmlView("NavigationVue.fxml")
 @Component
-public class NavigationControleur implements ControleurInterface{
+public class NavigationControleur  {
 
+
+    private Utilisateur utilisateur;
     private NouveauProduitControleur controleurVueInterne;
 
     @FXML
@@ -76,4 +81,14 @@ public class NavigationControleur implements ControleurInterface{
     public Tab getTabVisualisationProduit() {
         return tabVisualisationProduit;
     }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+
 }
