@@ -18,11 +18,12 @@
 		<module>Vue</module>
 		<module>Controlleur</module>
 		<module>Modele</module>
-		<module>Vue</module>
-		<module>vue</module>
+
 	</modules>
 	<properties>
 		<java.version>17</java.version>
+		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<dependency>
