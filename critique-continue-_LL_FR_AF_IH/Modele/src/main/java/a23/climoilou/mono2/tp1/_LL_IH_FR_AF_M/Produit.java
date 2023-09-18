@@ -2,12 +2,10 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -18,20 +16,25 @@ import java.util.Objects;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
-public class Utilisateur {
+@Table(name = "Produit")
+public class Produit {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    //@Column(name = "nom", unique = true )
     private String nom;
 
-    private LocalDate dateDeNaissance;
+    private String description;
 
-    private Type type;
+    private LocalDateTime dateDeSortie;
 
-    @OneToMany(mappedBy = "utilisateur")
+    //Pour l'instant c'est un string, pour le path, s'il y a une meilleure facon ont changera.
+    private String image;
+
+    @OneToMany(mappedBy = "produit")
     @Builder.Default
-    private List<Critique> critiqueList =new ArrayList<>();
-
+    private List<Critique> listeDeCritique = new ArrayList<>();
 }

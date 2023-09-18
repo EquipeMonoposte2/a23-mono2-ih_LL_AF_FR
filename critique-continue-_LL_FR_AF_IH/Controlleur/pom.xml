@@ -28,7 +28,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>a23.climoilou.mono2.tp1._LL_IH_FR_AF</groupId>
+            <groupId>a23.climoilou.mono2.tp1._LL_IH_FR_AF_M</groupId>
             <artifactId>Modele</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>

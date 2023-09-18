@@ -1,15 +1,21 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DataBase;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.UtilisateursService;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_critique;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,7 +28,6 @@ public class ConnectionControleur {
 
     public ConnectionControleur(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
-
     }
 
     /**
@@ -33,11 +38,12 @@ public class ConnectionControleur {
     void connect(ActionEvent event) {
         //condition pour valider la connection
         //user temporaire
-        Utilisateur utilisateurTemporaire = new Utilisateur("Tom", LocalDate.now(), Type.Utilisateur);
+        Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tommy",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
 
         if (true) {
             //passe un message pour tester et un utilisateur pour référence dans la navigation de l'application
             applicationEventPublisher.publishEvent(new ConnectionEvent(this,"BouttonClick dans connection controleur",utilisateurTemporaire));
         }
     }
+
 }

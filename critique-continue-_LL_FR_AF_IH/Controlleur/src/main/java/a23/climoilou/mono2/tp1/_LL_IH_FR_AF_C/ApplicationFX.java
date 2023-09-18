@@ -105,6 +105,7 @@ public class ApplicationFX extends Application {
         String[] args = getParameters().getRaw().toArray(new String[0]);
         //creation explicite du contexte de l'application
         this.context = new SpringApplicationBuilder().sources(CritiqueContinueLlFrAfIhApplication.class).run(args);
+
     }
 
     @Override
