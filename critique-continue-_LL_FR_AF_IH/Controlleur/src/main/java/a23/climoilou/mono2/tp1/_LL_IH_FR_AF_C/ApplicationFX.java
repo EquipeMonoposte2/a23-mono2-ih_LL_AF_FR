@@ -67,10 +67,17 @@ public class ApplicationFX extends Application {
                     Parent newProduitRoot = controllerAndViewNewProduit.getView().get();
                     NouveauProduitControleur nouveauProduitControleur = controllerAndViewNewProduit.getController();
 
+<<<<<<< HEAD
                     //Visualisation du produit
                     FxControllerAndView<VisualisationProduitController, AnchorPane>  controllerAndViewVisualisationProduit= fxWeaver.load(VisualisationProduitController.class);
                     Parent newVisualisationRoot = controllerAndViewVisualisationProduit.getView().get();
                     VisualisationProduitController visualisationProduitController = controllerAndViewVisualisationProduit.getController();
+=======
+                    //critique vue
+                    FxControllerAndView<CritiqueControler, AnchorPane> controllerAndViewCritique = fxWeaver.load(CritiqueControler.class);
+                    Parent critiqueRoot = controllerAndViewCritique.getView().get();
+                    CritiqueControler critiqueControler = controllerAndViewCritique.getController();
+>>>>>>> 148220b68fa4f7e44a31d32891a55610fd5a4e87
 
                     //ajout du contenu aux tabs
                     navigationControleur.getTabNouveauProduit().setContent(newProduitRoot); //produit vue
