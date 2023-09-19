@@ -1,9 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C;
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.ConnectionControleur;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.ConnectionEvent;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.NavigationControleur;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.NouveauProduitControleur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.application.Application;
@@ -86,6 +83,14 @@ public class ApplicationFX extends Application {
 
                     //lancement  main vue
                     primaryStage.setScene(new Scene(root));
+                    primaryStage.show();
+                }
+
+                else if (event instanceof CreationCompteEvent){
+                    FxControllerAndView<CreationCompteEvent,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(CreationCompteEvent.class);
+                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
+
+                    primaryStage.setScene(new Scene(rootCreation));
                     primaryStage.show();
                 }
             });
