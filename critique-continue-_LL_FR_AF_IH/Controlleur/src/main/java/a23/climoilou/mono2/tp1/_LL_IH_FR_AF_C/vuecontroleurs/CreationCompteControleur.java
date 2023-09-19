@@ -1,5 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.CreationCompteEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.event.ActionEvent;
@@ -32,10 +33,6 @@ public class CreationCompteControleur {
 
     @FXML
     private TextField nomUtilisateur;
-
-    @FXML
-    private TextField nomUtilisateurConfirmer;
-
 
     @FXML
     void creerClick(ActionEvent event) {

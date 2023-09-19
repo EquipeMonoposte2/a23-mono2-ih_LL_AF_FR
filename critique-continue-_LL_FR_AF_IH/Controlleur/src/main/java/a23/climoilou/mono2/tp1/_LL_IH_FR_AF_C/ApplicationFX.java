@@ -1,5 +1,8 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ConnectionEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.CreationCompteEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauCompteEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
@@ -85,14 +88,28 @@ public class ApplicationFX extends Application {
                     primaryStage.setScene(new Scene(root));
                     primaryStage.show();
                 }
+                //event pour envoyer vers la page pour créer le compte
+               else if (event instanceof NouveauCompteEvent){
+                    FxControllerAndView<CreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(CreationCompteControleur.class);
+                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
 
-//                else if (event instanceof CreationCompteEvent){
-//                    FxControllerAndView<CreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(CreationCompteControleur.class);
-//                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
-//
-//                    primaryStage.setScene(new Scene(rootCreation));
-//                    primaryStage.show();
-//                }
+                    primaryStage.setScene(new Scene(rootCreation));
+                    //on peut ajouter listener si on ferme la window top right
+                    primaryStage.setOnCloseRequest(closeEvent ->{
+                        System.err.println("vue fermer top right");
+                    });
+                    primaryStage.show();
+                }
+               //event pour envoyer
+               else if(event instanceof CreationCompteEvent){
+                    FxControllerAndView<SuccesCreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(SuccesCreationCompteControleur.class);
+                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
+
+                    primaryStage.setScene(new Scene(rootCreation));
+                    primaryStage.show();
+
+
+                }
             });
 
             //lancement connexion vue

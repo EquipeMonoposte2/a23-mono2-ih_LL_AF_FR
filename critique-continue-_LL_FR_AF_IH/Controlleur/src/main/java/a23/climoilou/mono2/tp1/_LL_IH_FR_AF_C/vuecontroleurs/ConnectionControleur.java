@@ -1,16 +1,14 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DataBase;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.UtilisateursService;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ConnectionEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.CreationCompteEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauCompteEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Utilisateur;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_critique;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +46,6 @@ public class ConnectionControleur {
 
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
-        applicationEventPublisher.publishEvent(new CreationCompteEvent(this));
+        applicationEventPublisher.publishEvent(new NouveauCompteEvent(this));
     }
 }
