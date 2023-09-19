@@ -12,7 +12,7 @@
     <artifactId>Controlleur</artifactId>
 
     <properties>
-        <start-class>a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.ApplicationFX</start-class>
+        <start-class>a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.CritiqueContinueLlFrAfIhApplication</start-class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>

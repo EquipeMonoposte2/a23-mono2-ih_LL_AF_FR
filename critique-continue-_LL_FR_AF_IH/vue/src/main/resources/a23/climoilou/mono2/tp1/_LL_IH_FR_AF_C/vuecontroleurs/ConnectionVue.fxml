@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,5 +22,6 @@
             <Font name="Arial Bold" size="18.0" />
          </font>
       </Text>
+      <Hyperlink fx:id="creerCompteHyperlink" layoutX="40.0" layoutY="125.0" onAction="#ouvrirFormulaireCreationCompte" text="Créer un compte" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
    </children>
 </AnchorPane>

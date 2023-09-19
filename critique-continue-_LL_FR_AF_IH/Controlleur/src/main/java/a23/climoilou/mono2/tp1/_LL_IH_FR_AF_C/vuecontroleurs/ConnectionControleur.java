@@ -46,4 +46,8 @@ public class ConnectionControleur {
         }
     }
 
+    @FXML
+    void ouvrirFormulaireCreationCompte(ActionEvent event) {
+        applicationEventPublisher.publishEvent(new CreationCompteEvent(this));
+    }
 }

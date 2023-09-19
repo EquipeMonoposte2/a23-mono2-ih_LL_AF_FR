@@ -86,13 +86,13 @@ public class ApplicationFX extends Application {
                     primaryStage.show();
                 }
 
-                else if (event instanceof CreationCompteEvent){
-                    FxControllerAndView<CreationCompteEvent,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(CreationCompteEvent.class);
-                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
-
-                    primaryStage.setScene(new Scene(rootCreation));
-                    primaryStage.show();
-                }
+//                else if (event instanceof CreationCompteEvent){
+//                    FxControllerAndView<CreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(CreationCompteControleur.class);
+//                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
+//
+//                    primaryStage.setScene(new Scene(rootCreation));
+//                    primaryStage.show();
+//                }
             });
 
             //lancement connexion vue

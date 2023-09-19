@@ -12,7 +12,15 @@ public class CreationCompteEvent extends ApplicationEvent {
         this.utilisateur = utilisateur;
     }
 
+    public CreationCompteEvent(Object source) {
+        super(source);
+    }
+
     public Utilisateur getUtilisateur() {
         return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 }
