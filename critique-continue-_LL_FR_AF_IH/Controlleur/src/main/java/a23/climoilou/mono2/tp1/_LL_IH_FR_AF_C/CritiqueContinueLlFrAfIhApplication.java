@@ -19,19 +19,17 @@ import java.util.ArrayList;
  * Main de l'application lance l'application
  */
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories("a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository")
 @ComponentScan(basePackages = {
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_C",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs",
-        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_V",
+        //"a23.climoilou.mono2.tp1._LL_IH_FR_AF_V",
         "net.rgielen.fxweaver.spring.boot.autoconfigure"})
 @EntityScan(basePackages = {
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M",
-        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository",
-        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF"})
 public class CritiqueContinueLlFrAfIhApplication implements CommandLineRunner {
 
