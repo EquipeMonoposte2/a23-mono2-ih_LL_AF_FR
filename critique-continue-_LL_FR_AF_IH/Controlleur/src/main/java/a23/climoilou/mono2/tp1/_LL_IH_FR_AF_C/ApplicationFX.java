@@ -70,12 +70,22 @@ public class ApplicationFX extends Application {
                     Parent newProduitRoot = controllerAndViewNewProduit.getView().get();
                     NouveauProduitControleur nouveauProduitControleur = controllerAndViewNewProduit.getController();
 
+                    //Visualisation du produit
+                    FxControllerAndView<VisualisationProduitController, AnchorPane>  controllerAndViewVisualisationProduit= fxWeaver.load(VisualisationProduitController.class);
+                    Parent newVisualisationRoot = controllerAndViewVisualisationProduit.getView().get();
+                    VisualisationProduitController visualisationProduitController = controllerAndViewVisualisationProduit.getController();
+                    //critique vue
+                    FxControllerAndView<CritiqueControler, AnchorPane> controllerAndViewCritique = fxWeaver.load(CritiqueControler.class);
+                    Parent critiqueRoot = controllerAndViewCritique.getView().get();
+                    CritiqueControler critiqueControler = controllerAndViewCritique.getController();
+
                     //ajout du contenu aux tabs
                     navigationControleur.getTabNouveauProduit().setContent(newProduitRoot); //produit vue
                     navigationControleur.getTabStatistique(); //
                     navigationControleur.getTabVisualisationProduit(); //
                     navigationControleur.getTabCompte(); //
                     navigationControleur.getTabNouvelleCritique(); //
+                    navigationControleur.getTabVisualisationProduit().setContent(newVisualisationRoot);
 
                     //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
                     if (utilisateur.getType() != Type.Expert) {
