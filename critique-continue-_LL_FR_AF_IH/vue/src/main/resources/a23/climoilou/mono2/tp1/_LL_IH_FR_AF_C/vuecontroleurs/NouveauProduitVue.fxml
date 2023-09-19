@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.NouveauProduitControleur">
+    <children>
+        <Text layoutX="213.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nouveau Produit" wrappingWidth="174.13671875">
+            <font>
+                <Font name="Arial Bold" size="19.0" />
+            </font>
+        </Text>
+        <TextField fx:id="nomMediaInput" layoutX="139.0" layoutY="96.0" />
+        <Label layoutX="103.0" layoutY="100.0" text="Nom : " />
+        <Label layoutX="69.0" layoutY="139.0" text="Description : " />
+        <TextField fx:id="descriptionMediaInput" layoutX="139.0" layoutY="135.0" />
+        <DatePicker fx:id="dateSortieMediaInput" layoutX="139.0" layoutY="177.0" />
+        <Label layoutX="72.0" layoutY="181.0" text="Date sortie : " />
+        <TextField fx:id="lienImageMediaInput" layoutX="139.0" layoutY="217.0" />
+        <Label layoutX="74.0" layoutY="221.0" text="Image lien : " />
+        <Button fx:id="buttonCreationInput" layoutX="280.0" layoutY="273.0" mnemonicParsing="false" onAction="#createMedia" text="Save" />
+    </children>
+</AnchorPane>

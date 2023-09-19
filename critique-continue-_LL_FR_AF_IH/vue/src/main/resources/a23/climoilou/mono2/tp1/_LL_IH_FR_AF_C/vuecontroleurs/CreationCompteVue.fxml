@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.CreationCompteControleur">
+   <children>
+      <Pane layoutX="34.0" layoutY="60.0" prefHeight="281.0" prefWidth="545.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
+         <children>
+            <Label layoutX="63.0" layoutY="111.0" text="Date Naissance" />
+            <Label layoutX="63.0" layoutY="61.0" text="NouveauNom" />
+            <Button layoutX="455.0" layoutY="242.0" mnemonicParsing="false" onAction="#creerClick" text="Créer" />
+            <TextField fx:id="nomUtilisateur" layoutX="63.0" layoutY="78.0" prefHeight="25.0" prefWidth="388.0" />
+            <Text layoutX="157.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Création Compte">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Text>
+            <DatePicker fx:id="dateNaissance" layoutX="63.0" layoutY="128.0" prefHeight="25.0" prefWidth="388.0" />
+            <ChoiceBox fx:id="dropDowntypes" layoutX="185.0" layoutY="193.0" prefHeight="25.0" prefWidth="145.0" />
+            <Label layoutX="185.0" layoutY="176.0" text="Type d'utilisateur" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
