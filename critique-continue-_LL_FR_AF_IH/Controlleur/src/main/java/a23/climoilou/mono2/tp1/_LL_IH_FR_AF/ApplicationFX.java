@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF.vuecontroleurs.NavigationControleur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF.vuecontroleurs.NouveauProduitControleur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -23,6 +24,8 @@ public class ApplicationFX extends Application {
     private ConfigurableApplicationContext context;
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        Produit produit1 = new Produit();
         System.out.println("javafx init");
 
         FxWeaver fxWeaver = context.getBean(FxWeaver.class);
