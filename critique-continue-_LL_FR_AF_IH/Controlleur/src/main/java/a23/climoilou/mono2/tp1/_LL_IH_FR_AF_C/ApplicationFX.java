@@ -87,10 +87,7 @@ public class ApplicationFX extends Application {
                 }
                 //event pour envoyer vers la page pour créer le compte
                 else if (event instanceof NouveauCompteEvent){
-                    FxControllerAndView<CreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(CreationCompteControleur.class);
-                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
-
-                    primaryStage.setScene(new Scene(rootCreation));
+                    primaryStage.setScene(new Scene(fabriquerRoot(CreationCompteControleur.class, fxWeaver)));
                     //on peut ajouter listener si on ferme la window top right
                     primaryStage.setOnCloseRequest(closeEvent ->{
                         System.err.println("vue fermer top right");
@@ -99,13 +96,8 @@ public class ApplicationFX extends Application {
                 }
                 //event pour envoyer
                 else if(event instanceof CreationCompteEvent){
-                    FxControllerAndView<SuccesCreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(SuccesCreationCompteControleur.class);
-                    Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
-
-                    primaryStage.setScene(new Scene(rootCreation));
+                    primaryStage.setScene(new Scene(fabriquerRoot(SuccesCreationCompteControleur.class, fxWeaver)));
                     primaryStage.show();
-
-
                 }
             });
 
@@ -125,10 +117,10 @@ public class ApplicationFX extends Application {
      * @param fxweaver FxWeaver à utiliser pour le chargement des vues
      * @return root root avec le controleur commandé en paramètre
      */
-    private <T> Node fabriquerRoot(Class<T> controleurClass, FxWeaver fxweaver) {
-        FxControllerAndView<T, AnchorPane> controllerAndViewStatistiques = fxweaver.load(controleurClass);
-        Parent root = controllerAndViewStatistiques.getView().get();
-        controllerAndViewStatistiques.getController();
+    private <T> Parent fabriquerRoot(Class<T> controleurClass, FxWeaver fxweaver) {
+        FxControllerAndView<T, AnchorPane> controllerAndView = fxweaver.load(controleurClass);
+        Parent root = controllerAndView.getView().get();
+        controllerAndView.getController();
         return root;
     }
 
