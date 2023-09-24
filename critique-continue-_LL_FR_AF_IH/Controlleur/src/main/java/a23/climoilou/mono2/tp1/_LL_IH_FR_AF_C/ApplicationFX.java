@@ -8,6 +8,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
@@ -65,27 +66,13 @@ public class ApplicationFX extends Application {
                     //ajout de l'utilisateur dans la navigation
                     navigationControleur.setUtilisateur(connectionEvent.getUtilisateur());
 
-                    //nouveau produit vue
-                    FxControllerAndView<NouveauProduitControleur, AnchorPane> controllerAndViewNewProduit = fxWeaver.load(NouveauProduitControleur.class);
-                    Parent newProduitRoot = controllerAndViewNewProduit.getView().get();
-                    NouveauProduitControleur nouveauProduitControleur = controllerAndViewNewProduit.getController();
-
-                    //Visualisation du produit
-                    FxControllerAndView<VisualisationProduitController, AnchorPane>  controllerAndViewVisualisationProduit= fxWeaver.load(VisualisationProduitController.class);
-                    Parent newVisualisationRoot = controllerAndViewVisualisationProduit.getView().get();
-                    VisualisationProduitController visualisationProduitController = controllerAndViewVisualisationProduit.getController();
-                    //critique vue
-                    FxControllerAndView<CritiqueControler, AnchorPane> controllerAndViewCritique = fxWeaver.load(CritiqueControler.class);
-                    Parent critiqueRoot = controllerAndViewCritique.getView().get();
-                    CritiqueControler critiqueControler = controllerAndViewCritique.getController();
-
                     //ajout du contenu aux tabs
-                    navigationControleur.getTabNouveauProduit().setContent(newProduitRoot); //produit vue
+                    navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
                     navigationControleur.getTabStatistique(); //
                     navigationControleur.getTabVisualisationProduit(); //
                     navigationControleur.getTabCompte(); //
                     navigationControleur.getTabNouvelleCritique(); //
-                    navigationControleur.getTabVisualisationProduit().setContent(newVisualisationRoot);
+                    navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitController.class, fxWeaver));
 
                     //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
                     if (utilisateur.getType() != Type.Expert) {
@@ -99,7 +86,7 @@ public class ApplicationFX extends Application {
                     primaryStage.show();
                 }
                 //event pour envoyer vers la page pour créer le compte
-               else if (event instanceof NouveauCompteEvent){
+                else if (event instanceof NouveauCompteEvent){
                     FxControllerAndView<CreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(CreationCompteControleur.class);
                     Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
 
@@ -110,8 +97,8 @@ public class ApplicationFX extends Application {
                     });
                     primaryStage.show();
                 }
-               //event pour envoyer
-               else if(event instanceof CreationCompteEvent){
+                //event pour envoyer
+                else if(event instanceof CreationCompteEvent){
                     FxControllerAndView<SuccesCreationCompteControleur,AnchorPane> creationCompteEventAnchorPaneFxControllerAndView = fxWeaver.load(SuccesCreationCompteControleur.class);
                     Parent rootCreation = creationCompteEventAnchorPaneFxControllerAndView.getView().get();
 
@@ -130,6 +117,19 @@ public class ApplicationFX extends Application {
             System.err.println(e.getMessage() + "    -    " + Arrays.toString(e.getStackTrace()));
         }
 
+    }
+
+    /**
+     * Fabrique un Node qui aura le role d'un root.
+     * @param controleurClass controleur du root à créer
+     * @param fxweaver FxWeaver à utiliser pour le chargement des vues
+     * @return root root avec le controleur commandé en paramètre
+     */
+    private <T> Node fabriquerRoot(Class<T> controleurClass, FxWeaver fxweaver) {
+        FxControllerAndView<T, AnchorPane> controllerAndViewStatistiques = fxweaver.load(controleurClass);
+        Parent root = controllerAndViewStatistiques.getView().get();
+        controllerAndViewStatistiques.getController();
+        return root;
     }
 
     @Override
