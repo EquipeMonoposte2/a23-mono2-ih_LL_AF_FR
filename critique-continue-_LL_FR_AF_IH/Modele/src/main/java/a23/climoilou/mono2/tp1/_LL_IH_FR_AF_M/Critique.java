@@ -3,6 +3,10 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+
 @Entity
 @Getter
 @Setter
@@ -18,15 +22,17 @@ public class Critique {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int note;
+    private Date dateCritque;
 
     @ManyToOne
     @JoinColumn(name="utilisateur_id")
     private Utilisateur utilisateur;
 
-    @ManyToOne
-    @JoinColumn(name = "produit_id")
-    private Produit produit;
-
+    @ManyToMany
+    @JoinTable(
+            name = "critique_produit",
+            joinColumns = @JoinColumn(name = "critique_id"),
+            inverseJoinColumns = @JoinColumn(name = "produit_id"))
+    private LinkedList<Produit> listeProduits = new LinkedList<>();
 
 }
