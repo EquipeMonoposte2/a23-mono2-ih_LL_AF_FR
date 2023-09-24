@@ -34,14 +34,6 @@ import java.util.ArrayList;
 public class CritiqueContinueLlFrAfIhApplication implements CommandLineRunner {
 
 
-    //demander à martin pourquoi ca marche pas!
-    /*private final UtilisateursService utilisateursService;
-
-    @Autowired
-    public CritiqueContinueLlFrAfIhApplication(UtilisateursService utilisateursService) {
-        this.utilisateursService = utilisateursService;
-    }*/
-
     public static void main(String[] args) {
         //SpringApplication.run(CritiqueContinueLlFrAfIhApplication.class, args);
         Application.launch(ApplicationFX.class);
@@ -49,10 +41,6 @@ public class CritiqueContinueLlFrAfIhApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        /*Utilisateur utilisateur = utilisateursService.findUtilisateurByID(1l);
 
-        if(utilisateur!=null){
-            utilisateursService.createUtilisateur(Utilisateur.builder().critiqueList(new ArrayList<>()).dateDeNaissance(LocalDate.now()).type(Type.Utilisateur).nom("Tommy").id(1L).build());
-        }*/
     }
 }

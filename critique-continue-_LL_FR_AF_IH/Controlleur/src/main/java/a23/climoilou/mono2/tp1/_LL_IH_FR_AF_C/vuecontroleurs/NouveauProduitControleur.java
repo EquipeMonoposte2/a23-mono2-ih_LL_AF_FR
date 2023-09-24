@@ -50,6 +50,7 @@ public class NouveauProduitControleur {
     void createMedia(ActionEvent event) {
         Produit p1 = new Produit();
 
+
         bd.getProduitsService().saveProduit(p1);
 
         System.out.println("Test du fonction du nouveau produit controleur");

@@ -10,7 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import java.net.URL?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.CreationCompteControleur">
+   <stylesheets>
+      <URL value="@stylesCss.css" />
+   </stylesheets>
    <children>
       <Pane layoutX="34.0" layoutY="60.0" prefHeight="281.0" prefWidth="545.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
          <children>
@@ -26,6 +30,11 @@
             <DatePicker fx:id="dateNaissance" layoutX="63.0" layoutY="128.0" prefHeight="25.0" prefWidth="388.0" />
             <ChoiceBox fx:id="dropDowntypes" layoutX="185.0" layoutY="193.0" prefHeight="25.0" prefWidth="145.0" />
             <Label layoutX="185.0" layoutY="176.0" text="Type d'utilisateur" />
+            <Text fx:id="messageErreur" layoutX="48.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
    </children>

@@ -12,21 +12,20 @@ public class DB {
 
     private UtilisateursService utilisateursService;
 
-
-
     @Autowired
     public void setUtilisateursService(UtilisateursService utilisateursService) {
         this.utilisateursService = utilisateursService;
     }
+
     @Autowired
     public void setCritiquesService(CritiquesService critiquesService) {
         this.critiquesService = critiquesService;
     }
+
     @Autowired
     public void setProduitsService(ProduitsService produitsService) {
         this.produitsService = produitsService;
     }
-
 
     public UtilisateursService getUtilisateursService() {
         return utilisateursService;

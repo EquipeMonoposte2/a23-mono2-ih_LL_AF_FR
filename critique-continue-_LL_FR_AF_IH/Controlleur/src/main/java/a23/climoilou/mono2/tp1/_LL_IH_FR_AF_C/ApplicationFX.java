@@ -8,7 +8,6 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
@@ -71,8 +70,8 @@ public class ApplicationFX extends Application {
                     navigationControleur.getTabStatistique(); //
                     navigationControleur.getTabVisualisationProduit(); //
                     navigationControleur.getTabCompte(); //
-                    navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControler.class, fxWeaver));
-                    navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitController.class, fxWeaver));
+                    navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
+                    navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
 
                     //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
                     if (utilisateur.getType() != Type.Expert) {
@@ -88,13 +87,13 @@ public class ApplicationFX extends Application {
                 //event pour envoyer vers la page pour créer le compte
                 else if (event instanceof NouveauCompteEvent){
                     primaryStage.setScene(new Scene(fabriquerRoot(CreationCompteControleur.class, fxWeaver)));
-                    //on peut ajouter listener si on ferme la window top right
+                    //on peut ajouter listener si on ferme la window top right X
                     primaryStage.setOnCloseRequest(closeEvent ->{
                         System.err.println("vue fermer top right");
                     });
                     primaryStage.show();
                 }
-                //event pour envoyer
+                //event pour envoyer à la navigation après création de compte
                 else if(event instanceof CreationCompteEvent){
                     primaryStage.setScene(new Scene(fabriquerRoot(SuccesCreationCompteControleur.class, fxWeaver)));
                     primaryStage.show();

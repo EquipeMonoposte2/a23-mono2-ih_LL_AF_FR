@@ -21,4 +21,8 @@ public class ProduitsService {
     public void saveProduit(Produit produit){
         this.produitRepository.save(produit);
     }
+
+    public Repo_produits getProduitRepository() {
+        return produitRepository;
+    }
 }

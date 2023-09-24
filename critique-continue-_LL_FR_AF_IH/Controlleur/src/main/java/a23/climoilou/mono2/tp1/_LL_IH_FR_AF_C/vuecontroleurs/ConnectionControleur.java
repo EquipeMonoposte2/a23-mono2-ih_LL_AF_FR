@@ -47,7 +47,7 @@ public class ConnectionControleur {
         //user temporaire
         Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tommy",9989978,LocalDate.now(),Type.Utilisateur,new ArrayList<>());
 
-        bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
+       // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
 
         System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
 

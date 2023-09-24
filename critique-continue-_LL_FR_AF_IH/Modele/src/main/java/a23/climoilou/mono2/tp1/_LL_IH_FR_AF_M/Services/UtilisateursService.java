@@ -37,4 +37,8 @@ public class UtilisateursService {
         }
         return utilisateursList;
     }
+
+  public Repo_Utilisateur getUtilisateurRepo() {
+    return utilisateurRepo;
+  }
 }

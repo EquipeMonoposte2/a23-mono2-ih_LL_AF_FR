@@ -29,5 +29,7 @@ public class CritiquesService {
         this.critiqueRepo.delete(critique);
     }
 
-
+    public Repo_critique getCritiqueRepo() {
+        return critiqueRepo;
+    }
 }

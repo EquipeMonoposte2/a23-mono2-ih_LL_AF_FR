@@ -19,6 +19,8 @@ public class NavigationControleur  {
     private Utilisateur utilisateur;
     private NouveauProduitControleur controleurVueInterne;
 
+    private SuccesCreationCompteControleur succesCreationCompteControleur;
+
     @FXML
     private Tab tabCompte;
 
