@@ -12,11 +12,7 @@
     <artifactId>Controlleur</artifactId>
 
     <properties>
-<<<<<<< HEAD
-        <start-class>a23.climoilou.mono2.tp1._LL_IH_FR_AF.ApplicationFX</start-class>
-=======
         <start-class>a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.CritiqueContinueLlFrAfIhApplication</start-class>
->>>>>>> dev
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -39,20 +35,5 @@
         </dependency>
     </dependencies>
 
-
-
-    <dependencies>
-        <dependency>
-            <groupId>a23.climoilou.mono2.tp1._LL_IH_FR_AF</groupId>
-            <artifactId>Vue</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.rgielen</groupId>
-            <artifactId>javafx-weaver-spring-boot-starter</artifactId>
-            <version>1.3.0</version>
-        </dependency>
-    </dependencies>
 
 </project>
