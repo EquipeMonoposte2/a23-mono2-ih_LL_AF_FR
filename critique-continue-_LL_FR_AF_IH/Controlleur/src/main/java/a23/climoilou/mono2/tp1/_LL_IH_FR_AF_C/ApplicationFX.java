@@ -79,9 +79,14 @@ public class ApplicationFX extends Application {
                     Parent critiqueRoot = controllerAndViewCritique.getView().get();
                     CritiqueControler critiqueControler = controllerAndViewCritique.getController();
 
+                    //vue des statistiques
+                    FxControllerAndView<StatistiquesControleur, AnchorPane> controllerAndViewStatistiques = fxWeaver.load(StatistiquesControleur.class);
+                    Parent statistiqueRoot = controllerAndViewStatistiques.getView().get();
+                    StatistiquesControleur statistiquesControleur = controllerAndViewStatistiques.getController();
+
                     //ajout du contenu aux tabs
                     navigationControleur.getTabNouveauProduit().setContent(newProduitRoot); //produit vue
-                    navigationControleur.getTabStatistique(); //
+                    navigationControleur.getTabStatistique().setContent(statistiqueRoot); //
                     navigationControleur.getTabVisualisationProduit(); //
                     navigationControleur.getTabCompte(); //
                     navigationControleur.getTabNouvelleCritique(); //
