@@ -71,7 +71,7 @@ public class ApplicationFX extends Application {
                     navigationControleur.getTabStatistique(); //
                     navigationControleur.getTabVisualisationProduit(); //
                     navigationControleur.getTabCompte(); //
-                    navigationControleur.getTabNouvelleCritique(); //
+                    navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControler.class, fxWeaver));
                     navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitController.class, fxWeaver));
 
                     //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
