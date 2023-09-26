@@ -96,6 +96,7 @@ public class ApplicationFX extends Application {
                 //event pour envoyer à la navigation après création de compte
                 else if(event instanceof CreationCompteEvent){
                     primaryStage.setScene(new Scene(fabriquerRoot(SuccesCreationCompteControleur.class, fxWeaver)));
+
                     primaryStage.show();
                 }
             });

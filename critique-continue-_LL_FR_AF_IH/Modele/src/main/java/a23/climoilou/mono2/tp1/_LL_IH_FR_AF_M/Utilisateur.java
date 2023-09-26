@@ -27,7 +27,7 @@ public class Utilisateur {
     private String nom;
 
     @Column(unique = true)
-    private int identifiant;
+    private String identifiant;
 
     private LocalDate dateDeNaissance;
 

@@ -36,7 +36,7 @@ public class SuccesCreationCompteControleur {
 
         //on reprend l'utilisateur
         if(true){
-            this.utilisateur = new Utilisateur();
+
             applicationEventPublisher.publishEvent(new ConnectionEvent(this,"lancer de succes creation compte controleur",this.utilisateur));
         }
     }
@@ -44,7 +44,7 @@ public class SuccesCreationCompteControleur {
     @FXML
     void initialize(){
         //String nom = this.utilisateur.getNom();
-        nomUtilisateur.setText("nom batard");
+        //nomUtilisateur.setText(utilisateur.getNom());
     }
 
     public void setUtilisateur(Utilisateur utilisateur) {
