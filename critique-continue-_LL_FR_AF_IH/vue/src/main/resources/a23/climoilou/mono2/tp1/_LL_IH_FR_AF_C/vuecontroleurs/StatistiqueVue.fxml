@@ -21,7 +21,7 @@
                     <content>
                         <AnchorPane fx:id="vosCritiquesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <fx:include source="critiqueTabView.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <fx:include fx:id="vosCritiquesTableView" source="critiqueTabView.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -30,8 +30,8 @@
                     <content>
                         <AnchorPane fx:id="toutesCritiquesPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <Hyperlink layoutX="527.0" layoutY="14.0" text="Filtre(s)" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
-                                <fx:include source="critiqueTabView.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                                <Hyperlink fx:id="filtreHyperlink" layoutX="527.0" layoutY="14.0" onAction="#afficherFiltres" text="Filtre(s)" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                                <fx:include fx:id="toutesCritiquesTableView" source="critiqueTabView.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                             </children>
                         </AnchorPane>
                     </content>
