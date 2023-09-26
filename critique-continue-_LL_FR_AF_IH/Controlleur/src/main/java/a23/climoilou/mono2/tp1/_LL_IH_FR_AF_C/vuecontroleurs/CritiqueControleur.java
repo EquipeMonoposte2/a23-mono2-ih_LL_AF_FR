@@ -1,5 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.SoumettreCritiqueEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @FxmlView("CritiqueVue.fxml")
 @Component
-public class CritiqueControler
+public class CritiqueControleur
 {
 
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -46,7 +47,7 @@ public class CritiqueControler
     @FXML
     private Button soumettreCritiqueButton;
 
-    public CritiqueControler(ApplicationEventPublisher applicationEventPublisher)
+    public CritiqueControleur(ApplicationEventPublisher applicationEventPublisher)
     {
         this.applicationEventPublisher = applicationEventPublisher;
     }

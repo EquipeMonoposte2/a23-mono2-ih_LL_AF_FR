@@ -24,7 +24,7 @@ public class Produit {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //@Column(name = "nom", unique = true )
+    @Column(unique = true )
     private String nom;
 
     private String description;
@@ -34,7 +34,6 @@ public class Produit {
     //Pour l'instant c'est un string, pour le path, s'il y a une meilleure facon ont changera.
     private String image;
 
-    @OneToMany(mappedBy = "produit")
-    @Builder.Default
+    @ManyToMany(mappedBy = "listeProduits")
     private List<Critique> listeDeCritique = new ArrayList<>();
 }

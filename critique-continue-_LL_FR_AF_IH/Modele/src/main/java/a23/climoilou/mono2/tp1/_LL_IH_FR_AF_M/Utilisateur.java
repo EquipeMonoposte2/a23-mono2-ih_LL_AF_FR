@@ -26,6 +26,9 @@ public class Utilisateur {
 
     private String nom;
 
+    @Column(unique = true)
+    private int identifiant;
+
     private LocalDate dateDeNaissance;
 
     private Type type;

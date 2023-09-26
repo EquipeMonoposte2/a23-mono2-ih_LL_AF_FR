@@ -2,44 +2,43 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Utilisateur;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-//@Service
+@Service
 public class UtilisateursService {
-   /* private final Repo_Utilisateur repoUtilisateur;
+  private Repo_Utilisateur utilisateurRepo;
 
-
-
-    @Autowired
-    public UtilisateursService(Repo_Utilisateur repoUtilisateur) {
-        this.repoUtilisateur = repoUtilisateur;
+  @Autowired
+    public void setUtilisateurRepo(Repo_Utilisateur utilisateurRepo) {
+        this.utilisateurRepo = utilisateurRepo;
     }
 
-    public List<Utilisateur> getRepoUtilisateur() {
-        return (List<Utilisateur>) repoUtilisateur.findAll();
+    @Transactional
+    public void sauvegarderUtilisateur(Utilisateur utilisateur){
+        this.utilisateurRepo.save(utilisateur);
     }
 
-    public Utilisateur findUtilisateurByID(Long id){
-        return repoUtilisateur.findById(id).orElse(null);
+    @Transactional
+    public void surpprimerUtilisateur(Utilisateur utilisateur){
+        this.utilisateurRepo.delete(utilisateur);
     }
 
-    public void createUtilisateur(Utilisateur utilisateur){
-        if (utilisateur != null){
-            repoUtilisateur.save(utilisateur);
-        }else {
-            System.err.println("utilisateur null on create : "+this);
+    @Transactional
+    public List<Utilisateur> retourLesUtilisateurs(){
+      List<Utilisateur> utilisateursList = new ArrayList<>();
+
+        for (Utilisateur util: this.utilisateurRepo.findAll()) {
+            utilisateursList.add(util);
         }
+        return utilisateursList;
     }
 
-    public void deleteUtilisateur(Utilisateur utilisateur){
-        if (utilisateur != null){
-            repoUtilisateur.delete(utilisateur);
-        }else {
-            System.err.println("utilisateur null on delete : "+this);
-        }
-    }*/
-
+  public Repo_Utilisateur getUtilisateurRepo() {
+    return utilisateurRepo;
+  }
 }

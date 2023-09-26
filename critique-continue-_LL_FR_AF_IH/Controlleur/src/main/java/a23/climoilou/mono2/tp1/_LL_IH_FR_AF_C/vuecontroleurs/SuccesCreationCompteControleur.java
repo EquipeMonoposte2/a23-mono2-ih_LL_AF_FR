@@ -41,8 +41,6 @@ public class SuccesCreationCompteControleur {
         }
     }
 
-
-
     @FXML
     void initialize(){
         //String nom = this.utilisateur.getNom();
