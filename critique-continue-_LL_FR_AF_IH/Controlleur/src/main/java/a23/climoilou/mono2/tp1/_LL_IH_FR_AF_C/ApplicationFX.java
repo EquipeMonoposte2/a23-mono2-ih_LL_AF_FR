@@ -116,10 +116,9 @@ public class ApplicationFX extends Application {
      * @param fxweaver FxWeaver à utiliser pour le chargement des vues
      * @return root root avec le controleur commandé en paramètre
      */
-    private <T> Parent fabriquerRoot(Class<T> controleurClass, FxWeaver fxweaver) {
+    public <T> Parent fabriquerRoot(Class<T> controleurClass, FxWeaver fxweaver) {
         FxControllerAndView<T, AnchorPane> controllerAndView = fxweaver.load(controleurClass);
         Parent root = controllerAndView.getView().get();
-        controllerAndView.getController();
         return root;
     }
 

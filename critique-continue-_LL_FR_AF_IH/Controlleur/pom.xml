@@ -36,14 +36,6 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-
-        <dependency>
-            <groupId>a23.climoilou.mono2.tp1._LL_IH_FR_AF</groupId>
-            <artifactId>Vue</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
         <dependency>
             <groupId>net.rgielen</groupId>
             <artifactId>javafx-weaver-spring-boot-starter</artifactId>

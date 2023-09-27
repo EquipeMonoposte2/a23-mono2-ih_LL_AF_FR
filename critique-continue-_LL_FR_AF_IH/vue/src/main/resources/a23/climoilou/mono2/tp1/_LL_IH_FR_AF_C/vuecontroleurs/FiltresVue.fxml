@@ -15,7 +15,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="confirmerButton" layoutX="357.0" layoutY="250.0" mnemonicParsing="false" text="Confirmer" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <Button fx:id="confirmerButton" onAction="#confirmerFiltres" layoutX="357.0" layoutY="250.0" mnemonicParsing="false" text="Confirmer" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <Label layoutX="54.0" layoutY="114.0" text="Type d'utilisateur:">
          <font>
             <Font name="System Bold" size="12.0" />
