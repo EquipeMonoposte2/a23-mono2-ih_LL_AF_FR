@@ -77,7 +77,7 @@ public class ApplicationFX extends Application {
                     if (utilisateur.getType() != Type.Expert) {
                         //navigationControleur.getTabNouvelleCritique().setDisable(true);
                         //navigationControleur.getTabNouvelleCritique().setContent(null);
-                        // navigationControleur.getTabNouvelleCritique().setClosable(false);
+                        //navigationControleur.getTabNouvelleCritique().setClosable(false);
                     }
 
                     //lancement  main vue
@@ -95,8 +95,11 @@ public class ApplicationFX extends Application {
                 }
                 //event pour envoyer à la navigation après création de compte
                 else if(event instanceof CreationCompteEvent){
-                    primaryStage.setScene(new Scene(fabriquerRoot(SuccesCreationCompteControleur.class, fxWeaver)));
-
+                    FxControllerAndView<SuccesCreationCompteControleur, TabPane> succesCreationCompteControleur = fxWeaver.load(SuccesCreationCompteControleur.class);
+                    Parent succesRoot = succesCreationCompteControleur.getView().get();
+                    SuccesCreationCompteControleur cont = succesCreationCompteControleur.getController();
+                    cont.setUtilisateur(((CreationCompteEvent) event).getUtilisateur());
+                    primaryStage.setScene(new Scene(succesRoot));
                     primaryStage.show();
                 }
             });

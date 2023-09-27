@@ -4,13 +4,10 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Utilisateur;
 import jakarta.transaction.Transactional;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +20,14 @@ public class UtilisateursService {
         this.utilisateurRepo = utilisateurRepo;
     }
 
-    public Utilisateur validationCreationService(DatePicker dateNaissance, Type type, TextField nomUtilisateur,TextField identifiant){
+    public Utilisateur validationCreationUtilisateur(LocalDate dateNaissance, Type type, String nomUtilisateur, String identifiant){
         //validation et creation d'utilisateur
         Utilisateur utilisateur = null;
-        if(nomUtilisateur.getText()!="" && dateNaissance !=null && type!=null && identifiant.getText()!="") {
-            utilisateur = getUtilisateurRepo().findFirstByNom(identifiant.getText());
+        if(nomUtilisateur!="" && dateNaissance !=null && type!=null && identifiant!="") {
+            utilisateur = getUtilisateurRepo().findFirstByNom(identifiant);
 
             if (utilisateur == null) {
-                utilisateur = Utilisateur.builder().nom(nomUtilisateur.getText()).type(type).dateDeNaissance(dateNaissance.getValue()).identifiant(identifiant.getText()).build();
+                utilisateur = Utilisateur.builder().nom(nomUtilisateur).type(type).dateDeNaissance(dateNaissance).identifiant(identifiant).build();
                 //applicationEventPublisher.publishEvent(new CreationCompteEvent(this,new Utilisateur()));
             }
         }

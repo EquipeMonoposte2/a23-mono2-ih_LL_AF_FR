@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,17 +43,38 @@ public class NouveauProduitControleur {
     @FXML
     private TextField nomMediaInput;
 
+    @FXML
+    private Label messageErreur;
+
     /**
      * Boutton creation de produit
      * @param event
      */
     @FXML
-    void createMedia(ActionEvent event) {
-        Produit p1 = new Produit();
+    void createMedia(ActionEvent event) throws InterruptedException {
+
+        Produit produit;
+        if(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(),descriptionMediaInput.getText(),dateSortieMediaInput.getValue(), lienImageMediaInput.getText())!=null){
+            produit = bd.getProduitsService().getProduitRepository().findFirstByNom(this.nomMediaInput.getText());
+
+            if (produit == null){
+
+                bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(),descriptionMediaInput.getText(),dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
 
 
-        bd.getProduitsService().saveProduit(p1);
+                messageErreur.setText("Produit créé.");
 
-        System.out.println("Test du fonction du nouveau produit controleur");
+            }
+            else {
+                messageErreur.setText("Erreur ce produit est déjà existant.");
+
+            }
+        }
+        else {
+        messageErreur.setText("Erreur tous les champs doivent être remplis.");
+        }
+
+
+
     }
 }

@@ -58,11 +58,14 @@ public class CreationCompteControleur {
         System.out.println(dropDowntypes.getValue());
         System.out.println(nomUtilisateur.getText());
         System.out.println(identifiant.getText());
-        if(dateNaissance.getValue()!=null &&  dropDowntypes.getValue() != null && nomUtilisateur.getText()!=null && identifiant.getText()!=null){
-            utilisateur = bd.getUtilisateursService().validationCreationService(dateNaissance,Type.valueOf(dropDowntypes.getValue()),nomUtilisateur,identifiant);
+        //if(dateNaissance.getValue()!=null &&  dropDowntypes.getValue() != null && nomUtilisateur.getText()!=null && identifiant.getText()!=null){
+        if(dropDowntypes.getValue()!= null && bd.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(),Type.valueOf(dropDowntypes.getValue()),nomUtilisateur.getText(),identifiant.getText())!=null){
+            utilisateur = bd.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(),Type.valueOf(dropDowntypes.getValue()),nomUtilisateur.getText(),identifiant.getText());
             if(utilisateur!=null ){
+                //save utilisateur
                 bd.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
-                applicationEventPublisher.publishEvent(new CreationCompteEvent(this,new Utilisateur()));
+                //lancement de l'événement de creation
+                applicationEventPublisher.publishEvent(new CreationCompteEvent(this,utilisateur));
             }
             else {
                 messageErreur.setText("Erreur nom d'utilisateur déjà existant.");
