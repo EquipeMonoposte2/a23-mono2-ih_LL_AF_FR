@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class CritiquesService {
 
- private Repo_critique critiqueRepo;
+    private Repo_critique critiqueRepo;
 
     @Autowired
     public void setCritiqueRepo(Repo_critique critiqueRepo) {
@@ -20,12 +20,12 @@ public class CritiquesService {
     }
 
     @Transactional
-    public void saveCritique(Critique critique){
+    public void saveCritique(Critique critique) {
         this.critiqueRepo.save(critique);
     }
 
     @Transactional
-    public void supprimerCritique(Critique critique){
+    public void supprimerCritique(Critique critique) {
         this.critiqueRepo.delete(critique);
     }
 
