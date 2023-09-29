@@ -38,7 +38,6 @@ public class FiltresControleur {
     @FXML
     private CheckBox influenceurCheckbox;
 
-
     public void confirmerFiltres(ActionEvent actionEvent) {
         FiltresEvent event = FiltresEvent.builder()
                 .estAmateur(amateurCheckbox.isSelected())

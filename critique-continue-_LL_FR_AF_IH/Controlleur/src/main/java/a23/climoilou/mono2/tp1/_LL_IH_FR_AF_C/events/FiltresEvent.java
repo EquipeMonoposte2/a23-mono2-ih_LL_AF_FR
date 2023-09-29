@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-public class FiltresEvent extends ApplicationEvent {
+public class FiltresEvent{
     private boolean estAmateur;
     private boolean estInfluenceur;
     private boolean estExpert;
@@ -18,7 +18,6 @@ public class FiltresEvent extends ApplicationEvent {
     private LocalDate dateFin;
 
     public FiltresEvent(boolean estAmateur, boolean estInfluenceur, boolean estExpert, LocalDate dateDebut, LocalDate dateFin) {
-        super(new Object());
         this.estAmateur = estAmateur;
         this.estInfluenceur = estInfluenceur;
         this.estExpert = estExpert;
@@ -27,23 +26,4 @@ public class FiltresEvent extends ApplicationEvent {
     }
 
 
-    public boolean isEstAmateur() {
-        return estAmateur;
-    }
-
-    public boolean isEstInfluenceur() {
-        return estInfluenceur;
-    }
-
-    public boolean isEstExpert() {
-        return estExpert;
-    }
-
-    public LocalDate getDateDebut() {
-        return dateDebut;
-    }
-
-    public LocalDate getDateFin() {
-        return dateFin;
-    }
 }

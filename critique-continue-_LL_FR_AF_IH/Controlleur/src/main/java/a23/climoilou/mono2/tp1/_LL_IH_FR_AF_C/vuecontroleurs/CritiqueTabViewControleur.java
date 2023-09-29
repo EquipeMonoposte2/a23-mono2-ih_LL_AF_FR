@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @FxmlView("critiqueTabView.fxml")
-public class CritiqueTabViewControleur{
+public class CritiqueTabViewControleur {
     private ConfigurableApplicationContext context;
 
     private DB bd;
@@ -37,24 +37,28 @@ public class CritiqueTabViewControleur{
 
     @FXML
     void initialize() {
-        context.addApplicationListener(event -> rafraichirCritique(event));
+
     }
 
-    @EventListener
-    private void rafraichirCritique(ApplicationEvent event) {
-        if (event instanceof FiltresEvent) {
-            if (((FiltresEvent) event).isEstAmateur()) {
-                //TODO
-            }
-            if (((FiltresEvent) event).isEstExpert()) {
-                //TODO
-            }
-            if (((FiltresEvent) event).isEstExpert()) {
-                //TODO
-            }
-            if (((FiltresEvent) event).isEstAmateur()) {
-                //TODO
-            }
+    @EventListener()
+    private void rafraichirCritique(FiltresEvent event) {
+        if ( event.isEstAmateur()) {
+            //TODO
+            System.out.println("un amateur");
+        }
+        if (event.isEstExpert()) {
+            //TODO
+            System.out.println("un expert");
+        }
+        if (event.isEstInfluenceur()) {
+            //TODO
+            System.out.println("un influenceur");
+        }
+        if(event.getDateDebut() != null){
+            //TODO
+        }
+        if(event.getDateFin() != null){
+            //TODO
         }
     }
 
