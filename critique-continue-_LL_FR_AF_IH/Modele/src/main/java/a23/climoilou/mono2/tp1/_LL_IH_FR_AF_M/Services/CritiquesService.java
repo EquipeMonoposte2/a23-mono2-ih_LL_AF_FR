@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -35,7 +36,7 @@ public class CritiquesService {
         return critiqueRepo;
     }
 
-    public Critique creerNouvelleCritique(Date date, Utilisateur utilisateur, LinkedList<CritiqueProduit> critiqueProduits){
+    public Critique creerNouvelleCritique(LocalDate date, Utilisateur utilisateur, LinkedList<CritiqueProduit> critiqueProduits){
         return Critique.builder().dateCritique(date).utilisateur(utilisateur).critiqueProduits(critiqueProduits).build();
     }
 

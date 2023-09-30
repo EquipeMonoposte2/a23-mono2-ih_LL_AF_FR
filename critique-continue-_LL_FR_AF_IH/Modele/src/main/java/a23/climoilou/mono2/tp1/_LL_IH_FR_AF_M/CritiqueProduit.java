@@ -29,44 +29,5 @@ public class CritiqueProduit
     private Critique critique;
 
     private EnumEcart enumEcart;
-
-    public CritiqueProduitKey getId()
-    {
-        return id;
-    }
-
-    public void setId(CritiqueProduitKey id)
-    {
-        this.id = id;
-    }
-
-    public Produit getProduit()
-    {
-        return produit;
-    }
-
-    public void setProduit(Produit produit)
-    {
-        this.produit = produit;
-    }
-
-    public Critique getCritique()
-    {
-        return critique;
-    }
-
-    public void setCritique(Critique critique)
-    {
-        this.critique = critique;
-    }
-
-    public EnumEcart getEnumEcart()
-    {
-        return enumEcart;
-    }
-
-    public void setEnumEcart(EnumEcart enumEcart)
-    {
-        this.enumEcart = enumEcart;
-    }
+    private boolean estNeutre;
 }
