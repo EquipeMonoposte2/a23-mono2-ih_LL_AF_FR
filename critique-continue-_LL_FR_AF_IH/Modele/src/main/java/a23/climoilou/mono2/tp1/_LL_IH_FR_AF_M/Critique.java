@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 @Entity
@@ -22,17 +21,30 @@ public class Critique {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Date dateCritque;
+    private Date dateCritique;
 
     @ManyToOne
     @JoinColumn(name="utilisateur_id")
     private Utilisateur utilisateur;
 
-    @ManyToMany
-    @JoinTable(
-            name = "critique_produit",
-            joinColumns = @JoinColumn(name = "critique_id"),
-            inverseJoinColumns = @JoinColumn(name = "produit_id"))
-    private LinkedList<Produit> listeProduits = new LinkedList<>();
+    @OneToMany(mappedBy = "critique")
+    private LinkedList<CritiqueProduit> critiqueProduits;
+
+    /**
+     * Ajoute un jeu à la critique
+     * @param produit
+     * @param enumEcart
+     */
+    public void ajouterJeu(Produit produit, EnumEcart enumEcart){
+        critiqueProduits.add(CritiqueProduit.builder().produit(produit).critique(this).enumEcart(enumEcart).build());
+    }
+
+    /**
+     * Supprime un jeu de la critiqueq
+     * @param produit
+     */
+    public void supprimerJeu(Produit produit){
+        critiqueProduits.removeIf(critiqueProduit -> critiqueProduit.getProduit().equals(produit));
+    }
 
 }
