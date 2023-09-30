@@ -3,7 +3,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class Produit {
 
     private String description;
 
-    private LocalDateTime dateDeSortie;
+    private LocalDate dateDeSortie;
 
     //Pour l'instant c'est un string, pour le path, s'il y a une meilleure facon ont changera.
     private String image;

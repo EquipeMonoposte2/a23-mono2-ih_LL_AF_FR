@@ -45,19 +45,27 @@ public class CreationCompteControleur {
     private TextField nomUtilisateur;
 
     @FXML
+    private TextField identifiant;
+
+    @FXML
     private Text messageErreur;
 
     @FXML
     void creerClick(ActionEvent event) {
         //validation et creation d'utilisateur
         Utilisateur utilisateur = null;
-        if(nomUtilisateur.getText()!="" && dateNaissance !=null && dropDowntypes.getValue()!=null) {
-            utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByNom(nomUtilisateur.getText());
-
-            if(utilisateur==null ){
-                utilisateur = Utilisateur.builder().nom(nomUtilisateur.getText()).type(Type.valueOf(dropDowntypes.getValue())).dateDeNaissance(dateNaissance.getValue()).identifiant(1).build();
+        System.out.println(dateNaissance.getValue());
+        System.out.println(dropDowntypes.getValue());
+        System.out.println(nomUtilisateur.getText());
+        System.out.println(identifiant.getText());
+        //if(dateNaissance.getValue()!=null &&  dropDowntypes.getValue() != null && nomUtilisateur.getText()!=null && identifiant.getText()!=null){
+        if(dropDowntypes.getValue()!= null && bd.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(),Type.valueOf(dropDowntypes.getValue()),nomUtilisateur.getText(),identifiant.getText())!=null){
+            utilisateur = bd.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(),Type.valueOf(dropDowntypes.getValue()),nomUtilisateur.getText(),identifiant.getText());
+            if(utilisateur!=null ){
+                //save utilisateur
                 bd.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
-                applicationEventPublisher.publishEvent(new CreationCompteEvent(this,new Utilisateur()));
+                //lancement de l'événement de creation
+                applicationEventPublisher.publishEvent(new CreationCompteEvent(this,utilisateur));
             }
             else {
                 messageErreur.setText("Erreur nom d'utilisateur déjà existant.");

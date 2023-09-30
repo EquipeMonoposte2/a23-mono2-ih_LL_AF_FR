@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface Repo_Utilisateur extends CrudRepository<Utilisateur, Long> {
 
-    @Query("select U from Utilisateur U where U.nom = :nom")
-    Utilisateur findFirstByNom(@Param("nom") String nom);
+    //trouve l'utilisateur selon l'identifiant passé en paramètre
+    @Query("select U from Utilisateur U where U.identifiant = :identifiant")
+    Utilisateur findFirstByNom(@Param("identifiant") String identifiant);
 }

@@ -19,8 +19,11 @@ public class SuccesCreationCompteControleur {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     private Utilisateur utilisateur;
+
+
     public SuccesCreationCompteControleur(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
+        this.utilisateur = new Utilisateur();
     }
 
     @FXML
@@ -32,22 +35,19 @@ public class SuccesCreationCompteControleur {
      */
     @FXML
     void connect(ActionEvent event) {
-        //conditions
+        //à enlever lorsque utilisateur sera fonctionnel
+        applicationEventPublisher.publishEvent(new ConnectionEvent(this,"lancer de succes creation compte controleur",this.utilisateur));
 
-        //on reprend l'utilisateur
-        if(true){
-            this.utilisateur = new Utilisateur();
-            applicationEventPublisher.publishEvent(new ConnectionEvent(this,"lancer de succes creation compte controleur",this.utilisateur));
-        }
     }
 
-    @FXML
-    void initialize(){
-        //String nom = this.utilisateur.getNom();
-        nomUtilisateur.setText("nom batard");
+
+    private void afficheNom(){
+        nomUtilisateur.setText(utilisateur.getNom());
     }
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+        //seulement appelé après le set
+        this.afficheNom();
     }
 }

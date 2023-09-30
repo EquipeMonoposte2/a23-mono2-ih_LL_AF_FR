@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,7 +24,22 @@ public class ProduitsService {
         this.produitRepository.save(produit);
     }
 
+    @Transactional
+    public void deleteProduit(Produit produit){
+        this.produitRepository.delete(produit);
+    }
+
     public Repo_produits getProduitRepository() {
         return produitRepository;
+    }
+
+    public Produit creationValidationProduit(String nom, String description, LocalDate dateSortie, String image){
+        Produit produitRet = null;
+
+        if(nom!=""&&description!=""&&dateSortie!=null){
+            produitRet = Produit.builder().nom(nom).dateDeSortie(dateSortie).description(description).image(image).build();
+        }
+
+        return produitRet;
     }
 }
