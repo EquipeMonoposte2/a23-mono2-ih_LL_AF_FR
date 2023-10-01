@@ -24,7 +24,7 @@ public class UtilisateursService {
         //validation et creation d'utilisateur
         Utilisateur utilisateur = null;
         if(nomUtilisateur!="" && dateNaissance !=null && type!=null && identifiant!="") {
-            utilisateur = getUtilisateurRepo().findFirstByNom(identifiant);
+            utilisateur = getUtilisateurRepo().findFirstByIdentifiant(identifiant);
 
             if (utilisateur == null) {
                 utilisateur = Utilisateur.builder().nom(nomUtilisateur).type(type).dateDeNaissance(dateNaissance).identifiant(identifiant).build();

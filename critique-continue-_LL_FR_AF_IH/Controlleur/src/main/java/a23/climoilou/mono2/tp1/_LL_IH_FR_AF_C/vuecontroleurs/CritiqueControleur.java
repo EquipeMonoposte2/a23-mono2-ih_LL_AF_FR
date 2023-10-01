@@ -16,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -31,11 +32,7 @@ public class CritiqueControleur
     private Utilisateur utilisateur;
     private DB db;
     private List<Produit> produitList;
-
-    @Autowired
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
+    private ApplicationContext applicationContext;
 
     @FXML
     private Button ajouterJeuButton;
@@ -59,33 +56,44 @@ public class CritiqueControleur
     private Text nomJeuCritique;
 
     @FXML
-    private ListView<?> nouvelleCritique;
+    private ListView<String> nouvelleCritique;
 
     @FXML
     private Button soumettreCritiqueButton;
 
     @Autowired
-    public CritiqueControleur(ApplicationEventPublisher applicationEventPublisher, DB db)
+    public CritiqueControleur(ApplicationEventPublisher applicationEventPublisher, DB db, ApplicationContext applicationContext)
     {
         this.applicationEventPublisher = applicationEventPublisher;
         this.db = db;
+        this.applicationContext = applicationContext;
     }
 
     @FXML
     private void initialize() {
 
         // Initialisation de l'interface utilisateur ici
+        utilisateur = applicationContext.getBean(Utilisateur.class);
         critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
 
-        // Setup de la liste
+        // Setup de la liste de jeux
         Iterable<Produit> produitIterable = db.getProduitsService().getProduitRepository().findAll();
         produitList = new ArrayList<>();
         produitIterable.forEach(produitList::add);
 
-        // Ajout des jeux
+        // Ajout des valeurs dans choicebox
         choixJeuCritique.getItems().addAll(produitList.stream().map(Produit::getNom).toList());
+        choixPoidsCritique.getItems().addAll(EnumEcart.values());
+
+        // Selection des premiers elements des choicebox
+        choixJeuCritique.setValue(choixJeuCritique.getItems().get(0));
+        choixPoidsCritique.setValue(choixPoidsCritique.getItems().get(0));
     }
 
+    /**
+     * Ajouter un jeu a la critique actuelle
+     * @param event
+     */
     @FXML
     void ajouterJeu(ActionEvent event) {
 
@@ -96,6 +104,7 @@ public class CritiqueControleur
                 .filter(produit -> produit.getNom().equals(choixJeuCritique.getValue()))
                 .findFirst();
 
+        // Si le jeu existe, on passe a la suite
         if (produitOptional.isPresent()) {
 
             jeu = produitOptional.get();
@@ -112,10 +121,15 @@ public class CritiqueControleur
             if(!critique.possedeJeu(jeu)){
                 //Ajout
                 critique.ajouterJeu(jeu,poidsJeu,estNeutre);
+                nouvelleCritique.getItems().add(jeu.getNom() + " - Différence " + poidsJeu.toString() + " par rapport au jeu en dessous" + (estNeutre ? " - Neutre" : ""));
             }
         }
     }
 
+    /**
+     * Soumettre la critique actuelle et informer le system afin de MAJ les donnees etc...
+     * @param event
+     */
     @FXML
     void soumettreCritique(ActionEvent event) {
         LocalDate date = dateCritique.getValue();
@@ -128,10 +142,31 @@ public class CritiqueControleur
         //On set la date passee en entree
         critique.setDateCritique(date);
 
-        applicationEventPublisher.publishEvent(new SoumettreCritiqueEvent(this));
+        //Detection de la critique neutre
+        if(critique.possedeNeutre()){
 
-        //Fin = clean de la critique pour en refaire une nouvelle
+            //Detection si produit deja dans une critique de l'utilisateur aujourd'hui
+            utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant("jeanMichel");
+            List<Critique> listeCritiqueUser = db.getCritiquesService().getCritiqueRepo().findAllByUtilisateur(utilisateur);
+
+            LocalDate finalDate = date;
+            if(!(listeCritiqueUser.stream().anyMatch(critique1 -> critique1.getDateCritique().isEqual(finalDate)))){
+
+                //save de la critique en BD
+                //TODO bug ici
+                db.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
+                db.getCritiquesService().saveCritique(critique);
+
+                //Informer le systeme de la nouvelle critique
+                applicationEventPublisher.publishEvent(new SoumettreCritiqueEvent(critique));
+                System.out.println("Critique neutre");
+            }
+        }
+
+        System.out.println("Critique clean");
+        //Fin = clean de la critique et de la ListeView pour en refaire une nouvelle
         critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
+        nouvelleCritique.getItems().clear();
     }
 
 }

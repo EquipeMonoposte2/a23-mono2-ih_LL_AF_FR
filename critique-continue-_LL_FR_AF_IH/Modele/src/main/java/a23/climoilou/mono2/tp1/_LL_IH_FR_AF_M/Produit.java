@@ -12,8 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//where annotation @EqualsAndHashCode.Include est présente
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
 @Table(name = "Produit")
@@ -36,4 +34,13 @@ public class Produit {
 
     @OneToMany(mappedBy = "produitActuel")
     private List<CritiqueLienProduit> critiqueProduits = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Produit)) return false;
+        Produit produit = (Produit) o;
+        return getId().equals(produit.getId());
+    }
+
 }
