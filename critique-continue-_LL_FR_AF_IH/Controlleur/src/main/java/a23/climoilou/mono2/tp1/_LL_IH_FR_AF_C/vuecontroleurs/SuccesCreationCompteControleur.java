@@ -1,6 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ConnectionEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,7 +36,9 @@ public class SuccesCreationCompteControleur {
     @FXML
     void connect(ActionEvent event) {
         //à enlever lorsque utilisateur sera fonctionnel
-        applicationEventPublisher.publishEvent(new ConnectionEvent(this,"lancer de succes creation compte controleur",this.utilisateur));
+        ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).utilisateur(this.utilisateur).build();
+        applicationEventPublisher.publishEvent(applicationFXEvent);
+        //applicationEventPublisher.publishEvent(new ConnectionEvent(this,"lancer de succes creation compte controleur",this.utilisateur));
 
     }
 
