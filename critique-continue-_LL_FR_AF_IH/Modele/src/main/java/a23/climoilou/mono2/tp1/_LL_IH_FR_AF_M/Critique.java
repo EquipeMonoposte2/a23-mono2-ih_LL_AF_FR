@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,8 +29,8 @@ public class Critique {
     @JoinColumn(name="utilisateur_id")
     private Utilisateur utilisateur;
 
-    @OneToMany(mappedBy = "critique")
-    private LinkedList<CritiqueProduit> critiqueProduits;
+    @OneToMany(mappedBy = "critiqueActuelle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CritiqueLienProduit> critiqueLienProduits;
 
     /**
      * Ajoute un jeu à la critique
@@ -37,7 +38,7 @@ public class Critique {
      * @param enumEcart
      */
     public void ajouterJeu(Produit produit, EnumEcart enumEcart, boolean estNeutre){
-        critiqueProduits.add(CritiqueProduit.builder().produit(produit).critique(this).enumEcart(enumEcart).estNeutre(estNeutre).build());
+        critiqueLienProduits.add(CritiqueLienProduit.builder().produitActuel(produit).critiqueActuelle(this).enumEcart(enumEcart).estNeutre(estNeutre).build());
     }
 
     /**
@@ -45,7 +46,7 @@ public class Critique {
      * @return
      */
     public boolean possedeNeutre(){
-        return critiqueProduits.stream().anyMatch(CritiqueProduit::isEstNeutre);
+        return critiqueLienProduits.stream().anyMatch(CritiqueLienProduit::isEstNeutre);
     }
 
     /**
@@ -54,7 +55,7 @@ public class Critique {
      * @return
      */
     public boolean possedeJeu(Produit produit){
-        return critiqueProduits.stream().anyMatch(critiqueProduit -> critiqueProduit.getProduit().equals(produit));
+        return critiqueLienProduits.stream().anyMatch(critiqueProduit -> critiqueProduit.getProduitActuel().equals(produit));
     }
 
 }

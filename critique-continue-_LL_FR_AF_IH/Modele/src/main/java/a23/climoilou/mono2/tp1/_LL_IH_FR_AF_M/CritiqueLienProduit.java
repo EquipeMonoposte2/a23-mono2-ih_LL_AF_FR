@@ -3,6 +3,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -11,23 +12,21 @@ import lombok.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
-@Entity
-public class CritiqueProduit
+public class CritiqueLienProduit
 {
-
-    @EmbeddedId
-    private CritiqueProduitKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     @ManyToOne
-    @MapsId ( "produitId" )
     @JoinColumn(name = "produit_id")
-    private Produit produit;
+    private Produit produitActuel;
 
     @ManyToOne
-    @MapsId ( "critiqueId" )
     @JoinColumn(name = "critique_id")
-    private Critique critique;
+    private Critique critiqueActuelle;
 
     private EnumEcart enumEcart;
     private boolean estNeutre;
+
 }

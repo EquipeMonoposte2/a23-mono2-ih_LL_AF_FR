@@ -34,6 +34,6 @@ public class Produit {
     //Pour l'instant c'est un string, pour le path, s'il y a une meilleure facon ont changera.
     private String image;
 
-    @OneToMany(mappedBy = "produit")
-    private List<CritiqueProduit> critiqueProduits;
+    @OneToMany(mappedBy = "produitActuel")
+    private List<CritiqueLienProduit> critiqueProduits = new ArrayList<>();
 }

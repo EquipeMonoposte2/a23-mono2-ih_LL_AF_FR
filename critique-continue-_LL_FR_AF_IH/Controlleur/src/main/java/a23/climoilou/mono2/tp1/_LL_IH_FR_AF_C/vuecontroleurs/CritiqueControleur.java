@@ -75,7 +75,7 @@ public class CritiqueControleur
     private void initialize() {
 
         // Initialisation de l'interface utilisateur ici
-        critique = Critique.builder().utilisateur(utilisateur).critiqueProduits(new LinkedList<>()).build();
+        critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
 
         // Setup de la liste
         Iterable<Produit> produitIterable = db.getProduitsService().getProduitRepository().findAll();
@@ -128,11 +128,10 @@ public class CritiqueControleur
         //On set la date passee en entree
         critique.setDateCritique(date);
 
-
         applicationEventPublisher.publishEvent(new SoumettreCritiqueEvent(this));
 
         //Fin = clean de la critique pour en refaire une nouvelle
-        critique = Critique.builder().utilisateur(utilisateur).critiqueProduits(new LinkedList<>()).build();
+        critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
     }
 
 }
