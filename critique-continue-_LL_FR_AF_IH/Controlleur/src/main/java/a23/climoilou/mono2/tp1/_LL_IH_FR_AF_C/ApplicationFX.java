@@ -68,7 +68,7 @@ public class ApplicationFX extends Application {
 
                     //ajout du contenu aux tabs
                     navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
-                    navigationControleur.getTabStatistique(); //
+                    navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver)); //
                     navigationControleur.getTabVisualisationProduit(); //
                     navigationControleur.getTabCompte(); //
                     navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
@@ -121,10 +121,9 @@ public class ApplicationFX extends Application {
      * @param fxweaver FxWeaver à utiliser pour le chargement des vues
      * @return root root avec le controleur commandé en paramètre
      */
-    private <T> Parent fabriquerRoot(Class<T> controleurClass, FxWeaver fxweaver) {
+    public <T> Parent fabriquerRoot(Class<T> controleurClass, FxWeaver fxweaver) {
         FxControllerAndView<T, AnchorPane> controllerAndView = fxweaver.load(controleurClass);
         Parent root = controllerAndView.getView().get();
-        controllerAndView.getController();
         return root;
     }
 

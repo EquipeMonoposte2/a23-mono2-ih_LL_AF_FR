@@ -1,11 +1,15 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.FiltresEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -19,6 +23,7 @@ public class NavigationControleur  {
 
     private UtilisateurSession utilisateur;
     private NouveauProduitControleur controleurVueInterne;
+    private ApplicationEventPublisher applicationEventPublisher;
 
     private SuccesCreationCompteControleur succesCreationCompteControleur;
 
@@ -41,6 +46,13 @@ public class NavigationControleur  {
         this.controleurVueInterne = controleurVueInterne;
     }
 
+    public void afficherCritiques(){
+        FiltresEvent event = FiltresEvent.builder()
+                .estAmateur(false)
+                .estInfluenceur(false)
+                .estExpert(false).build();
+        applicationEventPublisher.publishEvent(event);
+    }
     public void setTabCompte(Tab tabCompte) {
         this.tabCompte = tabCompte;
     }
@@ -93,5 +105,8 @@ public class NavigationControleur  {
         this.utilisateur = utilisateur;
     }
 
-
+    @Autowired
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
 }

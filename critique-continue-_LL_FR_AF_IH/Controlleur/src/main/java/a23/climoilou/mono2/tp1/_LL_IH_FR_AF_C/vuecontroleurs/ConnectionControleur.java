@@ -69,7 +69,6 @@ public class ConnectionControleur {
             alert.setTitle("Erreur de connexion");
             alert.setContentText("Le nom d'utilisateur n'est pas valide.");
             alert.show();
-
         }
 
     }

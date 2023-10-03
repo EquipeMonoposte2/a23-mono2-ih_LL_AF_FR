@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -18,12 +19,12 @@ import java.util.Objects;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
+@Component
 public class Utilisateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String nom;
 
     @Column(unique = true)
@@ -31,10 +32,12 @@ public class Utilisateur {
 
     private LocalDate dateDeNaissance;
 
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     @OneToMany(mappedBy = "utilisateur")
     @Builder.Default
-    private List<Critique> critiqueList =new ArrayList<>();
+    @ToString.Exclude
+    private List<Critique> critiqueList = new ArrayList<>();
 
 }

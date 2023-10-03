@@ -39,7 +39,6 @@ public class SuccesCreationCompteControleur {
     void connect(ActionEvent event) {
         //à enlever lorsque utilisateur sera fonctionnel
 //        applicationEventPublisher.publishEvent(new ConnectionEvent(this,"lancer de succes creation compte controleur",this.utilisateur));
-
     }
 
 
