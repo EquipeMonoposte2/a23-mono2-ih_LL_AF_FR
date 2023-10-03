@@ -20,13 +20,16 @@ public class CritiqueLienProduit
 
     @ManyToOne
     @JoinColumn(name = "produit_id")
+    @ToString.Exclude
     private Produit produitActuel;
 
     @ManyToOne
     @JoinColumn(name = "critique_id")
+    @ToString.Exclude
     private Critique critiqueActuelle;
 
-    private EnumEcart enumEcart;
+    @Enumerated(EnumType.STRING)
+    private EnumEcart ecart;
     private boolean estNeutre;
 
 }

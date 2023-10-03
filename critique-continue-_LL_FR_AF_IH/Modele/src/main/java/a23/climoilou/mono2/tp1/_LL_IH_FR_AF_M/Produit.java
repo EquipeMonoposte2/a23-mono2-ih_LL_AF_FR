@@ -2,9 +2,11 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -27,6 +29,8 @@ public class Produit {
     @Column(unique = true )
     private String nom;
 
+    private float cote;
+
     private String description;
 
     private LocalDate dateDeSortie;
@@ -35,5 +39,26 @@ public class Produit {
     private String image;
 
     @OneToMany(mappedBy = "produitActuel")
+    @ToString.Exclude
     private List<CritiqueLienProduit> critiqueProduits = new ArrayList<>();
+
+    public boolean critiqueApres(LocalDate dateDebut) {
+        boolean[] retValeur = {false};
+        critiqueProduits.stream().forEach(critiqueLienProduit -> {
+            if(critiqueLienProduit.getCritiqueActuelle().getDateCritique().isAfter(dateDebut)){
+                retValeur[0] = true;
+            }
+        });
+        return retValeur[0];
+    }
+
+    public boolean critiqueAvant(LocalDate dateFin) {
+        boolean[] retValeur = {false};
+        critiqueProduits.forEach(critiqueLienProduit -> {
+            if(critiqueLienProduit.getCritiqueActuelle().getDateCritique().isBefore(dateFin)){
+                retValeur[0] = true;
+            }
+        });
+        return retValeur[0];
+    }
 }
