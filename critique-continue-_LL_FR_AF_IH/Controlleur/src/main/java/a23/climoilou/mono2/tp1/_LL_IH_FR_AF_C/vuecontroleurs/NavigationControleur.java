@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Controller;
 public class NavigationControleur  {
 
 
-    private Utilisateur utilisateur;
+    private UtilisateurSession utilisateur;
     private NouveauProduitControleur controleurVueInterne;
 
     private SuccesCreationCompteControleur succesCreationCompteControleur;
@@ -84,11 +85,11 @@ public class NavigationControleur  {
         return tabVisualisationProduit;
     }
 
-    public Utilisateur getUtilisateur() {
+    public UtilisateurSession getUtilisateur() {
         return utilisateur;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
+    public void setUtilisateur(UtilisateurSession utilisateur) {
         this.utilisateur = utilisateur;
     }
 

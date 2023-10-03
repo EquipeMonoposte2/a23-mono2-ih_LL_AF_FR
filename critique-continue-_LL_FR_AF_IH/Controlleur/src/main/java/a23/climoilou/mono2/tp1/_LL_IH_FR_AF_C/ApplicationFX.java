@@ -6,6 +6,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauCompteEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -56,7 +57,7 @@ public class ApplicationFX extends Application {
                     ConnectionEvent connectionEvent = (ConnectionEvent) event;
                     System.out.println(connectionEvent.getMessage());
                     //utilisateur provient de l'événement
-                    Utilisateur utilisateur = connectionEvent.getUtilisateur();
+                    UtilisateurSession utilisateur = connectionEvent.getUtilisateur();
 
                     //main vue (navigation)
                     FxControllerAndView<NavigationControleur, TabPane> controllerAndViewNav = fxWeaver.load(NavigationControleur.class);
@@ -74,7 +75,7 @@ public class ApplicationFX extends Application {
                     navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
 
                     //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
-                    if (utilisateur.getType() != Type.Expert) {
+                    if (utilisateur.getDroitUtilisateurConnected() != Type.Expert) {
                         //navigationControleur.getTabNouvelleCritique().setDisable(true);
                         //navigationControleur.getTabNouvelleCritique().setContent(null);
                         //navigationControleur.getTabNouvelleCritique().setClosable(false);
