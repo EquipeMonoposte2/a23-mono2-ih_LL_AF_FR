@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -30,8 +31,8 @@ public class NavigationControleur  implements Initializable {
 
     private UtilisateurSession session;
 
-
     private NouveauProduitControleur controleurVueInterne;
+
     private ApplicationEventPublisher applicationEventPublisher;
 
     private SuccesCreationCompteControleur succesCreationCompteControleur;
