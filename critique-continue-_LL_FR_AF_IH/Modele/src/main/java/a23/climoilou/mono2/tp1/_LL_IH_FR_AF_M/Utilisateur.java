@@ -18,7 +18,6 @@ import java.util.Objects;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
-@Component
 public class Utilisateur {
 
     @Id
