@@ -1,14 +1,14 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ConnectionEvent;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.CreationCompteEvent;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauCompteEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +21,13 @@ import java.util.ArrayList;
 @FxmlView("ConnectionVue.fxml")
 @Component
 public class ConnectionControleur {
+
+    private DB bd;
+
+    @Autowired
+    public void setBd(DB bd) {
+        this.bd = bd;
+    }
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -36,16 +43,19 @@ public class ConnectionControleur {
     void connect(ActionEvent event) {
         //condition pour valider la connection
         //user temporaire
-        Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tommy",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
-
+       // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
+       // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
+        System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
+        Utilisateur utilisateur =bd.getUtilisateursService().retourLesUtilisateurs().get(0);
         if (true) {
             //passe un message pour tester et un utilisateur pour référence dans la navigation de l'application
-            applicationEventPublisher.publishEvent(new ConnectionEvent(this,"BouttonClick dans connection controleur",utilisateurTemporaire));
+            ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).estCreationCompteEvent(false).estCreationCompteEvent(false).utilisateur(utilisateur).estDeconnectionEvent(false).build();
+            applicationEventPublisher.publishEvent(applicationFXEvent);
         }
     }
 
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
-        applicationEventPublisher.publishEvent(new NouveauCompteEvent(this));
+        applicationEventPublisher.publishEvent(ApplicationFXEvent.builder().estNouveauCompteEvent(true).build());
     }
 }

@@ -18,6 +18,7 @@ import java.util.Objects;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
+@Component
 public class Utilisateur {
 
     @Id
@@ -25,6 +26,9 @@ public class Utilisateur {
     private Long id;
 
     private String nom;
+
+    @Column(unique = true)
+    private String identifiant;
 
     private LocalDate dateDeNaissance;
 

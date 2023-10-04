@@ -2,44 +2,34 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Critique;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_critique;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Service
+@Service
 public class CritiquesService {
 
-    /*private final Repo_critique repoCritique;
+ private Repo_critique critiqueRepo;
 
     @Autowired
-    public CritiquesService(Repo_critique repoCritique) {
-        this.repoCritique = repoCritique;
+    public void setCritiqueRepo(Repo_critique critiqueRepo) {
+        this.critiqueRepo = critiqueRepo;
     }
 
-
-    public List<Critique> getAllCritiques(){
-        return (List<Critique>) repoCritique.findAll();
+    @Transactional
+    public void saveCritique(Critique critique){
+        this.critiqueRepo.save(critique);
     }
 
-    public Critique getCritiqueByID(Long id){
-        return repoCritique.findById(id).orElse(null);
+    @Transactional
+    public void supprimerCritique(Critique critique){
+        this.critiqueRepo.delete(critique);
     }
 
-    public void createCritique(Critique critique){
-        if (critique!=null){
-            repoCritique.save(critique);
-        }else {
-            System.err.println("Critique null on create : "+this);
-        }
+    public Repo_critique getCritiqueRepo() {
+        return critiqueRepo;
     }
-
-    public void deleteCritique(Critique critique){
-        if (critique!=null){
-            repoCritique.delete(critique);
-        }else {
-            System.err.println("Critique null on delete : "+this);
-        }
-    }*/
 }

@@ -2,40 +2,44 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_produits;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-//@Service
+@Service
 public class ProduitsService {
+    private Repo_produits produitRepository;
 
-   /* private final Repo_produits repoProduits;
-
-   // @Autowired
-    public ProduitsService(Repo_produits repoProduits) {
-        this.repoProduits = repoProduits;
+    @Autowired
+    public void setProduitRepository(Repo_produits produitRepository) {
+        this.produitRepository = produitRepository;
     }
 
-    public List<Produit> getAllProduits(){
-        return (List<Produit>) repoProduits.findAll();
+    @Transactional
+    public void saveProduit(Produit produit){
+        this.produitRepository.save(produit);
     }
 
-    public Produit findProduitByID(Long id){
-        return repoProduits.findById(id).orElse(null);
+    @Transactional
+    public void deleteProduit(Produit produit){
+        this.produitRepository.delete(produit);
     }
 
-    public void createProduits(Produit produits){
-        if (produits != null){
-            repoProduits.save(produits);
-        }else {
-            System.err.println("Produit null on create : "+this);
+    public Repo_produits getProduitRepository() {
+        return produitRepository;
+    }
+
+    public Produit creationValidationProduit(String nom, String description, LocalDate dateSortie, String image){
+        Produit produitRet = null;
+
+        if(nom!=""&&description!=""&&dateSortie!=null){
+            produitRet = Produit.builder().nom(nom).dateDeSortie(dateSortie).description(description).image(image).build();
         }
-    }
 
-    public void deleteProduits(Produit produits){
-        if (produits != null){
-            repoProduits.delete(produits);
-        }else {
-            System.err.println("Produit null on delete : "+this);
-        }
-    }*/
+        return produitRet;
+    }
 }

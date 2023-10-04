@@ -1,45 +1,59 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Utilisateur;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-//@Service
+@Service
 public class UtilisateursService {
-   /* private final Repo_Utilisateur repoUtilisateur;
+  private Repo_Utilisateur utilisateurRepo;
 
-
-
-    @Autowired
-    public UtilisateursService(Repo_Utilisateur repoUtilisateur) {
-        this.repoUtilisateur = repoUtilisateur;
+  @Autowired
+    public void setUtilisateurRepo(Repo_Utilisateur utilisateurRepo) {
+        this.utilisateurRepo = utilisateurRepo;
     }
 
-    public List<Utilisateur> getRepoUtilisateur() {
-        return (List<Utilisateur>) repoUtilisateur.findAll();
-    }
+    public Utilisateur validationCreationUtilisateur(LocalDate dateNaissance, Type type, String nomUtilisateur, String identifiant){
+        //validation et creation d'utilisateur
+        Utilisateur utilisateur = null;
+        if(nomUtilisateur!="" && dateNaissance !=null && type!=null && identifiant!="") {
+            utilisateur = getUtilisateurRepo().findFirstByNom(identifiant);
 
-    public Utilisateur findUtilisateurByID(Long id){
-        return repoUtilisateur.findById(id).orElse(null);
-    }
-
-    public void createUtilisateur(Utilisateur utilisateur){
-        if (utilisateur != null){
-            repoUtilisateur.save(utilisateur);
-        }else {
-            System.err.println("utilisateur null on create : "+this);
+            if (utilisateur == null) {
+                utilisateur = Utilisateur.builder().nom(nomUtilisateur).type(type).dateDeNaissance(dateNaissance).identifiant(identifiant).build();
+                //applicationEventPublisher.publishEvent(new CreationCompteEvent(this,new Utilisateur()));
+            }
         }
+        return utilisateur;
+    }
+    @Transactional
+    public void sauvegarderUtilisateur(Utilisateur utilisateur){
+        this.utilisateurRepo.save(utilisateur);
     }
 
-    public void deleteUtilisateur(Utilisateur utilisateur){
-        if (utilisateur != null){
-            repoUtilisateur.delete(utilisateur);
-        }else {
-            System.err.println("utilisateur null on delete : "+this);
-        }
-    }*/
+    @Transactional
+    public void surpprimerUtilisateur(Utilisateur utilisateur){
+        this.utilisateurRepo.delete(utilisateur);
+    }
 
+    @Transactional
+    public List<Utilisateur> retourLesUtilisateurs(){
+      List<Utilisateur> utilisateursList = new ArrayList<>();
+
+        for (Utilisateur util: this.utilisateurRepo.findAll()) {
+            utilisateursList.add(util);
+        }
+        return utilisateursList;
+    }
+
+  public Repo_Utilisateur getUtilisateurRepo() {
+    return utilisateurRepo;
+  }
 }
