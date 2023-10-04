@@ -1,9 +1,13 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
-
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * La session sert à garder l'identifiant unique de l'utilisateur actuel
+ */
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,32 +18,42 @@ import org.springframework.stereotype.Component;
 @EqualsAndHashCode
 public class UtilisateurSession {
 
-    private UtilisateurSession isUserConnected;
+    private DB bd;
 
-    private long idUtilisateurConnected;
-    private Type droitUtilisateurConnected;
-    private String identifiant;
+    private String identifiantUtilisateur;
 
+    private Utilisateur utilisateur;
 
-    public UtilisateurSession logIn(long idUtilisateur, Type permission, String identifiant){
-        if(isUserConnected == null) {
-            isUserConnected =
-                    builder().
-                            idUtilisateurConnected(idUtilisateur).
-                            droitUtilisateurConnected(permission).
-                            identifiant(identifiant).build();
-        }
-        return isUserConnected;
+    @Autowired
+    public void setBd(DB bd) {
+        this.bd = bd;
+    }
+    /**
+     * Connection utilisateur
+     * @param identifiantUtilisateur
+     */
+    public void connection(String identifiantUtilisateur){
+        this.setIdentifiantUtilisateur(identifiantUtilisateur);
+        this.utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiantUtilisateur);
     }
 
-    public boolean logout(){
-        this.isUserConnected = null;
-        this.idUtilisateurConnected = -1;
-        this.droitUtilisateurConnected = null;
-        return true;
+    /**
+     * Deconnection utilisateur
+     */
+    public void deconnection(){
+        this.setIdentifiantUtilisateur("");
+        this.utilisateur = null;
     }
 
-
-
-
+    /**
+     * Modification utilisateur
+     * @param utilisateur
+     */
+    public void modificationSession(Utilisateur utilisateur){
+        //update session
+        this.getUtilisateur().setType(utilisateur.getType());
+        this.getUtilisateur().setNom(utilisateur.getNom());
+        this.getUtilisateur().setDateDeNaissance(utilisateur.getDateDeNaissance());
+        this.getUtilisateur().setCritiqueList(utilisateur.getCritiqueList());
+    }
 }

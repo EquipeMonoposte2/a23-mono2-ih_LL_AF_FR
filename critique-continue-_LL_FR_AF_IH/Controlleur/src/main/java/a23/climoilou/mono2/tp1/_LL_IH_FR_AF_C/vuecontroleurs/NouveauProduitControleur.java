@@ -48,33 +48,23 @@ public class NouveauProduitControleur {
 
     /**
      * Boutton creation de produit
+     *
      * @param event
      */
     @FXML
     void createMedia(ActionEvent event) throws InterruptedException {
 
         Produit produit;
-        if(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(),descriptionMediaInput.getText(),dateSortieMediaInput.getValue(), lienImageMediaInput.getText())!=null){
+        if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()) != null) {
             produit = bd.getProduitsService().getProduitRepository().findFirstByNom(this.nomMediaInput.getText());
-
-            if (produit == null){
-
-                bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(),descriptionMediaInput.getText(),dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
-
-
+            if (produit == null) {
+                bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
                 messageErreur.setText("Produit créé.");
-
-            }
-            else {
+            } else {
                 messageErreur.setText("Erreur ce produit est déjà existant.");
-
             }
+        } else {
+            messageErreur.setText("Erreur tous les champs doivent être remplis.");
         }
-        else {
-        messageErreur.setText("Erreur tous les champs doivent être remplis.");
-        }
-
-
-
     }
 }
