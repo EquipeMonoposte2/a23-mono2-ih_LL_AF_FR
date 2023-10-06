@@ -25,12 +25,6 @@ public class UtilisateursService {
         //validation et creation d'utilisateur
         boolean b = false;
         if(nomUtilisateur!="" && dateNaissance !=null && type!=null && identifiant!="") {
-            utilisateur = getUtilisateurRepo().findFirstByIdentifiant(identifiant);
-
-            if (utilisateur == null) {
-                utilisateur = Utilisateur.builder().nom(nomUtilisateur).type(type).dateDeNaissance(dateNaissance).identifiant(identifiant).build();
-                //applicationEventPublisher.publishEvent(new CreationCompteEvent(this,new Utilisateur()));
-            }
             b = true;
         }
         return b;

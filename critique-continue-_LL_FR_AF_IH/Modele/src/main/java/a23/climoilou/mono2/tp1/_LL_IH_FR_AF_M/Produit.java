@@ -36,9 +36,6 @@ public class Produit {
     //Pour l'instant c'est un string, pour le path, s'il y a une meilleure facon ont changera.
     private String image;
 
-    @OneToMany(mappedBy = "produitActuel")
-    private List<CritiqueLienProduit> critiqueProduits = new ArrayList<>();
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,6 +44,7 @@ public class Produit {
         return getId().equals(produit.getId());
     }
 
+    @OneToMany(mappedBy = "produitActuel")
     @ToString.Exclude
     private List<CritiqueLienProduit> critiqueProduits = new ArrayList<>();
 

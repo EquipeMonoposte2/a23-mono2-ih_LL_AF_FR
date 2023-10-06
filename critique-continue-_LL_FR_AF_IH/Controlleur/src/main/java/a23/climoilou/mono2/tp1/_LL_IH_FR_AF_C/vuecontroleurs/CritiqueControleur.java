@@ -1,11 +1,9 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauProduitEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.SoumettreCritiqueEvent;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Critique;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.EnumEcart;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,6 +16,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -78,24 +77,16 @@ public class CritiqueControleur
     private void initialize() {
 
         // Initialisation de l'interface utilisateur ici
-        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiant());
+        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiantUtilisateur());
 
         critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
 
         // Setup de la liste de jeux
-        Iterable<Produit> produitIterable = db.getProduitsService().getProduitRepository().findAll();
-        produitList = new ArrayList<>();
-        produitIterable.forEach(produitList::add);
+        majChoiceBoxProduits();
 
-        // Ajout des valeurs dans choicebox
-        choixJeuCritique.getItems().addAll(produitList.stream().map(Produit::getNom).toList());
+        //Setup liste de poids
         choixPoidsCritique.getItems().addAll(EnumEcart.values());
-
-        // Selection des premiers elements des choicebox
-        if(choixJeuCritique.getItems().size() > 0)choixJeuCritique.setValue(choixJeuCritique.getItems().get(0));
-
         if(choixPoidsCritique.getItems().size() > 0)choixPoidsCritique.setValue(choixPoidsCritique.getItems().get(0));
-
     }
 
     /**
@@ -142,7 +133,7 @@ public class CritiqueControleur
     void soumettreCritique(ActionEvent event) {
         LocalDate date = dateCritique.getValue();
         utilisateurSession = applicationContext.getBean(UtilisateurSession.class);
-        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiant());
+        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiantUtilisateur());
 
         //Si le champ date est vide, on met la date du jour
         if(date == null){
@@ -164,7 +155,6 @@ public class CritiqueControleur
 
                 //save de la critique en BD
                 //TODO bug ici
-                db.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
                 db.getCritiquesService().saveCritique(critique);
 
                 //Informer le systeme de la nouvelle critique
@@ -179,4 +169,28 @@ public class CritiqueControleur
         nouvelleCritique.getItems().clear();
     }
 
+    private void majChoiceBoxProduits(){
+        //On maj la liste des produits
+        Iterable<Produit> produitIterable = db.getProduitsService().getProduitRepository().findAll();
+        produitList = new ArrayList<>();
+        produitIterable.forEach(produitList::add);
+
+        // Ajout des valeurs dans choicebox
+        choixJeuCritique.getItems().clear();
+        choixJeuCritique.getItems().addAll(produitList.stream().map(Produit::getNom).toList());
+
+        // Selection des premiers elements du choicebox
+        if(choixJeuCritique.getItems().size() > 0)choixJeuCritique.setValue(choixJeuCritique.getItems().get(0));
+    }
+
+    // LES EVENTS LISTENER
+
+    /**
+     * Lorsqu'un nouveau produit est ajoute, on met a jour la liste des produits
+     * @param event
+     */
+    @EventListener
+    public void onNouveauProduitAjoute(NouveauProduitEvent event){
+        majChoiceBoxProduits();
+    }
 }
