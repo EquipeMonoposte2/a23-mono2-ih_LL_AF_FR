@@ -57,7 +57,7 @@ public class ConnectionControleur {
     void connect(ActionEvent event) {
         Utilisateur utilisateurConnected = bd.getUtilisateursService().
                                             getUtilisateurRepo().
-                                            findFirstByNom(this.nomUtilisateurTextField.getText());
+                                            findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
 
         //condition pour valider la connection
         if(utilisateurConnected != null) {

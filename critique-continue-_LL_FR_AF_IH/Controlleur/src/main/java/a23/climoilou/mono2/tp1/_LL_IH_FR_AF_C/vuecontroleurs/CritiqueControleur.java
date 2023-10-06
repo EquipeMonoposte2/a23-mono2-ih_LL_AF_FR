@@ -1,11 +1,8 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.SoumettreCritiqueEvent;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Critique;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.EnumEcart;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,7 +26,7 @@ public class CritiqueControleur
 {
     private final ApplicationEventPublisher applicationEventPublisher;
     private Critique critique;
-    private Utilisateur utilisateur;
+    private UtilisateurSession utilisateurSession;
     private DB db;
     private List<Produit> produitList;
     private ApplicationContext applicationContext;
@@ -62,6 +59,11 @@ public class CritiqueControleur
     private Button soumettreCritiqueButton;
 
     @Autowired
+    public void setUtilisateurSession(UtilisateurSession utilisateurSession) {
+        this.utilisateurSession = utilisateurSession;
+    }
+
+    @Autowired
     public CritiqueControleur(ApplicationEventPublisher applicationEventPublisher, DB db, ApplicationContext applicationContext)
     {
         this.applicationEventPublisher = applicationEventPublisher;
@@ -73,7 +75,8 @@ public class CritiqueControleur
     private void initialize() {
 
         // Initialisation de l'interface utilisateur ici
-        utilisateur = applicationContext.getBean(Utilisateur.class);
+        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiant());
+
         critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
 
         // Setup de la liste de jeux
@@ -86,8 +89,10 @@ public class CritiqueControleur
         choixPoidsCritique.getItems().addAll(EnumEcart.values());
 
         // Selection des premiers elements des choicebox
-        choixJeuCritique.setValue(choixJeuCritique.getItems().get(0));
-        choixPoidsCritique.setValue(choixPoidsCritique.getItems().get(0));
+        if(choixJeuCritique.getItems().size() > 0)choixJeuCritique.setValue(choixJeuCritique.getItems().get(0));
+
+        if(choixPoidsCritique.getItems().size() > 0)choixPoidsCritique.setValue(choixPoidsCritique.getItems().get(0));
+
     }
 
     /**
@@ -133,6 +138,8 @@ public class CritiqueControleur
     @FXML
     void soumettreCritique(ActionEvent event) {
         LocalDate date = dateCritique.getValue();
+        utilisateurSession = applicationContext.getBean(UtilisateurSession.class);
+        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiant());
 
         //Si le champ date est vide, on met la date du jour
         if(date == null){
