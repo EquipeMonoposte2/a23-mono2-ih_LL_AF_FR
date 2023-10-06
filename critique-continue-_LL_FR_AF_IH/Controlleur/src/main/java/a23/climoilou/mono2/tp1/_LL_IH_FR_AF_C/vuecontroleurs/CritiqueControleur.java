@@ -77,9 +77,7 @@ public class CritiqueControleur
     private void initialize() {
 
         // Initialisation de l'interface utilisateur ici
-        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiantUtilisateur());
-
-        critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
+        critique = Critique.builder().critiqueLienProduits(new ArrayList<>()).build();
 
         // Setup de la liste de jeux
         majChoiceBoxProduits();
@@ -147,14 +145,13 @@ public class CritiqueControleur
         if(critique.possedeNeutre()){
 
             //Detection si produit deja dans une critique de l'utilisateur aujourd'hui
-            utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant("jeanMichel");
             List<Critique> listeCritiqueUser = db.getCritiquesService().getCritiqueRepo().findAllByUtilisateur(utilisateur);
 
             LocalDate finalDate = date;
             if(!(listeCritiqueUser.stream().anyMatch(critique1 -> critique1.getDateCritique().isEqual(finalDate)))){
 
                 //save de la critique en BD
-                //TODO bug ici
+                critique.setUtilisateur(utilisateur);
                 db.getCritiquesService().saveCritique(critique);
 
                 //Informer le systeme de la nouvelle critique
@@ -165,7 +162,7 @@ public class CritiqueControleur
 
         System.out.println("Critique clean");
         //Fin = clean de la critique et de la ListeView pour en refaire une nouvelle
-        critique = Critique.builder().utilisateur(utilisateur).critiqueLienProduits(new ArrayList<>()).build();
+        critique = Critique.builder().critiqueLienProduits(new ArrayList<>()).build();
         nouvelleCritique.getItems().clear();
     }
 
