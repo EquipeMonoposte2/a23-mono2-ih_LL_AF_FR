@@ -1,8 +1,11 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.SoumettreCritiqueEvent;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.*;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Critique;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.EnumEcart;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

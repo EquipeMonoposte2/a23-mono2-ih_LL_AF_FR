@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.CreationCompteControleur">
+<AnchorPane fx:id="creationVueAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.CreationCompteControleur">
    <stylesheets>
       <URL value="@stylesCss.css" />
    </stylesheets>
@@ -20,9 +20,9 @@
          <children>
             <Label layoutX="63.0" layoutY="111.0" text="Date Naissance" />
             <Label layoutX="63.0" layoutY="61.0" text="NouveauNom" />
-            <Button layoutX="455.0" layoutY="242.0" mnemonicParsing="false" onAction="#creerClick" text="Créer" />
+            <Button fx:id="buttonCreation" layoutX="455.0" layoutY="242.0" mnemonicParsing="false" onAction="#creerClick" text="Créer" />
             <TextField fx:id="nomUtilisateur" layoutX="63.0" layoutY="78.0" prefHeight="25.0" prefWidth="388.0" />
-            <Text layoutX="157.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Création Compte">
+            <Text fx:id="titreVue" layoutX="157.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Création Compte">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>

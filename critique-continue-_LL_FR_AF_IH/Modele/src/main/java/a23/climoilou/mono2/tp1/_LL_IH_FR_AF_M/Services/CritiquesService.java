@@ -23,12 +23,12 @@ public class CritiquesService {
     }
 
     @Transactional
-    public void saveCritique(Critique critique){
+    public void saveCritique(Critique critique) {
         this.critiqueRepo.save(critique);
     }
 
     @Transactional
-    public void supprimerCritique(Critique critique){
+    public void supprimerCritique(Critique critique) {
         this.critiqueRepo.delete(critique);
     }
 

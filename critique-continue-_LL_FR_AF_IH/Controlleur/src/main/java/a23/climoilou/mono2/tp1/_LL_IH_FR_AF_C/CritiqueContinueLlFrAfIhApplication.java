@@ -6,6 +6,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,16 +32,12 @@ import java.util.ArrayList;
 @EntityScan(basePackages = {
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF"})
-public class CritiqueContinueLlFrAfIhApplication implements CommandLineRunner {
+public class CritiqueContinueLlFrAfIhApplication {
 
 
     public static void main(String[] args) {
         //SpringApplication.run(CritiqueContinueLlFrAfIhApplication.class, args);
         Application.launch(ApplicationFX.class);
     }
-    @Override
-    @Transactional
-    public void run(String... args) throws Exception {
 
-    }
 }
