@@ -18,6 +18,8 @@ public class CritiqueLienProduit
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private int ordreListe;
+
     @ManyToOne
     @JoinColumn(name = "produit_id")
     @ToString.Exclude

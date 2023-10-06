@@ -38,7 +38,7 @@ public class Critique {
      * @param enumEcart
      */
     public void ajouterJeu(Produit produit, EnumEcart enumEcart, boolean estNeutre){
-        critiqueLienProduits.add(CritiqueLienProduit.builder().produitActuel(produit).critiqueActuelle(this).ecart(enumEcart).estNeutre(estNeutre).build());
+        critiqueLienProduits.add(CritiqueLienProduit.builder().produitActuel(produit).critiqueActuelle(this).ecart(enumEcart).estNeutre(estNeutre).ordreListe(critiqueLienProduits.size()+1).build());
     }
 
     /**
