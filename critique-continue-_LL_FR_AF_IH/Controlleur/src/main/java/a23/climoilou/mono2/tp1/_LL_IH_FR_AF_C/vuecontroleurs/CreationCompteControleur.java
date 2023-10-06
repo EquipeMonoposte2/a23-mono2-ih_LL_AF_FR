@@ -72,10 +72,10 @@ public class CreationCompteControleur {
         //validation et creation d'utilisateur
         Utilisateur utilisateur = null;
         if (dropDowntypes.getValue() != null && db.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(), Type.valueOf(dropDowntypes.getValue()), nomUtilisateur.getText(), identifiant.getText())) {
-            utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiant.getText());
+            utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(session.getIdentifiantUtilisateur());
             if (utilisateur != null && isUpdate) {
                 //utilisateur update
-                session.modificationSession(Utilisateur.builder().dateDeNaissance(dateNaissance.getValue()).nom(nomUtilisateur.getText()).critiqueList(utilisateur.getCritiqueList()).type(Type.valueOf(dropDowntypes.getValue())).identifiant(identifiant.getText()).build());
+//                session.modificationSession(Utilisateur.builder().dateDeNaissance(dateNaissance.getValue()).nom(nomUtilisateur.getText()).critiqueList(utilisateur.getCritiqueList()).type(Type.valueOf(dropDowntypes.getValue())).identifiant(identifiant.getText()).build());
                 System.out.println("id = "+identifiant.getText());
                 db.getUtilisateursService().updateUtilisateur(Utilisateur.builder().dateDeNaissance(dateNaissance.getValue()).nom(nomUtilisateur.getText()).critiqueList(utilisateur.getCritiqueList()).type(Type.valueOf(dropDowntypes.getValue())).identifiant(identifiant.getText()).build());
             }
@@ -83,10 +83,10 @@ public class CreationCompteControleur {
                     //sauvegarder utilisateur et instancier utilisateur
                     utilisateur = Utilisateur.builder().dateDeNaissance(dateNaissance.getValue()).nom(nomUtilisateur.getText()).critiqueList(new ArrayList<>()).type(Type.valueOf(dropDowntypes.getValue())).identifiant(identifiant.getText()).build();
                     db.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
-                    session.connection(utilisateur.getIdentifiant());
-                    System.out.println(session.getUtilisateur().toString());
+                    session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
+                    System.out.println(session.getIdentifiantUtilisateur());
                     //lancement de l'événement de creation
-                    ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estCreationCompteEvent(true).utilisateur(utilisateur).build();
+                    ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estCreationCompteEvent(true).utilisateur(session).build();
                     applicationEventPublisher.publishEvent(applicationFXEvent);
 
             }

@@ -20,40 +20,64 @@ public class UtilisateurSession {
 
     private DB bd;
 
+
     private String identifiantUtilisateur;
 
-    private Utilisateur utilisateur;
+    private Type permission;
+
+    private UtilisateurSession session;
 
     @Autowired
     public void setBd(DB bd) {
         this.bd = bd;
     }
+
+
     /**
      * Connection utilisateur
      * @param identifiantUtilisateur
      */
-    public void connection(String identifiantUtilisateur){
-        this.setIdentifiantUtilisateur(identifiantUtilisateur);
-        this.utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiantUtilisateur);
+    public UtilisateurSession connection(String identifiantUtilisateur, Type permission){
+//        this.setIdentifiantUtilisateur(identifiantUtilisateur);
+//        this.utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiantUtilisateur);
+        if(session == null) {
+            session = UtilisateurSession.
+                    builder().
+                            identifiantUtilisateur(identifiantUtilisateur)
+                            .permission(permission).build();
+        }
+        return session;
+
     }
 
     /**
      * Deconnection utilisateur
      */
-    public void deconnection(){
+    public boolean deconnection(){
         this.setIdentifiantUtilisateur("");
-        this.utilisateur = null;
+        this.setPermission(null);
+//        this.session = null;
+        return true;
+    }
+
+    /**
+     * Recupère l'utilisateur associé a l'identifiant connecté.
+     * @return
+     */
+    public Utilisateur TrouverUtilisateurConnecter(){
+        return bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.identifiantUtilisateur);
     }
 
     /**
      * Modification utilisateur
      * @param utilisateur
      */
-    public void modificationSession(Utilisateur utilisateur){
-        //update session
-        this.getUtilisateur().setType(utilisateur.getType());
-        this.getUtilisateur().setNom(utilisateur.getNom());
-        this.getUtilisateur().setDateDeNaissance(utilisateur.getDateDeNaissance());
-        this.getUtilisateur().setCritiqueList(utilisateur.getCritiqueList());
-    }
+//    public void modificationSession(Utilisateur utilisateur){
+//
+//        //update session
+//        this.getUtilisateur().setType(utilisateur.getType());
+//        this.getUtilisateur().setNom(utilisateur.getNom());
+//        this.getUtilisateur().setDateDeNaissance(utilisateur.getDateDeNaissance());
+//        this.getUtilisateur().setCritiqueList(utilisateur.getCritiqueList());
+//    }
 }
