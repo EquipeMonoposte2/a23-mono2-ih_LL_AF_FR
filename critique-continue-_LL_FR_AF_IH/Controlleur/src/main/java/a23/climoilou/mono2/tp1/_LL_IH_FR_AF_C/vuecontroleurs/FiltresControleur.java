@@ -1,6 +1,7 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.FiltresEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @FxmlView("FiltresVue.fxml")
@@ -39,10 +43,18 @@ public class FiltresControleur {
     private CheckBox influenceurCheckbox;
 
     public void confirmerFiltres(ActionEvent actionEvent) {
+        Set<Type> typesUtilisateurs = new HashSet<>();
+        if(amateurCheckbox.isSelected()){
+            typesUtilisateurs.add(Type.Utilisateur);
+        }
+        if(influenceurCheckbox.isSelected()){
+            typesUtilisateurs.add(Type.Influencer);
+        }
+        if(expertChecbox.isSelected()){
+            typesUtilisateurs.add(Type.Expert);
+        }
         FiltresEvent event = FiltresEvent.builder()
-                .estAmateur(amateurCheckbox.isSelected())
-                .estInfluenceur(influenceurCheckbox.isSelected())
-                .estExpert(expertChecbox.isSelected())
+                .typesUtilisateurs(typesUtilisateurs)
                 .dateDebut(debutDatePicker.getValue())
                 .dateFin(finDatePicker.getValue()).build();
         applicationEventPublisher.publishEvent(event);

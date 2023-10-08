@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TableView fx:id="produitsTableView" accessibleRole="LIST_VIEW" layoutX="100.0" layoutY="36.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.ProduitsTableViewControleur">
+    <columns>
+        <TableColumn fx:id="nomTableColumn" editable="false" maxWidth="1.7976931348623157E308" prefWidth="519.0" text="Nom" />
+        <TableColumn fx:id="coteTableColumn" minWidth="0.0" text="Cote" />
+    </columns>
+    <columnResizePolicy>
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+    </columnResizePolicy>
+</TableView>

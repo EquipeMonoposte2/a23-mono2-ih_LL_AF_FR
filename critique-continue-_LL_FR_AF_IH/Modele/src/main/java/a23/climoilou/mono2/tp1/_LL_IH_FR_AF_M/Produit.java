@@ -42,20 +42,22 @@ public class Produit {
     @ToString.Exclude
     private List<CritiqueLienProduit> critiqueProduits = new ArrayList<>();
 
-    public boolean critiqueApres(LocalDate dateDebut) {
+    public boolean critiqueApres(LocalDate date) {
         boolean[] retValeur = {false};
         critiqueProduits.stream().forEach(critiqueLienProduit -> {
-            if(critiqueLienProduit.getCritiqueActuelle().getDateCritique().isAfter(dateDebut)){
+            LocalDate dateCritiqueTemp = critiqueLienProduit.getCritiqueActuelle().getDateCritique();
+            if(dateCritiqueTemp.isAfter(date) || dateCritiqueTemp.isEqual(date)){
                 retValeur[0] = true;
             }
         });
         return retValeur[0];
     }
 
-    public boolean critiqueAvant(LocalDate dateFin) {
+    public boolean critiqueAvant(LocalDate date) {
         boolean[] retValeur = {false};
         critiqueProduits.forEach(critiqueLienProduit -> {
-            if(critiqueLienProduit.getCritiqueActuelle().getDateCritique().isBefore(dateFin)){
+            LocalDate dateCritiqueTemp = critiqueLienProduit.getCritiqueActuelle().getDateCritique();
+            if(dateCritiqueTemp.isBefore(date) || dateCritiqueTemp.isEqual(date)){
                 retValeur[0] = true;
             }
         });

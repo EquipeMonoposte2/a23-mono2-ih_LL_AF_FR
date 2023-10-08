@@ -49,7 +49,7 @@ public class ConnectionControleur {
 
        // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
 
-        System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
+        //System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
 
 
 

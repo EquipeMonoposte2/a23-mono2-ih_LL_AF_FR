@@ -44,10 +44,7 @@ public class NavigationControleur  {
     }
 
     public void afficherCritiques(){
-        FiltresEvent event = FiltresEvent.builder()
-                .estAmateur(false)
-                .estInfluenceur(false)
-                .estExpert(false).build();
+        FiltresEvent event = FiltresEvent.builder().build();
         applicationEventPublisher.publishEvent(event);
     }
     public void setTabCompte(Tab tabCompte) {
