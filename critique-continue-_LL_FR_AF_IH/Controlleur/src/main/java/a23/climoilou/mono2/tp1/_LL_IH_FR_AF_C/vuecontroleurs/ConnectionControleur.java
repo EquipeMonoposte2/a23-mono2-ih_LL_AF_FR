@@ -26,6 +26,12 @@ import java.util.ArrayList;
 public class ConnectionControleur {
 
     private DB bd;
+    private UtilisateurSession session;
+
+    @Autowired
+    public void setSession(UtilisateurSession session) {
+        this.session = session;
+    }
 
     @Autowired
     public void setBd(DB bd) {
@@ -55,14 +61,13 @@ public class ConnectionControleur {
         Utilisateur utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
 
         if (utilisateur != null) {
-            UtilisateurSession session = null;
 
             session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
 
-            System.out.println(session.getIdentifiantUtilisateur());
+//            System.out.println(session.getIdentifiantUtilisateur());
 //            session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
-//            ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).estCreationCompteEvent(false).estCreationCompteEvent(false).utilisateur(session).estDeconnectionEvent(false).build();
-//            applicationEventPublisher.publishEvent(applicationFXEvent);
+            ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).estCreationCompteEvent(false).estCreationCompteEvent(false).utilisateur(session).estDeconnectionEvent(false).build();
+            applicationEventPublisher.publishEvent(applicationFXEvent);
         }else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de connexion");

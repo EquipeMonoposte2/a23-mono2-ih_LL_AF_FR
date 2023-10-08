@@ -32,7 +32,6 @@ public class UtilisateurSession {
         this.bd = bd;
     }
 
-
     /**
      * Connection utilisateur
      * @param identifiantUtilisateur
@@ -65,7 +64,7 @@ public class UtilisateurSession {
      * @return
      */
     public Utilisateur TrouverUtilisateurConnecter(){
-        return bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.identifiantUtilisateur);
+        return bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.getIdentifiantUtilisateur());
     }
 
     /**

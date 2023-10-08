@@ -61,9 +61,10 @@ public class CompteControleur implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //init context
-        Utilisateur utilisateur = bd.getUtilisateursService()
-                .getUtilisateurRepo().
-                findFirstByIdentifiant(session.getIdentifiantUtilisateur());
+        Utilisateur utilisateur =
+                bd.getUtilisateursService().
+                        getUtilisateurRepo().findFirstByIdentifiant(session.getSession().getIdentifiantUtilisateur());
+
 
         DatePicker datePickerDateNaissance = new DatePicker();
         datePickerDateNaissance.setValue(utilisateur.getDateDeNaissance());
@@ -82,6 +83,8 @@ public class CompteControleur implements Initializable {
         modificationCompteControleur.getDropDowntypes().setValue(String.valueOf(utilisateur.getType()));
 
         modificationCompteControleur.getIdentifiant().setText(utilisateur.getIdentifiant());
+
+        modificationCompteControleur.getIdentifiant().setEditable(false);
 
         modificationCompteControleur.getNomUtilisateur().setText(utilisateur.getNom());
     }
