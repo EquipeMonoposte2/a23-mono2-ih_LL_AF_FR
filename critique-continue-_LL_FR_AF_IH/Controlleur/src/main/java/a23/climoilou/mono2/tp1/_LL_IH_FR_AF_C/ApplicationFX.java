@@ -89,7 +89,7 @@ public class ApplicationFX extends Application  {
 
             //ajout du contenu aux tabs
             navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
-            navigationControleur.getTabStatistique(); //
+            navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver)); //
             navigationControleur.getTabVisualisationProduit(); //
             navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class,fxWeaver)); //
             navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));

@@ -1,6 +1,7 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.FiltresEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.fxml.FXML;
@@ -53,6 +54,20 @@ public class NavigationControleur  implements Initializable {
 
     @FXML
     private Tab tabVisualisationProduit;
+
+    public void setControleurVueInterne(NouveauProduitControleur controleurVueInterne) {
+        this.controleurVueInterne = controleurVueInterne;
+    }
+
+    public void afficherCritiques(){
+        FiltresEvent event = FiltresEvent.builder().build();
+        applicationEventPublisher.publishEvent(event);
+    }
+
+    @Autowired
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
 
     @Autowired
     public void setSession(UtilisateurSession session) {

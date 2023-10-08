@@ -1,5 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauProduitEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import javax.lang.model.element.ModuleElement;
@@ -46,6 +48,13 @@ public class NouveauProduitControleur {
     @FXML
     private Label messageErreur;
 
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Autowired
+    public NouveauProduitControleur(ApplicationEventPublisher applicationEventPublisher){
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+
     /**
      * Boutton creation de produit
      *
@@ -60,6 +69,7 @@ public class NouveauProduitControleur {
             if (produit == null) {
                 bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
                 messageErreur.setText("Produit créé.");
+                applicationEventPublisher.publishEvent(new NouveauProduitEvent());
             } else {
                 messageErreur.setText("Erreur ce produit est déjà existant.");
             }

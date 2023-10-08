@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -38,7 +39,7 @@ public class Critique {
      * @param enumEcart
      */
     public void ajouterJeu(Produit produit, EnumEcart enumEcart, boolean estNeutre){
-        critiqueLienProduits.add(CritiqueLienProduit.builder().produitActuel(produit).critiqueActuelle(this).ecart(enumEcart).estNeutre(estNeutre).build());
+        critiqueLienProduits.add(CritiqueLienProduit.builder().produitActuel(produit).critiqueActuelle(this).ecart(enumEcart).estNeutre(estNeutre).ordreListe(critiqueLienProduits.size()+1).build());
     }
 
     /**
