@@ -1,6 +1,7 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.event.ActionEvent;
@@ -25,6 +26,8 @@ public class CompteControleur implements Initializable {
     private final ApplicationEventPublisher applicationEventPublisher;
     private ApplicationContext applicationContext;
 
+    private DB bd;
+
     private UtilisateurSession session;
     @FXML
     private CreationCompteControleur modificationCompteControleur;
@@ -37,6 +40,12 @@ public class CompteControleur implements Initializable {
     public void setSession(UtilisateurSession session) {
         this.session = session;
     }
+
+    @Autowired
+    public void setBd(DB bd) {
+        this.bd = bd;
+    }
+
     @Autowired
     public void setCompteControleur(CreationCompteControleur modificationCompteControleur) {
         this.modificationCompteControleur = modificationCompteControleur;
@@ -52,7 +61,10 @@ public class CompteControleur implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //init context
-        Utilisateur utilisateur =session.getUtilisateur();
+        Utilisateur utilisateur =
+                bd.getUtilisateursService().
+                        getUtilisateurRepo().findFirstByIdentifiant(session.getSession().getIdentifiantUtilisateur());
+
 
         DatePicker datePickerDateNaissance = new DatePicker();
         datePickerDateNaissance.setValue(utilisateur.getDateDeNaissance());
@@ -71,6 +83,8 @@ public class CompteControleur implements Initializable {
         modificationCompteControleur.getDropDowntypes().setValue(String.valueOf(utilisateur.getType()));
 
         modificationCompteControleur.getIdentifiant().setText(utilisateur.getIdentifiant());
+
+        modificationCompteControleur.getIdentifiant().setEditable(false);
 
         modificationCompteControleur.getNomUtilisateur().setText(utilisateur.getNom());
     }
