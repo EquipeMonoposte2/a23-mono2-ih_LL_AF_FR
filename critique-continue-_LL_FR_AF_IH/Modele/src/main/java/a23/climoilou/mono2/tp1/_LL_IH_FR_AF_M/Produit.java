@@ -14,8 +14,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//where annotation @EqualsAndHashCode.Include est présente
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
 @Table(name = "Produit")
@@ -37,6 +35,14 @@ public class Produit {
 
     //Pour l'instant c'est un string, pour le path, s'il y a une meilleure facon ont changera.
     private String image;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Produit)) return false;
+        Produit produit = (Produit) o;
+        return getId().equals(produit.getId());
+    }
 
     @OneToMany(mappedBy = "produitActuel")
     @ToString.Exclude

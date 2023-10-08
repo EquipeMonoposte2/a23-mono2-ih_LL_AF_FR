@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events;
 
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
@@ -14,7 +15,7 @@ public class ConnectionEvent extends ApplicationEvent {
 
     private String message ;
 
-    private Utilisateur utilisateur;
+    private UtilisateurSession utilisateur;
 
     /**
      * Constructeur recoit la source de l'événement, un message custom (test) et un utilisateur
@@ -22,7 +23,7 @@ public class ConnectionEvent extends ApplicationEvent {
      * @param message
      * @param utilisateur
      */
-    public ConnectionEvent(Object source, String message,Utilisateur utilisateur) {
+    public ConnectionEvent(Object source, String message,UtilisateurSession utilisateur) {
         super(source);
         this.message = message;
         this.utilisateur = utilisateur;
@@ -32,7 +33,7 @@ public class ConnectionEvent extends ApplicationEvent {
         return message;
     }
 
-    public Utilisateur getUtilisateur() {
+    public UtilisateurSession getUtilisateur() {
         return utilisateur;
     }
 }
