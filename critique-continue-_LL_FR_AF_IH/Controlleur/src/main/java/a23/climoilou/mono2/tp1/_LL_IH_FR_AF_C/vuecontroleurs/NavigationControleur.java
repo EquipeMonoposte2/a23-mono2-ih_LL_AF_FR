@@ -106,10 +106,6 @@ public class NavigationControleur  implements Initializable {
         return tabVisualisationProduit;
     }
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
-    }
-
     @Autowired
     public void setSession(UtilisateurSession session) {
         this.session = session;

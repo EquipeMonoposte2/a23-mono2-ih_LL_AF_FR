@@ -47,7 +47,6 @@ public class ConnectionControleur {
        // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
         System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
         Utilisateur utilisateur =bd.getUtilisateursService().retourLesUtilisateurs().get(0);
-        
         if (true) {
             //passe un message pour tester et un utilisateur pour référence dans la navigation de l'application
             ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).estCreationCompteEvent(false).estCreationCompteEvent(false).utilisateur(utilisateur).estDeconnectionEvent(false).build();
