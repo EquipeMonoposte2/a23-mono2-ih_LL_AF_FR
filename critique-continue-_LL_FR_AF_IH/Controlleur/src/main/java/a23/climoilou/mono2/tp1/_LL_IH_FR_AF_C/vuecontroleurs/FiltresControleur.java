@@ -45,7 +45,7 @@ public class FiltresControleur {
     public void confirmerFiltres(ActionEvent actionEvent) {
         Set<Type> typesUtilisateurs = new HashSet<>();
         if(amateurCheckbox.isSelected()){
-            typesUtilisateurs.add(Type.Utilisateur);
+            typesUtilisateurs.add(Type.AMATEUR);
         }
         if(influenceurCheckbox.isSelected()){
             typesUtilisateurs.add(Type.Influencer);

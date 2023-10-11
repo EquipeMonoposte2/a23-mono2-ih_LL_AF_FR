@@ -34,7 +34,7 @@ class UtilisateursServiceTest {
         LocalDate dateNaissance = LocalDate.now();
         String nomUtilisateur = "John";
         String identifiant = "john123";
-        Type type = Type.Utilisateur;
+        Type type = Type.AMATEUR;
 
         //mock de la repo
         //when(utilisateurRepo.findFirstByIdentifiant(identifiant)).thenReturn(null);

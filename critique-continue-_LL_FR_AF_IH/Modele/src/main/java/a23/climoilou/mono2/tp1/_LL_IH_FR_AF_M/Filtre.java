@@ -14,10 +14,10 @@ import java.util.Set;
 public class Filtre {
     public List<Produit> filtrerProduits(Set<Type> types, LocalDate dateDebut, LocalDate dateFin, List<Produit> produits) {
         types = types != null ? types : new HashSet<Type>();
-        boolean estAmateur = types.contains(Type.Utilisateur);
+        boolean estAmateur = types.contains(Type.AMATEUR);
         boolean estInfluenceur = types.contains(Type.Influencer);
         boolean estExpert = types.contains(Type.Expert);
-        if (types.contains(Type.Expert) || types.contains(Type.Utilisateur) || types.contains(Type.Influencer)) {
+        if (types.contains(Type.Expert) || types.contains(Type.AMATEUR) || types.contains(Type.Influencer)) {
             produits = filtrerRoles(produits, estAmateur, estInfluenceur, estExpert);
         }
         if (dateDebut != null || dateFin != null) {
@@ -38,7 +38,7 @@ public class Filtre {
     private List<Produit> filtrerRoles(List<Produit> produits, boolean estAmateur, boolean estInfluenceur, boolean estExpert) {
         return produits.stream().filter(produit -> produit.getCritiqueProduits().stream().anyMatch(critiqueLienProduit -> {
             Type typeUtilisateur = critiqueLienProduit.getCritiqueActuelle().getUtilisateur().getType();
-            return (typeUtilisateur == Type.Utilisateur && estAmateur) ||
+            return (typeUtilisateur == Type.AMATEUR && estAmateur) ||
                     (typeUtilisateur == Type.Influencer && estInfluenceur) ||
                     (typeUtilisateur == Type.Expert && estExpert);
         })).toList();

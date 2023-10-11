@@ -28,7 +28,7 @@ public class CalculesSignifiance
         return combinaisonProduitIdCompte.val();
     }
 
-    public float calculeSignifiance(Produit produit){
+    public float calculerSignifiance(Produit produit){
         return  (float) db.getRepoCritiqueLienProduit().countByProduitActuel(produit.getId()) /signifiance();
     }
 
