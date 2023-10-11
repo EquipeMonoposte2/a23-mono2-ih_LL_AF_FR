@@ -96,10 +96,11 @@ public class ApplicationFX extends Application  {
             navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
 
             //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
-            if (session.getPermission() != Type.Expert) {
-                //navigationControleur.getTabNouvelleCritique().setDisable(true);
-                //navigationControleur.getTabNouvelleCritique().setContent(null);
-                //navigationControleur.getTabNouvelleCritique().setClosable(false);
+            if (session.getSession().getPermission() != Type.Expert) {
+                System.out.println(session.getPermission());
+                navigationControleur.getTabNouvelleCritique().setDisable(true);
+                navigationControleur.getTabNouvelleCritique().setContent(null);
+                navigationControleur.getTabNouvelleCritique().setClosable(false);
             }
             //lancement  main vue
             primaryStage.setScene(new Scene(root));
