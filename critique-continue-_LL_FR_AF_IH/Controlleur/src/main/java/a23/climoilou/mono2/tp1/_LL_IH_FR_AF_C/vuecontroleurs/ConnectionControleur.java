@@ -3,12 +3,10 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesCote;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +20,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConnectionControleur {
 
+    private CalculesCote cote;
     private DB bd;
-    private UtilisateurSession session;
-
-    @Autowired
-    public void setSession(UtilisateurSession session) {
-        this.session = session;
-    }
 
     @Autowired
     public void setBd(DB bd) {
@@ -49,26 +42,26 @@ public class ConnectionControleur {
      */
     @FXML
     void connect(ActionEvent event) {
-        Utilisateur utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
-        if (utilisateur != null) {
-            session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
-            ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().
-                    estConnectionEvent(true).
-                    estCreationCompteEvent(false).
-                    estCreationCompteEvent(false).
-                    utilisateur(session).
-                    estDeconnectionEvent(false).
-                    build();
-
+    // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
+        System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
+        //Utilisateur utilisateur =bd.getUtilisateursService().retourLesUtilisateurs().get(0);
+        /*if (true) {
+            //passe un message pour tester et un utilisateur pour référence dans la navigation de l'application
+            ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).estCreationCompteEvent(false).estCreationCompteEvent(false).utilisateur(utilisateur).estDeconnectionEvent(false).build();
             applicationEventPublisher.publishEvent(applicationFXEvent);
-        }else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de connexion");
-            alert.setContentText("Le nom d'utilisateur n'est pas valide.");
-            alert.show();
-        }
+        }*/
+
+        System.out.println(cote.signifiance());
+
 
     }
+    @Autowired
+    public void setCote(CalculesCote cote) {
+        this.cote = cote;
+    }
+
+
+
 
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
