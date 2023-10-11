@@ -44,18 +44,18 @@ public class ConnectionControleur {
      */
     @FXML
     void connect(ActionEvent event) {
-        //condition pour valider la connection
-        //user temporaire
-        // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
-        // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
-//        System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
-//        Utilisateur utilisateur =bd.getUtilisateursService().retourLesUtilisateurs().get(0);
         Utilisateur utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
         if (utilisateur != null) {
             session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
-//            System.out.println(session.getIdentifiantUtilisateur());
-//            session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
-            ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).estCreationCompteEvent(false).estCreationCompteEvent(false).utilisateur(session).estDeconnectionEvent(false).build();
+            ApplicationFXEvent applicationFXEvent =
+                    ApplicationFXEvent.builder().
+                            estConnectionEvent(true).
+                            estCreationCompteEvent(false).
+                            estCreationCompteEvent(false).
+                            utilisateur(session).
+                            estDeconnectionEvent(false).
+                            build();
+
             applicationEventPublisher.publishEvent(applicationFXEvent);
         }else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

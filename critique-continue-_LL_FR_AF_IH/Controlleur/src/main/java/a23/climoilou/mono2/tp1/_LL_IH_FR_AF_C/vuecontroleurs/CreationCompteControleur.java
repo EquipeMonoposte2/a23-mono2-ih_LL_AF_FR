@@ -67,12 +67,23 @@ public class CreationCompteControleur {
     @FXML
     private Text messageErreur;
 
+
+    @Autowired
+    public void setSession(UtilisateurSession session) {
+        this.session = session;
+    }
+
+    @Autowired
+    public void setDb(DB db) {
+        this.db = db;
+    }
+
     @FXML
     void creerClick(ActionEvent event) {
         //validation et creation d'utilisateur
         Utilisateur utilisateur = null;
         if (dropDowntypes.getValue() != null && db.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(), Type.valueOf(dropDowntypes.getValue()), nomUtilisateur.getText(), identifiant.getText())) {
-            utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(session.getSession().getIdentifiantUtilisateur());
+            utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiant.getText());
             if (utilisateur != null && isUpdate) {
                 utilisateur.setDateDeNaissance(dateNaissance.getValue());
                 utilisateur.setNom(nomUtilisateur.getText());
@@ -115,13 +126,4 @@ public class CreationCompteControleur {
         ajoutDesChoixAuChoiceBox();
     }
 
-    @Autowired
-    public void setSession(UtilisateurSession session) {
-        this.session = session;
-    }
-
-    @Autowired
-    public void setDb(DB db) {
-        this.db = db;
-    }
 }

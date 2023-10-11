@@ -86,8 +86,6 @@ public class CompteControleur implements Initializable {
 
         modificationCompteControleur.getIdentifiant().setText(utilisateur.getIdentifiant());
 
-        modificationCompteControleur.getIdentifiant().setEditable(false);
-
         modificationCompteControleur.getNomUtilisateur().setText(utilisateur.getNom());
     }
 }
