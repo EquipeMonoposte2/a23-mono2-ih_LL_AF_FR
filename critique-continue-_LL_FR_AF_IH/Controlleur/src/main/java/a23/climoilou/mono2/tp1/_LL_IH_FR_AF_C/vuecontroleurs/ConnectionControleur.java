@@ -3,8 +3,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesCote;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesSignifiance;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConnectionControleur {
 
-    private CalculesCote cote;
+    private CalculesSignifiance cote;
     private DB bd;
 
     @Autowired
@@ -56,7 +55,7 @@ public class ConnectionControleur {
 
     }
     @Autowired
-    public void setCote(CalculesCote cote) {
+    public void setCote(CalculesSignifiance cote) {
         this.cote = cote;
     }
 

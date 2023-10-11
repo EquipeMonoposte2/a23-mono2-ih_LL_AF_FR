@@ -1,20 +1,18 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules;
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Critique;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.security.Provider;
 import java.util.*;
 
 /**
  * Classe de calcule de cote
  */
 @Component
-public class CalculesCote {
+public class CalculesSignifiance
+{
 
     private DB db;
 
@@ -27,7 +25,6 @@ public class CalculesCote {
 
         Collections.sort(combinaisonProduitIdCompteList);
         CombinaisonProduitIdCompte combinaisonProduitIdCompte = combinaisonProduitIdCompteList.get(combinaisonProduitIdCompteList.size()-1);
-        System.out.println(combinaisonProduitIdCompte);
         return combinaisonProduitIdCompte.val();
     }
 
