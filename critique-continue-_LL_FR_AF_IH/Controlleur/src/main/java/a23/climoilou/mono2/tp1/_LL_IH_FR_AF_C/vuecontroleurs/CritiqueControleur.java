@@ -114,8 +114,9 @@ public class CritiqueControleur
                 estNeutre = false;
             }
 
-            //Si le joueur a deja critiqué ce jeu, on rajoute pas
+            //Si le joueur a deja critiqué ce jeu dans la critique actuelle, on rajoute pas
             if(!critique.possedeJeu(jeu)){
+
                 //Ajout
                 critique.ajouterJeu(jeu,poidsJeu,estNeutre);
                 nouvelleCritique.getItems().add(jeu.getNom() + " - Différence " + poidsJeu.toString() + " par rapport au jeu en dessous" + (estNeutre ? " - Neutre" : ""));
@@ -141,14 +142,14 @@ public class CritiqueControleur
         //On set la date passee en entree
         critique.setDateCritique(date);
 
-        //Detection de la critique neutre
-        if(critique.possedeNeutre()){
+        //Detection de la critique neutre et si on a plus d un jeu critique actuellement
+        if(critique.possedeNeutre() && critique.getCritiqueLienProduits().size() > 1){
 
             //Detection si produit deja dans une critique de l'utilisateur aujourd'hui
             List<Critique> listeCritiqueUser = db.getCritiquesService().getCritiqueRepo().findAllByUtilisateur(utilisateur);
 
             LocalDate finalDate = date;
-            if(!(listeCritiqueUser.stream().anyMatch(critique1 -> critique1.getDateCritique().isEqual(finalDate)))){
+            if(!(listeCritiqueUser.stream().anyMatch(critique1 -> critique1.getDateCritique().isEqual(finalDate) && critique1.getCritiqueLienProduits().stream().anyMatch(e -> critique.possedeJeu(e.getProduitActuel()))))){
 
                 //save de la critique en BD
                 critique.setUtilisateur(utilisateur);
@@ -160,7 +161,6 @@ public class CritiqueControleur
             }
         }
 
-        System.out.println("Critique clean");
         //Fin = clean de la critique et de la ListeView pour en refaire une nouvelle
         critique = Critique.builder().critiqueLienProduits(new ArrayList<>()).build();
         nouvelleCritique.getItems().clear();
