@@ -1,16 +1,20 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.FiltresEvent;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Critique;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
@@ -26,40 +30,37 @@ public class CritiqueTabViewControleur {
 
     private DB bd;
 
-    @FXML
-    private TableColumn coteTableColumn;
 
     @FXML
-    private TableView critiqueTableView;
+    private TableView<Critique> critiqueTableView;
 
     @FXML
-    private TableColumn nomTableColumn;
+    private TableColumn<Critique, LocalDate> dateTableColumn;
+
+    @FXML
+    private TableColumn<Critique, Integer> numeroTableColumn;
+
+    @FXML
+    private TableColumn<Critique, String> produitsCritiqueColumn;
 
     @FXML
     void initialize() {
-
+        afficherCritiques();
     }
 
-    @EventListener()
-    private void rafraichirCritique(FiltresEvent event) {
-        if ( event.isEstAmateur()) {
-            //TODO
-            System.out.println("un amateur");
-        }
-        if (event.isEstExpert()) {
-            //TODO
-            System.out.println("un expert");
-        }
-        if (event.isEstInfluenceur()) {
-            //TODO
-            System.out.println("un influenceur");
-        }
-        if(event.getDateDebut() != null){
-            //TODO
-        }
-        if(event.getDateFin() != null){
-            //TODO
-        }
+    public void afficherCritiques() {
+        List<Critique> critiques = new ArrayList<>();
+
+        bd.getCritiquesService().getCritiqueRepo().findAll().forEach(critiques::add);
+        populerTableView(critiques);
+    }
+
+    public void populerTableView(List<Critique> critiques) {
+        dateTableColumn.setCellValueFactory(new PropertyValueFactory<>("dateCritique"));
+        numeroTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        produitsCritiqueColumn.setCellValueFactory(new PropertyValueFactory<>("critiqueLienProduits"));
+        ObservableList<Critique> data = FXCollections.observableArrayList(critiques);
+        critiqueTableView.setItems(data);
     }
 
     @Autowired

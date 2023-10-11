@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDate;
 import java.util.Date;

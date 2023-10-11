@@ -79,7 +79,7 @@ public class ApplicationFX extends Application  {
 
         if (applicationFXEvent.isEstConnectionEvent()) {
             //init session connecté
-            session.connection(applicationFXEvent.getUtilisateur().getIdentifiant());
+            session.connection(applicationFXEvent.getUtilisateur().getIdentifiantUtilisateur(), applicationFXEvent.getUtilisateur().getPermission());
 
             //main vue (navigation)
             FxControllerAndView<NavigationControleur, TabPane> controllerAndViewNav = fxWeaver.load(NavigationControleur.class);
@@ -89,14 +89,14 @@ public class ApplicationFX extends Application  {
 
             //ajout du contenu aux tabs
             navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
-            navigationControleur.getTabStatistique(); //
+            navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver)); //
             navigationControleur.getTabVisualisationProduit(); //
             navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class,fxWeaver)); //
             navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
             navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
 
             //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
-            if (session.getUtilisateur().getType() != Type.Expert) {
+            if (session.getPermission() != Type.Expert) {
                 //navigationControleur.getTabNouvelleCritique().setDisable(true);
                 //navigationControleur.getTabNouvelleCritique().setContent(null);
                 //navigationControleur.getTabNouvelleCritique().setClosable(false);
@@ -119,7 +119,7 @@ public class ApplicationFX extends Application  {
             FxControllerAndView<SuccesCreationCompteControleur, TabPane> succesCreationCompteControleur = fxWeaver.load(SuccesCreationCompteControleur.class);
             Parent succesRoot = succesCreationCompteControleur.getView().get();
             //init session connecté
-            session.connection(applicationFXEvent.getUtilisateur().getIdentifiant());
+            session.connection(applicationFXEvent.getUtilisateur().getIdentifiantUtilisateur(), applicationFXEvent.getUtilisateur().getPermission());
 
             primaryStage.setScene(new Scene(succesRoot));
             primaryStage.show();
