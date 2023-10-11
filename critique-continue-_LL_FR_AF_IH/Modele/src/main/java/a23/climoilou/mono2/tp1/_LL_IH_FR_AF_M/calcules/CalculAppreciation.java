@@ -6,11 +6,13 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+@Component
 public class CalculAppreciation
 {
     private DB db;
@@ -39,13 +41,14 @@ public class CalculAppreciation
                 List<CritiqueLienProduit> critiqueLienProduits = critiqueActuelle.getCritiqueLienProduits();
                 Collections.sort(critiqueLienProduits);
 
-                //On obtient l indice du neutre
-                int indiceNeutre = critiqueActuelle.obtenirIndiceNeutre();
+                //On obtient l indice du neutre dans la liste
+                int indiceNeutre = critiqueActuelle.obtenirIndiceNeutre() - 1;
 
-
+                //On obtient la map de pointage
                 HashMap<Produit, Float> mapProduitAppreciation = obtenirMapPointageCalcule(critiqueLienProduits, indiceNeutre);
 
-
+                //TODO : On calcule l'appreciation
+                //Les divisions
             }
         }
 
@@ -63,7 +66,6 @@ public class CalculAppreciation
         pointagePositif(critiqueLienProduits, indiceNeutre, mapProduitAppreciation);
 
 
-
         return mapProduitAppreciation;
     }
 
@@ -71,7 +73,7 @@ public class CalculAppreciation
     {
         //Positifs
         float pointageActuel = 0f;
-        for (int i = indiceNeutre; i < critiqueLienProduits.size(); i++)
+        for (int i = indiceNeutre + 1; i < critiqueLienProduits.size(); i++)
         {
 
             switch (critiqueLienProduits.get(i).getEcart())
@@ -90,7 +92,7 @@ public class CalculAppreciation
     {
         //Negatifs
         float pointageActuel = 0f;
-        for (int i = indiceNeutre; i > 0; i--)
+        for (int i = indiceNeutre-1; i >= 0; i--)
         {
 
             switch (critiqueLienProduits.get(i).getEcart())

@@ -157,7 +157,6 @@ public class CritiqueControleur
 
                 //Informer le systeme de la nouvelle critique
                 applicationEventPublisher.publishEvent(new SoumettreCritiqueEvent(critique));
-                System.out.println("Critique neutre");
             }
         }
 

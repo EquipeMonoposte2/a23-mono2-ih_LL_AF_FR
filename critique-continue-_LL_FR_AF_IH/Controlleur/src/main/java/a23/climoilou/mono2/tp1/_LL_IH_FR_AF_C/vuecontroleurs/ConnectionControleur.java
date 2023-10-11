@@ -1,6 +1,7 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculAppreciation;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesSignifiance;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
@@ -14,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 /**
  *
  */
@@ -24,7 +22,13 @@ import java.util.ArrayList;
 @Component
 public class ConnectionControleur {
 
-    private CalculesSignifiance cote;
+    private CalculAppreciation calculAppreciation;
+
+    @Autowired
+    public void setCalculAppreciation(CalculAppreciation calculAppreciation) {
+        this.calculAppreciation = calculAppreciation;
+    }
+
     private DB bd;
     private UtilisateurSession session;
     @Autowired
@@ -47,6 +51,7 @@ public class ConnectionControleur {
      */
     @FXML
     void connect(ActionEvent event) {
+        calculAppreciation.calculeAppreciation();
         //condition pour valider la connection
         //user temporaire
         // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
@@ -67,13 +72,6 @@ public class ConnectionControleur {
             alert.show();
         }
     }
-    @Autowired
-    public void setCote(CalculesSignifiance cote) {
-        this.cote = cote;
-    }
-
-
-
 
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
