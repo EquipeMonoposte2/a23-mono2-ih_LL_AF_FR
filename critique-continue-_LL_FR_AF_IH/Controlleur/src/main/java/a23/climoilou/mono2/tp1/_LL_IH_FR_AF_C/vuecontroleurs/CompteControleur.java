@@ -63,7 +63,9 @@ public class CompteControleur implements Initializable {
         //init context
         Utilisateur utilisateur =
                 bd.getUtilisateursService().
-                        getUtilisateurRepo().findFirstByIdentifiant(session.getSession().getIdentifiantUtilisateur());
+                        getUtilisateurRepo().
+                        findFirstByIdentifiant(session.getSession().
+                                getIdentifiantUtilisateur());
 
 
         DatePicker datePickerDateNaissance = new DatePicker();
