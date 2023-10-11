@@ -37,10 +37,8 @@ public class UtilisateurSession {
      * @param identifiantUtilisateur
      */
     public UtilisateurSession connection(String identifiantUtilisateur, Type permission){
-//        this.setIdentifiantUtilisateur(identifiantUtilisateur);
-//        this.utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiantUtilisateur);
-        if(session == null) {
-            session = UtilisateurSession.
+        if(this.session == null) {
+            this.session = UtilisateurSession.
                     builder().
                             identifiantUtilisateur(identifiantUtilisateur)
                             .permission(permission).build();
@@ -55,7 +53,7 @@ public class UtilisateurSession {
     public boolean deconnection(){
         this.setIdentifiantUtilisateur("");
         this.setPermission(null);
-//        this.session = null;
+        this.session = null;
         return true;
     }
 
@@ -64,7 +62,12 @@ public class UtilisateurSession {
      * @return
      */
     public Utilisateur TrouverUtilisateurConnecter(){
-        return bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.getIdentifiantUtilisateur());
+        if(this.session != null) {
+            return bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(session.getIdentifiantUtilisateur());
+        }else {
+            return null;
+        }
+
     }
 
     /**
