@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.Provider;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Classe de calcule de cote
@@ -18,21 +19,24 @@ public class CalculesCote {
 
     private DB db;
 
-    public int signifiance() {
-        List<CombinaisonProduitIdCompte> combinaisonProduitIdCompteList = new ArrayList<>();
-
-        for (Produit p : db.getProduitsService().retourLesProduits()) {
-            combinaisonProduitIdCompteList.add(new CombinaisonProduitIdCompte(p.getId(),db.getRepoCritiqueLienProduit().countByProduitActuel(p.getId())));
-        }
-
-        Collections.sort(combinaisonProduitIdCompteList);
-        CombinaisonProduitIdCompte combinaisonProduitIdCompte = combinaisonProduitIdCompteList.get(combinaisonProduitIdCompteList.size()-1);
-        System.out.println(combinaisonProduitIdCompte);
-        return combinaisonProduitIdCompte.val();
+    /**
+     * Calcule compte de réference
+     * @return
+     */
+    public CombinaisonProduitIdCompte signifiance() {
+        List<CombinaisonProduitIdCompte> combinaisonProduitIdCompteList = db.getProduitsService().retourLesProduits().stream().map(p->new CombinaisonProduitIdCompte(p.getId(),db.getRepoCritiqueLienProduit().countByProduitActuel(p.getId()))).toList();
+        CombinaisonProduitIdCompte compteRef = combinaisonProduitIdCompteList.stream().max((c1,c2)-> c1.compareTo(c2)).orElse(null);
+        return compteRef;
     }
 
+    /**
+     *Calcule de signifiance du produit passé en paramètre et selon le compte de réference
+     * @param produit
+     * @return
+     */
     public float calculeSignifiance(Produit produit){
-        return  (float) db.getRepoCritiqueLienProduit().countByProduitActuel(produit.getId()) /signifiance();
+        CombinaisonProduitIdCompte compteRef = signifiance();
+        return  (float) db.getRepoCritiqueLienProduit().countByProduitActuel(produit.getId()) /compteRef.val();
     }
 
     @Autowired

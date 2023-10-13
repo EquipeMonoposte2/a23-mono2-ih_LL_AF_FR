@@ -94,6 +94,7 @@ public class ApplicationFX extends Application  {
             navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class,fxWeaver)); //
             navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
             navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
+            navigationControleur.getTabAPropos().setContent(fabriquerRoot(AProposControleur.class,fxWeaver));
 
             //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
             if (session.getSession().getPermission() != Type.Expert) {
