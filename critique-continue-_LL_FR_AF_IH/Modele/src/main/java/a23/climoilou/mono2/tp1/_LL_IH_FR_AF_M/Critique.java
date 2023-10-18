@@ -50,6 +50,15 @@ public class Critique {
         return critiqueLienProduits.stream().anyMatch(CritiqueLienProduit::isEstNeutre);
     }
 
+    public int obtenirIndiceNeutre(){
+        int retour = -1;
+
+        if(possedeNeutre()){
+            retour = critiqueLienProduits.stream().filter(CritiqueLienProduit::isEstNeutre).findFirst().get().getOrdreListe();
+        }
+        return retour;
+    }
+
     /**
      * Retourne vrai si la critique possède deja le jeu
      * @param produit

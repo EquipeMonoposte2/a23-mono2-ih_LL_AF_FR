@@ -1,5 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CombinaisonProduitIdCompte;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import lombok.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder
-public class CritiqueLienProduit
+public class CritiqueLienProduit implements Comparable<CritiqueLienProduit>
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,4 +35,9 @@ public class CritiqueLienProduit
     private EnumEcart ecart;
     private boolean estNeutre;
 
+    @Override
+    public int compareTo(CritiqueLienProduit o)
+    {
+        return Integer.compare(this.ordreListe, o.ordreListe);
+    }
 }

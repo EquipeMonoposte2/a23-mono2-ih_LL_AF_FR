@@ -132,7 +132,7 @@ public class CritiqueControleur
     void soumettreCritique(ActionEvent event) {
         LocalDate date = dateCritique.getValue();
         utilisateurSession = applicationContext.getBean(UtilisateurSession.class);
-        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getIdentifiantUtilisateur());
+        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getSession().getIdentifiantUtilisateur());
 
         //Si le champ date est vide, on met la date du jour
         if(date == null){
@@ -157,7 +157,6 @@ public class CritiqueControleur
 
                 //Informer le systeme de la nouvelle critique
                 applicationEventPublisher.publishEvent(new SoumettreCritiqueEvent(critique));
-                System.out.println("Critique neutre");
             }
         }
 

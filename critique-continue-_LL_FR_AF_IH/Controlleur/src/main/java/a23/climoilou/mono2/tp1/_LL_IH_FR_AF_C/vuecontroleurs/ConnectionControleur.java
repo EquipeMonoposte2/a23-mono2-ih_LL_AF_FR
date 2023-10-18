@@ -1,10 +1,11 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculAppreciation;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesSignifiance;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesCote;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,15 +15,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 /**
  *
  */
 @FxmlView("ConnectionVue.fxml")
 @Component
 public class ConnectionControleur {
+
+    private CalculAppreciation calculAppreciation;
+
+    @Autowired
+    public void setCalculAppreciation(CalculAppreciation calculAppreciation) {
+        this.calculAppreciation = calculAppreciation;
+    }
 
     private DB bd;
     private UtilisateurSession session;
@@ -34,7 +39,6 @@ public class ConnectionControleur {
     public void setBd(DB bd) {
         this.bd = bd;
     }
-
     private final ApplicationEventPublisher applicationEventPublisher;
     public ConnectionControleur(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
@@ -47,7 +51,14 @@ public class ConnectionControleur {
      */
     @FXML
     void connect(ActionEvent event) {
-       Utilisateur utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
+        calculAppreciation.calculeAppreciation();
+        //condition pour valider la connection
+        //user temporaire
+        // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
+        // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
+//        System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
+//        Utilisateur utilisateur =bd.getUtilisateursService().retourLesUtilisateurs().get(0);
+        Utilisateur utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
         if (utilisateur != null) {
             session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
             ApplicationFXEvent applicationFXEvent =
@@ -67,6 +78,7 @@ public class ConnectionControleur {
             alert.show();
         }
     }
+
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
         applicationEventPublisher.publishEvent(ApplicationFXEvent.builder().estNouveauCompteEvent(true).build());
