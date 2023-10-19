@@ -5,23 +5,28 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.ConnectionControleur">
+<AnchorPane id="bgPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@compte.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.ConnectionControleur">
    <children>
-      <Button layoutX="264.0" layoutY="188.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#connect" prefHeight="25.0" prefWidth="100.0" text="Connexion" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-      <TextField fx:id="nomUtilisateurTextField" layoutX="40.0" layoutY="100.0" promptText="Votre nom d'utilisateur" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="40.0" layoutY="83.0" text="Nom d'utilisateur" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="83.0">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-      </Label>
-      <Text layoutX="154.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connexion" AnchorPane.bottomAnchor="144.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="35.0">
-         <font>
-            <Font name="Arial Bold" size="18.0" />
-         </font>
-      </Text>
-      <Hyperlink fx:id="creerCompteHyperlink" layoutX="40.0" layoutY="125.0" onAction="#ouvrirFormulaireCreationCompte" text="Créer un compte" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <Pane id="dessousPane" layoutX="14.0" layoutY="15.0" prefHeight="170.0" prefWidth="373.0" stylesheets="compte.css" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <Button layoutX="134.0" layoutY="112.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#connect" prefHeight="25.0" prefWidth="105.0" text="Connexion" />
+            <TextField fx:id="nomUtilisateurTextField" layoutX="165.0" layoutY="68.0" promptText="Votre nom d'utilisateur" />
+            <Label layoutX="28.0" layoutY="71.0" text="Nom d'utilisateur">
+               <font>
+                  <Font name="System Italic" size="14.0" />
+               </font>
+            </Label>
+            <Text layoutX="140.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connexion">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Text>
+            <Hyperlink fx:id="creerCompteHyperlink" layoutX="138.0" layoutY="145.0" onAction="#ouvrirFormulaireCreationCompte" text="Créer un compte" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
