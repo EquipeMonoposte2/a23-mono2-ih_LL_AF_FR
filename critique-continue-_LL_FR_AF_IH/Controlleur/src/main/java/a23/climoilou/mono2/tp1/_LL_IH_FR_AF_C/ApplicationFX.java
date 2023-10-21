@@ -4,6 +4,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -48,7 +49,7 @@ public class ApplicationFX extends Application  {
         ApplicationFX.primaryStage =primaryStage;
         fxWeaver = context.getBean(FxWeaver.class);
 
-        //ici on lance l'application
+        //lance l'application
         lancementPageConnection();
     }
 
@@ -74,34 +75,33 @@ public class ApplicationFX extends Application  {
     @EventListener(ApplicationFXEvent.class)
     public void filtreEvenementsApplication(ApplicationFXEvent applicationFXEvent){
         fxWeaver = context.getBean(FxWeaver.class);
+        UtilisateurSession session = context.getBean(UtilisateurSession.class);
 
         if (applicationFXEvent.isEstConnectionEvent()) {
-            //utilisateur
-            Utilisateur utilisateur = applicationFXEvent.getUtilisateur();
-
-            //init utilisateur connecté
-            initBeanUtilisateurConnecte(utilisateur);
+            //init session connecté
+            session.connection(applicationFXEvent.getUtilisateur().getIdentifiantUtilisateur(), applicationFXEvent.getUtilisateur().getPermission());
 
             //main vue (navigation)
             FxControllerAndView<NavigationControleur, TabPane> controllerAndViewNav = fxWeaver.load(NavigationControleur.class);
             Parent root = controllerAndViewNav.getView().get();
             NavigationControleur navigationControleur = controllerAndViewNav.getController();
             //ajout de l'utilisateur dans la navigation
-           // navigationControleur.setUtilisateur(utilisateur);
 
             //ajout du contenu aux tabs
             navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
-            navigationControleur.getTabStatistique(); //
+            navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver)); //
             navigationControleur.getTabVisualisationProduit(); //
             navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class,fxWeaver)); //
             navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
             navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
+            navigationControleur.getTabAPropos().setContent(fabriquerRoot(AProposControleur.class,fxWeaver));
 
             //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
-            if (utilisateur.getType() != Type.Expert) {
-                //navigationControleur.getTabNouvelleCritique().setDisable(true);
-                //navigationControleur.getTabNouvelleCritique().setContent(null);
-                //navigationControleur.getTabNouvelleCritique().setClosable(false);
+            if (session.getSession().getPermission() != Type.Expert) {
+                System.out.println(session.getPermission());
+                navigationControleur.getTabNouvelleCritique().setDisable(true);
+                navigationControleur.getTabNouvelleCritique().setContent(null);
+                navigationControleur.getTabNouvelleCritique().setClosable(false);
             }
             //lancement  main vue
             primaryStage.setScene(new Scene(root));
@@ -120,32 +120,23 @@ public class ApplicationFX extends Application  {
         else if(applicationFXEvent.isEstCreationCompteEvent()){
             FxControllerAndView<SuccesCreationCompteControleur, TabPane> succesCreationCompteControleur = fxWeaver.load(SuccesCreationCompteControleur.class);
             Parent succesRoot = succesCreationCompteControleur.getView().get();
-            SuccesCreationCompteControleur cont = succesCreationCompteControleur.getController();
-            cont.setUtilisateur(applicationFXEvent.getUtilisateur());
+            //init session connecté
+            session.connection(applicationFXEvent.getUtilisateur().getIdentifiantUtilisateur(), applicationFXEvent.getUtilisateur().getPermission());
+
             primaryStage.setScene(new Scene(succesRoot));
             primaryStage.show();
         }
         else if(applicationFXEvent.isEstDeconnectionEvent()){
-            //detruire bean utilisateur actuel
-            Utilisateur utilisateurBean = context.getBean(Utilisateur.class);
-            utilisateurBean.setIdentifiant(null);
-            utilisateurBean.setDateDeNaissance(null);
-            utilisateurBean.setCritiqueList(null);
-            utilisateurBean.setNom(null);
-            utilisateurBean.setType(null);
+            //detruire bean session
+            session.deconnection();
             //lancement connection
             lancementPageConnection();
         }
     }
 
     public void initBeanUtilisateurConnecte(Utilisateur utilisateur){
-        Utilisateur utilisateurBean = context.getBean(Utilisateur.class);
-        utilisateurBean.setIdentifiant(utilisateur.getIdentifiant());
-        utilisateurBean.setDateDeNaissance(utilisateur.getDateDeNaissance());
-        utilisateurBean.setCritiqueList(utilisateur.getCritiqueList());
-        utilisateurBean.setNom(utilisateur.getNom());
-        utilisateurBean.setId(utilisateur.getId());
-        utilisateurBean.setType(utilisateur.getType());
+        UtilisateurSession utilisateurSessionBean = context.getBean(UtilisateurSession.class);
+        utilisateurSessionBean.setIdentifiantUtilisateur(utilisateur.getIdentifiant());
     }
 
     /**

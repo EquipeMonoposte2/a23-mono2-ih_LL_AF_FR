@@ -4,6 +4,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,21 +32,12 @@ import java.util.List;
 @Setter
 public class CreationCompteControleur {
 
-    private DB bd;
 
-    private ApplicationContext applicationContext;
-    @Autowired
-    public void setBd(DB bd) {
-        this.bd = bd;
-    }
+    private UtilisateurSession session;
+
+    private DB db;
 
     private boolean isUpdate;
-
-    @FXML
-    private Text titreVue;
-
-    @FXML
-    private Button buttonCreation;
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
@@ -53,10 +45,12 @@ public class CreationCompteControleur {
         this.applicationEventPublisher = applicationEventPublisher;
         this.isUpdate =false;
     }
-    @Autowired
-    public void setContext(ApplicationContext context) {
-        this.applicationContext = context;
-    }
+
+    @FXML
+    private Text titreVue;
+
+    @FXML
+    private Button buttonCreation;
 
     @FXML
     private DatePicker dateNaissance;
@@ -73,39 +67,49 @@ public class CreationCompteControleur {
     @FXML
     private Text messageErreur;
 
+
+    @Autowired
+    public void setSession(UtilisateurSession session) {
+        this.session = session;
+    }
+
+    @Autowired
+    public void setDb(DB db) {
+        this.db = db;
+    }
+
     @FXML
     void creerClick(ActionEvent event) {
         //validation et creation d'utilisateur
         Utilisateur utilisateur = null;
-        if (dropDowntypes.getValue() != null && bd.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(), Type.valueOf(dropDowntypes.getValue()), nomUtilisateur.getText(), identifiant.getText()) != null) {
-            utilisateur = bd.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(), Type.valueOf(dropDowntypes.getValue()), nomUtilisateur.getText(), identifiant.getText());
-            if (utilisateur != null) {
-                //save utilisateur ou update
-                bd.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
-                //à ajouter update
-                if(isUpdate){
-                    modifierContextUtilisateur(utilisateur);
-                }
-                else {
+        if (dropDowntypes.getValue() != null && db.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(), Type.valueOf(dropDowntypes.getValue()), nomUtilisateur.getText(), identifiant.getText())) {
+            utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiant.getText());
+            if (utilisateur != null && isUpdate) {
+                utilisateur.setDateDeNaissance(dateNaissance.getValue());
+                utilisateur.setNom(nomUtilisateur.getText());
+                utilisateur.setType(Type.valueOf(dropDowntypes.getValue()));
+                utilisateur.setIdentifiant(session.getSession().getIdentifiantUtilisateur());
+                //utilisateur update
+                System.out.println("id = "+identifiant.getText());
+                db.getUtilisateursService().updateUtilisateur(utilisateur);
+                session.getSession().setPermission(utilisateur.getType());
+            }
+            else if(utilisateur==null) {
+                    //sauvegarder utilisateur et instancier utilisateur
+                    utilisateur = Utilisateur.builder().dateDeNaissance(dateNaissance.getValue()).nom(nomUtilisateur.getText()).critiqueList(new ArrayList<>()).type(Type.valueOf(dropDowntypes.getValue())).identifiant(identifiant.getText()).build();
+                    db.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
+                    session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
                     //lancement de l'événement de creation
-                    ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estCreationCompteEvent(true).utilisateur(utilisateur).build();
+                    ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estCreationCompteEvent(true).utilisateur(session).build();
                     applicationEventPublisher.publishEvent(applicationFXEvent);
-                }
-            } else {
-                messageErreur.setText("Erreur nom d'utilisateur déjà existant.");
+
+            }
+            else {
+                messageErreur.setText("Erreur identifiant d'utilisateur déjà existant.");
             }
         } else {
             messageErreur.setText("Erreur tous les champs doivent être remplis.");
         }
-    }
-
-    private void modifierContextUtilisateur(Utilisateur utilisateur){
-        Utilisateur utilisateurBean = applicationContext.getBean(Utilisateur.class);
-        utilisateurBean.setIdentifiant(utilisateur.getIdentifiant());
-        utilisateurBean.setDateDeNaissance(utilisateur.getDateDeNaissance());
-        utilisateurBean.setCritiqueList(utilisateur.getCritiqueList());
-        utilisateurBean.setNom(utilisateur.getNom());
-        utilisateurBean.setType(utilisateur.getType());
     }
 
     private void ajoutDesChoixAuChoiceBox() {
@@ -120,6 +124,5 @@ public class CreationCompteControleur {
     void initialize() {
         ajoutDesChoixAuChoiceBox();
     }
-
 
 }

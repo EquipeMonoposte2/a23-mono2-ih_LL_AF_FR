@@ -4,5 +4,6 @@ public enum EnumEcart
 {
     FAIBLE,
     NORMAL,
-    GRAND
+    GRAND,
+    AUCUN
 }

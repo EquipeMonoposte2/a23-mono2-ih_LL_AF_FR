@@ -1,6 +1,7 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_produits;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,5 +43,15 @@ public class ProduitsService {
         }
 
         return produitRet;
+    }
+
+    @Transactional
+    public List<Produit> retourLesProduits(){
+        List<Produit> produitList = new ArrayList<>();
+
+        for (Produit produit: this.produitRepository.findAll()) {
+            produitList.add(produit);
+        }
+        return produitList;
     }
 }

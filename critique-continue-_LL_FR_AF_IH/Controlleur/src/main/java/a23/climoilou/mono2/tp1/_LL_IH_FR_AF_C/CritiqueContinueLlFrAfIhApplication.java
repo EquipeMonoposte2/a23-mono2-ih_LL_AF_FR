@@ -27,7 +27,7 @@ import java.util.ArrayList;
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs",
-        //"a23.climoilou.mono2.tp1._LL_IH_FR_AF_V",
+        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules",
         "net.rgielen.fxweaver.spring.boot.autoconfigure"})
 @EntityScan(basePackages = {
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M",

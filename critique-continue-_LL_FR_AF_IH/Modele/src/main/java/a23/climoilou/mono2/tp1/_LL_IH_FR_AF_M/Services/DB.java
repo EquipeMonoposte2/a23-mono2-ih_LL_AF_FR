@@ -1,5 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_critique_lien_produit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,7 @@ public class DB {
 
     private CritiquesService critiquesService;
 
+    private Repo_critique_lien_produit repoCritiqueLienProduit;
     private ProduitsService produitsService;
 
     private UtilisateursService utilisateursService;
@@ -15,6 +17,11 @@ public class DB {
     @Autowired
     public void setUtilisateursService(UtilisateursService utilisateursService) {
         this.utilisateursService = utilisateursService;
+    }
+
+    @Autowired
+    public void setRepoCritiqueLienProduit(Repo_critique_lien_produit repoCritiqueLienProduit) {
+        this.repoCritiqueLienProduit = repoCritiqueLienProduit;
     }
 
     @Autowired
@@ -36,5 +43,9 @@ public class DB {
 
     public CritiquesService getCritiquesService() {
         return critiquesService;
+    }
+
+    public Repo_critique_lien_produit getRepoCritiqueLienProduit() {
+        return repoCritiqueLienProduit;
     }
 }
