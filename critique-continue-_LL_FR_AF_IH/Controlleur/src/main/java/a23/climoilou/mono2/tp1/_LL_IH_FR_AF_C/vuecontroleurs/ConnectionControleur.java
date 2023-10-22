@@ -24,6 +24,7 @@ public class ConnectionControleur {
 
     private CalculAppreciation calculAppreciation;
 
+    private CalculesSignifiance calculesSignifiance;
     @Autowired
     public void setCalculAppreciation(CalculAppreciation calculAppreciation) {
         this.calculAppreciation = calculAppreciation;
@@ -52,6 +53,7 @@ public class ConnectionControleur {
     @FXML
     void connect(ActionEvent event) {
         calculAppreciation.calculeAppreciation();
+        //System.out.println(calculesSignifiance.signifiance());
         //condition pour valider la connection
         //user temporaire
         // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
@@ -77,10 +79,16 @@ public class ConnectionControleur {
             alert.setContentText("Le nom d'utilisateur n'est pas valide.");
             alert.show();
         }
+
     }
 
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
         applicationEventPublisher.publishEvent(ApplicationFXEvent.builder().estNouveauCompteEvent(true).build());
+    }
+
+    @Autowired
+    public void setCalculesSignifiance(CalculesSignifiance calculesSignifiance) {
+        this.calculesSignifiance = calculesSignifiance;
     }
 }
