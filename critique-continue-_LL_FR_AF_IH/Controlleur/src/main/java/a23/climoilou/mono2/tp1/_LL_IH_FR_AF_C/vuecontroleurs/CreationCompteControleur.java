@@ -7,16 +7,12 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -65,7 +61,7 @@ public class CreationCompteControleur {
     private TextField identifiant;
 
     @FXML
-    private Text messageErreur;
+    private Label messageErreurCompte;
 
 
     @Autowired
@@ -105,10 +101,10 @@ public class CreationCompteControleur {
 
             }
             else {
-                messageErreur.setText("Erreur identifiant d'utilisateur déjà existant.");
+                messageErreurCompte.setText("Erreur identifiant d'utilisateur déjà existant.");
             }
         } else {
-            messageErreur.setText("Erreur tous les champs doivent être remplis.");
+            messageErreurCompte.setText("Erreur tous les champs doivent être remplis.");
         }
     }
 
