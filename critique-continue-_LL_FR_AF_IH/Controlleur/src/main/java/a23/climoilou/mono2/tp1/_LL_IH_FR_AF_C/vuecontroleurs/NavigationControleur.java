@@ -40,6 +40,9 @@ public class NavigationControleur  implements Initializable {
 
     private CompteControleur compteControleur;
 
+    private CreationCompteControleur creationCompteControleur;
+
+    private VisualisationProduitControleur visualisationProduitControleur;
     @FXML
     private Tab tabCompte;
 
@@ -65,6 +68,11 @@ public class NavigationControleur  implements Initializable {
     public void afficherCritiques(){
         FiltresEvent event = FiltresEvent.builder().build();
         applicationEventPublisher.publishEvent(event);
+    }
+
+    @Autowired
+    public void setVisualisationProduitControleur(VisualisationProduitControleur visualisationProduitControleur) {
+        this.visualisationProduitControleur = visualisationProduitControleur;
     }
 
     @Autowired

@@ -90,7 +90,7 @@ public class ApplicationFX extends Application  {
             //ajout du contenu aux tabs
             navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
             navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver)); //
-            navigationControleur.getTabVisualisationProduit(); //
+            navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver)); //
             navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class,fxWeaver)); //
             navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
             navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
@@ -98,7 +98,7 @@ public class ApplicationFX extends Application  {
 
             //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
             if (session.getSession().getPermission() != Type.Expert) {
-                System.out.println(session.getPermission());
+                System.out.println(session.getSession().getPermission());
                 navigationControleur.getTabNouvelleCritique().setDisable(true);
                 navigationControleur.getTabNouvelleCritique().setContent(null);
                 navigationControleur.getTabNouvelleCritique().setClosable(false);
