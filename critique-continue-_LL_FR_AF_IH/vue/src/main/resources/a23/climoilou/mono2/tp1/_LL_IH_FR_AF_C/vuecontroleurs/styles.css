@@ -19,3 +19,7 @@
     -fx-effect: dropshadow(three-pass-box, #000000, 10, 0.5, 4, 4);
 }
 
+#clock{
+    -fx-background-color: white;
+}
+
