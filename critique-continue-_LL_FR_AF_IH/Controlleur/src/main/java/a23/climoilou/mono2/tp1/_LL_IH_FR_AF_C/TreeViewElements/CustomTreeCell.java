@@ -1,9 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements;
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.InfoSupplementaire;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.PersonneParticipant;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.TreeItemI;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.TypeParticipant;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.*;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
@@ -50,6 +47,12 @@ public class CustomTreeCell extends TextFieldTreeCell<TreeItemI> {
                     setTextFill(Color.BLACK);
 
             }
+
+            if (item instanceof Dossier){
+                setTextFill(Color.BLACK);
+
+            }
+
 
 
 
