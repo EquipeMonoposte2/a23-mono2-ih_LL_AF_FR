@@ -3,27 +3,20 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.AProposControleur">
-   <children>
-      <Text layoutX="272.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="À propos">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
-      <Text layoutX="98.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2023" />
-      <Text fx:id="textEquipe" layoutX="98.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Équipe 4" wrappingWidth="290.919921875" />
-      <Text fx:id="textNomProjet" layoutX="104.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
-      <Text layoutX="96.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antoine Fortier" />
-      <Text layoutX="190.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lawrence Lefebvre" />
-      <Text layoutX="300.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Felix Rheaume" />
-      <Text layoutX="396.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ibrahim Hamitouche" />
-      <Text layoutX="96.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cégep Limoilou, Application monoposte II" />
-      <Text fx:id="textNomProf" layoutX="104.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
-      <TreeView fx:id="treeView" layoutX="51.0" layoutY="62.0" prefHeight="239.0" prefWidth="511.0" />
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.AProposControleur">
+  <children>
+    <Text layoutX="272.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="À propos">
+      <font>
+        <Font size="14.0" />
+      </font>
+    </Text>
+    <Text fx:id="textNomProjet" layoutX="104.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+    <Text fx:id="textNomProf" layoutX="104.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+    <TreeView fx:id="treeView" layoutX="51.0" layoutY="62.0" prefHeight="239.0" prefWidth="511.0" />
+  </children>
 </AnchorPane>
