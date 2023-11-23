@@ -22,6 +22,12 @@ public class ClockService extends ScheduledService<String> {
             String now = localDateTime.getYear()+"-"+localDateTime.getMonthValue()+"-"+localDateTime.getDayOfMonth()+ " & "+ localDateTime.getHour()+":"+localDateTime.getMinute();
             updateValue(now);
 
+            if (localDateTime.getSecond()==0||localDateTime.getSecond()==1|| localDateTime.getSecond()==2 || localDateTime.getSecond()==3){
+                updateMessage("flash");
+            }else {
+                updateMessage(null);
+            }
+
             return now;
         }
     }

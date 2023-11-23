@@ -9,13 +9,19 @@ import javafx.scene.control.Label;
 import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static java.awt.Color.*;
+
 @Component
+@Scope("prototype")
 @FxmlView("ClockView.fxml")
 public class ClockControleur implements Initializable {
 
@@ -52,6 +58,19 @@ public class ClockControleur implements Initializable {
                 }
             }
         });
+
+        clockService.messageProperty().addListener((ob,o,n)->{
+            System.out.println(n);
+            if (n!=null){
+                if (n.equals("flash")) {
+                    time.setTextFill(javafx.scene.paint.Color.RED);
+                }
+            }
+            else {
+                time.setTextFill(javafx.scene.paint.Color.BLACK);
+            }
+        });
+
         clockService.restart();
     }
 }
