@@ -60,7 +60,7 @@ public class ClockControleur implements Initializable {
         });
 
         clockService.messageProperty().addListener((ob,o,n)->{
-            System.out.println(n);
+            //System.out.println(n);
             if (n!=null){
                 if (n.equals("flash")) {
                     time.setTextFill(javafx.scene.paint.Color.RED);
