@@ -1,10 +1,12 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.Service_ibrahim.ImageMoverService;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import com.sun.tools.jconsole.JConsoleContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Control;
@@ -30,6 +32,13 @@ public class VisualisationProduitControleur {
 
     private DB bd;
 
+    private ImageMoverService imageMoverService;
+
+    @Autowired
+    public void setImageMoverService(ImageMoverService imageMoverService) {
+        this.imageMoverService = imageMoverService;
+    }
+
     @Autowired
     public void setBd(DB bd) {
         this.bd = bd;
@@ -52,6 +61,10 @@ public class VisualisationProduitControleur {
 
     @FXML
     public void initialize() {
+        if(imageMoverService.getState() == Worker.State.READY){
+            imageMoverService.start();
+        }
+
         description_film.setEditable(false);
         ObservableList<Produit> listeProduits = FXCollections.observableArrayList(bd.getProduitsService().retourLesProduits());
         list_view_all_movies.setItems(listeProduits);
@@ -73,11 +86,14 @@ public class VisualisationProduitControleur {
         id_titre_film.setText(produitChoisi.getNom());
         description_film.setText(produitChoisi.getDescription());
         date_movie_id.setText(produitChoisi.getDateDeSortie().toString());
+        imageMoverService.setCurrentX(image_film.getLayoutX());
+        imageMoverService.setXMax(154.0);
+        imageMoverService.setXMin(image_film.getLayoutBounds().getMinX());
 
-        System.out.println(image_film.getLayoutBounds());
 
-
-
+        imageMoverService.valueProperty().addListener((a, o, n) -> {
+            image_film.setLayoutX(n);
+        });
     }
 
 }
