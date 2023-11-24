@@ -1,8 +1,8 @@
-package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items;
+package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items;
 
 import javafx.scene.image.ImageView;
 
-public class Dossier implements TreeItemI{
+public class Dossier implements TreeItemI {
 
     private String Name;
 
