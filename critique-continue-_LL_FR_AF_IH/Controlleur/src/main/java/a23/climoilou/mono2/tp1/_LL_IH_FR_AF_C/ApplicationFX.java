@@ -1,6 +1,7 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.TabPaneEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
@@ -16,6 +17,7 @@ import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -33,6 +35,12 @@ public class ApplicationFX extends Application  {
     private ConfigurableApplicationContext context;
     private static Stage primaryStage;
     private  FxWeaver fxWeaver;
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Autowired
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
 
     /**
      * Lancement de l'application
@@ -103,6 +111,10 @@ public class ApplicationFX extends Application  {
                 navigationControleur.getTabNouvelleCritique().setContent(null);
                 navigationControleur.getTabNouvelleCritique().setClosable(false);
             }
+
+            // Lancement d un event spring lors du changement de tab
+            ajoutListenerTabPane(navigationControleur);
+
             //lancement  main vue
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
@@ -132,6 +144,46 @@ public class ApplicationFX extends Application  {
             //lancement connection
             lancementPageConnection();
         }
+    }
+
+
+    private void ajoutListenerTabPane(NavigationControleur navigationControleur)
+    {
+        // Nouvelle critique
+        navigationControleur.getTabNouvelleCritique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //on lance un event spring
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
+        });
+
+        // Nouveau produit
+        navigationControleur.getTabNouveauProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //on lance un event spring
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
+        });
+
+        // Statistiques
+        navigationControleur.getTabStatistique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //on lance un event spring
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
+        });
+
+        // Visualisation produit
+        navigationControleur.getTabVisualisationProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //on lance un event spring
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
+        });
+
+        // Compte
+        navigationControleur.getTabCompte().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //on lance un event spring
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
+        });
+
+        // A propos
+        navigationControleur.getTabAPropos().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //on lance un event spring
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
+        });
     }
 
     public void initBeanUtilisateurConnecte(Utilisateur utilisateur){
