@@ -28,8 +28,6 @@ import java.util.ArrayList;
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs",
-        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.TreeViewElements",
-        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.TreeViewElements.Items",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_V.services",
         "net.rgielen.fxweaver.spring.boot.autoconfigure"})
