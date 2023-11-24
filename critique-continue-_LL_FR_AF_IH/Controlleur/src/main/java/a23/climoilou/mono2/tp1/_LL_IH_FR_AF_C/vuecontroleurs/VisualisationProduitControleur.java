@@ -10,10 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -23,6 +25,7 @@ import java.util.ResourceBundle;
 
 @Component
 @FxmlView("vueProduit.fxml")
+@PropertySource("classpath:application.properties")
 public class VisualisationProduitControleur {
 
     private DB bd;
@@ -52,6 +55,7 @@ public class VisualisationProduitControleur {
         description_film.setEditable(false);
         ObservableList<Produit> listeProduits = FXCollections.observableArrayList(bd.getProduitsService().retourLesProduits());
         list_view_all_movies.setItems(listeProduits);
+
         selectItem();
     }
 
@@ -63,9 +67,16 @@ public class VisualisationProduitControleur {
     }
 
     public void afficheProduitSlected(Produit produitChoisi) {
+        String path = "file:images/" + produitChoisi.getImage().toString();
+        Image image = new Image(path);
+        image_film.setImage(image);
         id_titre_film.setText(produitChoisi.getNom());
         description_film.setText(produitChoisi.getDescription());
         date_movie_id.setText(produitChoisi.getDateDeSortie().toString());
+
+        System.out.println(image_film.getLayoutBounds());
+
+
 
     }
 

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="creationCompteBackGround" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.NouveauProduitControleur">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="creationCompteBackGround" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.NouveauProduitControleur">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
@@ -29,5 +29,6 @@
         <Button fx:id="buttonCreationInput" layoutX="280.0" layoutY="273.0" mnemonicParsing="false" onAction="#createMedia" styleClass="shadowed-button" text="Save" />
       <Label fx:id="messageErreur" layoutX="139.0" layoutY="322.0" prefHeight="17.0" prefWidth="287.0" styleClass="errorMsg" />
       <fx:include source="ClockView.fxml" AnchorPane.bottomAnchor="329.6" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0" />
+      <Button fx:id="buttonSaveFile1" layoutX="301.0" layoutY="217.0" mnemonicParsing="false" onAction="#uploadFile" styleClass="shadowed-button" text="Choisir un fichier" />
     </children>
 </AnchorPane>
