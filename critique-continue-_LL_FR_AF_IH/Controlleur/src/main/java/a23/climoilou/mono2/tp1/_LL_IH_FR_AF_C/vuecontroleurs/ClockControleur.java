@@ -1,6 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_V.services.ClockService;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.services.ClockService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -14,11 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static java.awt.Color.*;
 
 @Component
 @Scope("prototype")

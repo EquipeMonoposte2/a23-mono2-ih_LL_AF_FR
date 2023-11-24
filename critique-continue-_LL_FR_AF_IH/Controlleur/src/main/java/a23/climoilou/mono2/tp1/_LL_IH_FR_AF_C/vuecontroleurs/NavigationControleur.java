@@ -4,7 +4,6 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.FiltresEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_V.services.ClockService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
