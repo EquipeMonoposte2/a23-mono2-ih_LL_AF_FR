@@ -9,12 +9,16 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items.TreeItemI;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.TypeParticipant;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.algosrecursifs.CalculeMoyenne;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +39,17 @@ public class AProposControleur implements Initializable {
 
     private DB db;
 
+    private CalculeMoyenne calculeMoyenne;
+
     @Autowired
     public void setDb(DB db) {
         this.db = db;
     }
 
+    @Autowired
+    public void setCalculeMoyenne(CalculeMoyenne calculeMoyenne) {
+        this.calculeMoyenne = calculeMoyenne;
+    }
 
     @Value("${propriete.nomProduit}")
     private String nomProjet;
@@ -59,6 +69,24 @@ public class AProposControleur implements Initializable {
 
     @FXML
     private Text textNomProjet;
+
+    @FXML
+    private Label moyenne;
+
+    @FXML
+    void calculeMoyenne(ActionEvent event) {
+        double moy = calculeMoyenne.moyenne(root);
+        int compte = calculeMoyenne.compte(root);
+        double val =  moy/compte;
+        moyenne.setText(String.valueOf(val));
+
+        if (val>=60){
+            moyenne.setTextFill(Color.GREEN);
+        }else {
+            moyenne.setTextFill(Color.RED);
+        }
+
+    }
 
 
     @Override
