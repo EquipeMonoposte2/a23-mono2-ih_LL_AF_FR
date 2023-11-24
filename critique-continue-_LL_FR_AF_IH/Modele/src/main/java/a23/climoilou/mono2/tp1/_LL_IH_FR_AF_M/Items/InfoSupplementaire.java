@@ -1,6 +1,6 @@
-package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items;
+package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items;
 
-public class InfoSupplementaire implements TreeItemI{
+public class InfoSupplementaire implements TreeItemI {
 
     private String titre;
 
