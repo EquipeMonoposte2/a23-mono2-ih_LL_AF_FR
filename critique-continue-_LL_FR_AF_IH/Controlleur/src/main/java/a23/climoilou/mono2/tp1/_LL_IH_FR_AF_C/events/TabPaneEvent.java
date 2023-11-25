@@ -4,19 +4,19 @@ import javafx.scene.control.Tab;
 
 public class TabPaneEvent
 {
-    private Tab value;
+    private String value;
 
-    public TabPaneEvent(Tab value)
+    public TabPaneEvent(String value)
     {
         this.value = value;
     }
 
-    public Tab getValue()
+    public String getValue()
     {
         return value;
     }
 
-    public void setValue(Tab value)
+    public void setValue(String value)
     {
         this.value = value;
     }

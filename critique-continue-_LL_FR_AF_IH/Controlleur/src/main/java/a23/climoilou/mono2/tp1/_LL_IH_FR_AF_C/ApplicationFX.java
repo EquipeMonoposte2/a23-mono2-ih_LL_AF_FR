@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
@@ -146,44 +147,43 @@ public class ApplicationFX extends Application  {
         }
     }
 
-
     private void ajoutListenerTabPane(NavigationControleur navigationControleur)
     {
         // Nouvelle critique
         navigationControleur.getTabNouvelleCritique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             //on lance un event spring
-            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue.getText()));
         });
 
-        // Nouveau produit
-        navigationControleur.getTabNouveauProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            //on lance un event spring
-            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
-        });
-
-        // Statistiques
-        navigationControleur.getTabStatistique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            //on lance un event spring
-            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
-        });
-
-        // Visualisation produit
-        navigationControleur.getTabVisualisationProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            //on lance un event spring
-            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
-        });
-
-        // Compte
-        navigationControleur.getTabCompte().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            //on lance un event spring
-            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
-        });
-
-        // A propos
-        navigationControleur.getTabAPropos().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            //on lance un event spring
-            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue));
-        });
+//        // Nouveau produit
+//        navigationControleur.getTabNouveauProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Nouveau produit"));
+//        });
+//
+//        // Statistiques
+//        navigationControleur.getTabStatistique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Statistiques"));
+//        });
+//
+//        // Visualisation produit
+//        navigationControleur.getTabVisualisationProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Visualisation produit"));
+//        });
+//
+//        // Compte
+//        navigationControleur.getTabCompte().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Compte"));
+//        });
+//
+//        // A propos
+//        navigationControleur.getTabAPropos().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("A propos"));
+//        });
     }
 
     public void initBeanUtilisateurConnecte(Utilisateur utilisateur){
@@ -202,6 +202,54 @@ public class ApplicationFX extends Application  {
         Parent root = controllerAndView.getView().get();
         controllerAndView.getController();
         return root;
+    }
+
+    /**
+     * Event spring pour le changement de tab
+     * Redimensionner la fenetre en fonction du tab
+     * @param event
+     */
+    @EventListener
+    public void onTabChangedEvent(TabPaneEvent event) {
+
+        double width = 620;
+        double height = 420;
+
+        switch (event.getValue()){
+                case "NouvelleCritique":
+                width = 1280;
+                height = 800;
+                break;
+            case "NouveauProduit":
+                System.out.println("NouveauProduit");
+                height = 400;
+                break;
+            case "VisualisationProduit":
+                System.out.println("VisualisationProduit");
+                width = 600;
+                height = 470;
+                break;
+            default:
+                break;
+        }
+
+        // Redimensionner la fenêtre
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
+
+        // Récupérer la taille de l'écran
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+        // Calculer les nouvelles coordonnées pour maintenir la fenêtre centrée
+        double newX = (screenWidth - width) / 2;
+        double newY = (screenHeight - height) / 2;
+
+        // Définir les nouvelles coordonnées
+        primaryStage.setX(newX);
+        primaryStage.setY(newY);
+
+        //TODO : faire le service pour animation
     }
 
     @Override
