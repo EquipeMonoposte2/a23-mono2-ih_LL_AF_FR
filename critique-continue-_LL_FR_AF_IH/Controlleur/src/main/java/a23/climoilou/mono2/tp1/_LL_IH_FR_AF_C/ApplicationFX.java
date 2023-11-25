@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.TabPaneEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.services.RedimensionnementService;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
@@ -14,6 +15,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,10 +235,6 @@ public class ApplicationFX extends Application  {
                 break;
         }
 
-        // Redimensionner la fenêtre
-        primaryStage.setWidth(width);
-        primaryStage.setHeight(height);
-
         // Récupérer la taille de l'écran
         double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
         double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
@@ -245,11 +243,18 @@ public class ApplicationFX extends Application  {
         double newX = (screenWidth - width) / 2;
         double newY = (screenHeight - height) / 2;
 
-        // Définir les nouvelles coordonnées
-        primaryStage.setX(newX);
-        primaryStage.setY(newY);
+        RedimensionnementService redimensionnementService = new RedimensionnementService(new RedimensionnementService.LocationTaille(primaryStage.getX(),primaryStage.getY(),primaryStage.getWidth(),primaryStage.getHeight()), new RedimensionnementService.LocationTaille(newX, newY, width, height));
+        redimensionnementService.setPeriod(Duration.millis(2));
 
-        //TODO : faire le service pour animation
+        redimensionnementService.lastValueProperty().addListener((c, o, n) -> {
+            if (n != null) {
+                primaryStage.setX(n.getX());
+                primaryStage.setY(n.getY());
+                primaryStage.setWidth(n.getLargeur());
+                primaryStage.setHeight(n.getLongueur());
+            }
+        });
+        redimensionnementService.restart();
     }
 
     @Override
