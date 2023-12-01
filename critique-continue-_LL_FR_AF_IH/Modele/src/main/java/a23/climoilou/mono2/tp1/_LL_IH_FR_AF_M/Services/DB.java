@@ -1,6 +1,8 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Developpeur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_critique_lien_produit;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_developpeur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,12 @@ public class DB {
     private CritiquesService critiquesService;
 
     private Repo_critique_lien_produit repoCritiqueLienProduit;
+
     private ProduitsService produitsService;
 
     private UtilisateursService utilisateursService;
+
+    private DeveloppeurService devService;
 
     @Autowired
     public void setUtilisateursService(UtilisateursService utilisateursService) {
@@ -34,6 +39,15 @@ public class DB {
         this.produitsService = produitsService;
     }
 
+    public DeveloppeurService getDevService() {
+        return devService;
+    }
+
+    @Autowired
+    public void setDevService(DeveloppeurService devService) {
+        this.devService = devService;
+    }
+
     public UtilisateursService getUtilisateursService() {
         return utilisateursService;
     }
@@ -48,4 +62,6 @@ public class DB {
     public Repo_critique_lien_produit getRepoCritiqueLienProduit() {
         return repoCritiqueLienProduit;
     }
+
+
 }
