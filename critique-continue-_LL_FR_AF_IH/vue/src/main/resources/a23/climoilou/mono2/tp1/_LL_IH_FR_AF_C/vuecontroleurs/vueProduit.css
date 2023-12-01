@@ -1,0 +1,38 @@
+.list-view{
+    -fx-background-color: #004746;
+    -fx-text-fill: #FFFFFF;
+}
+
+
+.list-cell {
+    -fx-background-color: #013D3E;
+    -fx-text-fill: #B0BEC5;
+}
+
+.list-cell:filled:selected, .list-cell:filled:hover {
+    -fx-background-color: #026E6F;
+    -fx-text-fill: #FFFFFF;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:hover:focused {
+    -fx-background-color: #FFAB40;
+}
+
+.vueProduitBackground{
+    -fx-background-color: #1E6D6F;
+}
+
+.titreProduitStyle{
+    -fx-font-size: 24px;
+    -fx-text-fill: #FFAB40;
+}
+
+.DateProduitStyle{
+    -fx-font-size: 16px;
+    -fx-text-fill: #2E8B57;
+    -fx-font-weight: bold;
+}
+
+.descriptionProduitStyle{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5);
+}

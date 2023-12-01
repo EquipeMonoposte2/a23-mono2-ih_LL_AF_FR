@@ -28,6 +28,7 @@ public class ConnectionControleur {
 
     private CalculCote calculCote;
 
+    private CalculesSignifiance calculesSignifiance;
     @Autowired
     public void setCalculAppreciation(CalculCote calculCote) {
         this.calculCote = calculCote;
@@ -55,12 +56,8 @@ public class ConnectionControleur {
      */
     @FXML
     void connect(ActionEvent event) {
-        List<Produit> produits = bd.getProduitsService().retourLesProduits();
-        for(Produit produit : produits){
-            produit.setCote(calculCote.calculerCoteFinale(produit));
-            bd.getProduitsService().saveProduit(produit);
-        }
-
+        calculAppreciation.calculeAppreciation();
+        //System.out.println(calculesSignifiance.signifiance());
         //condition pour valider la connection
         //user temporaire
         // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
@@ -86,10 +83,16 @@ public class ConnectionControleur {
             alert.setContentText("Le nom d'utilisateur n'est pas valide.");
             alert.show();
         }
+
     }
 
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
         applicationEventPublisher.publishEvent(ApplicationFXEvent.builder().estNouveauCompteEvent(true).build());
+    }
+
+    @Autowired
+    public void setCalculesSignifiance(CalculesSignifiance calculesSignifiance) {
+        this.calculesSignifiance = calculesSignifiance;
     }
 }

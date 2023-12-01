@@ -69,7 +69,6 @@ public class CritiqueTabViewControleur {
     }
 
     @Autowired
-
     public void setBd(DB bd) {
         this.bd = bd;
     }

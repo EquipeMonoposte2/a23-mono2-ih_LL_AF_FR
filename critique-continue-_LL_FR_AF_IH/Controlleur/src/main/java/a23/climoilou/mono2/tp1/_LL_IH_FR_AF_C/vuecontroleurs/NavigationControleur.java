@@ -4,9 +4,12 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.FiltresEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurSession;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
+import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -30,6 +33,8 @@ import java.util.ResourceBundle;
 public class NavigationControleur  implements Initializable {
 
 
+
+
     private UtilisateurSession session;
 
     private NouveauProduitControleur controleurVueInterne;
@@ -40,6 +45,9 @@ public class NavigationControleur  implements Initializable {
 
     private CompteControleur compteControleur;
 
+    private CreationCompteControleur creationCompteControleur;
+
+    private VisualisationProduitControleur visualisationProduitControleur;
     @FXML
     private Tab tabCompte;
 
@@ -68,6 +76,11 @@ public class NavigationControleur  implements Initializable {
     }
 
     @Autowired
+    public void setVisualisationProduitControleur(VisualisationProduitControleur visualisationProduitControleur) {
+        this.visualisationProduitControleur = visualisationProduitControleur;
+    }
+
+    @Autowired
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
@@ -88,6 +101,6 @@ public class NavigationControleur  implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //this.compteControleur.setUtilisateur(this.utilisateur);
+
     }
 }

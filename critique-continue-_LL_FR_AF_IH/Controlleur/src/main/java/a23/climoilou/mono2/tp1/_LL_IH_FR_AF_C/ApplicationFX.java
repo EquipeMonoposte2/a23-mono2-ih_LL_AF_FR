@@ -1,6 +1,8 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.TabPaneEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.services.RedimensionnementService;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
@@ -11,11 +13,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -33,6 +38,12 @@ public class ApplicationFX extends Application  {
     private ConfigurableApplicationContext context;
     private static Stage primaryStage;
     private  FxWeaver fxWeaver;
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Autowired
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
 
     /**
      * Lancement de l'application
@@ -90,7 +101,7 @@ public class ApplicationFX extends Application  {
             //ajout du contenu aux tabs
             navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
             navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver)); //
-            navigationControleur.getTabVisualisationProduit(); //
+            navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver)); //
             navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class,fxWeaver)); //
             navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
             navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
@@ -98,11 +109,15 @@ public class ApplicationFX extends Application  {
 
             //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
             if (session.getSession().getPermission() != Type.Expert) {
-                System.out.println(session.getPermission());
+                System.out.println(session.getSession().getPermission());
                 navigationControleur.getTabNouvelleCritique().setDisable(true);
                 navigationControleur.getTabNouvelleCritique().setContent(null);
                 navigationControleur.getTabNouvelleCritique().setClosable(false);
             }
+
+            // Lancement d un event spring lors du changement de tab
+            ajoutListenerTabPane(navigationControleur);
+
             //lancement  main vue
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
@@ -134,6 +149,45 @@ public class ApplicationFX extends Application  {
         }
     }
 
+    private void ajoutListenerTabPane(NavigationControleur navigationControleur)
+    {
+        // Nouvelle critique
+        navigationControleur.getTabNouvelleCritique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            //on lance un event spring
+            applicationEventPublisher.publishEvent(new TabPaneEvent(newValue.getText()));
+        });
+
+//        // Nouveau produit
+//        navigationControleur.getTabNouveauProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Nouveau produit"));
+//        });
+//
+//        // Statistiques
+//        navigationControleur.getTabStatistique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Statistiques"));
+//        });
+//
+//        // Visualisation produit
+//        navigationControleur.getTabVisualisationProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Visualisation produit"));
+//        });
+//
+//        // Compte
+//        navigationControleur.getTabCompte().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("Compte"));
+//        });
+//
+//        // A propos
+//        navigationControleur.getTabAPropos().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+//            //on lance un event spring
+//            applicationEventPublisher.publishEvent(new TabPaneEvent("A propos"));
+//        });
+    }
+
     public void initBeanUtilisateurConnecte(Utilisateur utilisateur){
         UtilisateurSession utilisateurSessionBean = context.getBean(UtilisateurSession.class);
         utilisateurSessionBean.setIdentifiantUtilisateur(utilisateur.getIdentifiant());
@@ -150,6 +204,57 @@ public class ApplicationFX extends Application  {
         Parent root = controllerAndView.getView().get();
         controllerAndView.getController();
         return root;
+    }
+
+    /**
+     * Event spring pour le changement de tab
+     * Redimensionner la fenetre en fonction du tab
+     * @param event
+     */
+    @EventListener
+    public void onTabChangedEvent(TabPaneEvent event) {
+
+        double width = 620;
+        double height = 420;
+
+        switch (event.getValue()){
+                case "NouvelleCritique":
+                width = 1280;
+                height = 800;
+                break;
+            case "NouveauProduit":
+                System.out.println("NouveauProduit");
+                height = 400;
+                break;
+            case "VisualisationProduit":
+                System.out.println("VisualisationProduit");
+                width = 600;
+                height = 470;
+                break;
+            default:
+                break;
+        }
+
+        // Récupérer la taille de l'écran
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+        // Calculer les nouvelles coordonnées pour maintenir la fenêtre centrée
+        double newX = (screenWidth - width) / 2;
+        double newY = (screenHeight - height) / 2;
+
+        RedimensionnementService redimensionnementService = new RedimensionnementService(new RedimensionnementService.LocationTaille(primaryStage.getX(),primaryStage.getY(),primaryStage.getWidth(),primaryStage.getHeight()), new RedimensionnementService.LocationTaille(newX, newY, width, height));
+        redimensionnementService.setPeriod(Duration.millis(2));
+
+        redimensionnementService.lastValueProperty().addListener((c, o, n) -> {
+            if (n != null) {
+                primaryStage.setX(n.getX());
+                primaryStage.setY(n.getY());
+                primaryStage.setWidth(n.getLargeur());
+                primaryStage.setHeight(n.getLongueur());
+            }
+        });
+        redimensionnementService.restart();
     }
 
     @Override

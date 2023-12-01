@@ -118,7 +118,7 @@ public class CalculAppreciation {
             float moyenneInfluenceur = calculerMoyenne(appreciationsInfluenceur, produitActuel);
             float moyenneAmateur = calculerMoyenne(appreciationsAmateur, produitActuel);
             float moyenneGlobaleDuProduit = additionnerMoyennes(moyenneAmateur, moyenneInfluenceur, moyenneExpert);
-            produitActuel.setCote(5 + moyenneGlobaleDuProduit *  calculeSignifiance.calculerSignifiance(produitActuel) * 5);
+            produitActuel.setCote(5 + moyenneGlobaleDuProduit *  calculeSignifiance.calculeSignifiance(produitActuel) * 5);
             db.getProduitsService().saveProduit(produitActuel);
         }
 

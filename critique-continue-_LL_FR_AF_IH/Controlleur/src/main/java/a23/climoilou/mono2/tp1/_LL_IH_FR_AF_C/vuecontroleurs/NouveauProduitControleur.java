@@ -68,6 +68,8 @@ public class NouveauProduitControleur {
             produit = bd.getProduitsService().getProduitRepository().findFirstByNom(this.nomMediaInput.getText());
             if (produit == null) {
                 bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
+                messageErreur.getStyleClass().removeAll();
+                messageErreur.getStyleClass().add("validMsg");
                 messageErreur.setText("Produit créé.");
                 applicationEventPublisher.publishEvent(new NouveauProduitEvent());
             } else {

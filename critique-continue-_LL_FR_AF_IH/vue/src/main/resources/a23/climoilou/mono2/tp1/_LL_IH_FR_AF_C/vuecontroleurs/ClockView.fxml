@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="clock" prefHeight="50.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/20.0.1" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.ClockControleur">
+   <children>
+      <Label fx:id="date" layoutX="14.0" layoutY="6.0" prefHeight="18.0" prefWidth="78.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="6.0" />
+      <Label fx:id="time" layoutX="14.0" layoutY="27.0" prefHeight="18.0" prefWidth="78.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="27.0" />
+   </children>
+</AnchorPane>
