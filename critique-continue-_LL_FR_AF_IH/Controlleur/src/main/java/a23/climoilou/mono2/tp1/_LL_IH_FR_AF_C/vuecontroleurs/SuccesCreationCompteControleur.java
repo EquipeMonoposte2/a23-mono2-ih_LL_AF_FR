@@ -27,8 +27,6 @@ public class SuccesCreationCompteControleur implements Initializable {
 
     private UtilisateurSession session;
 
-
-
     public SuccesCreationCompteControleur(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
@@ -49,13 +47,11 @@ public class SuccesCreationCompteControleur implements Initializable {
      * Lance un évenement de type ApplicationFxEvent qui sera attrapé dans applicationfx
      * @param event
      */
-
     @FXML
     void connect(ActionEvent event) {
         ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estConnectionEvent(true).utilisateur(session).build();
         applicationEventPublisher.publishEvent(applicationFXEvent);
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

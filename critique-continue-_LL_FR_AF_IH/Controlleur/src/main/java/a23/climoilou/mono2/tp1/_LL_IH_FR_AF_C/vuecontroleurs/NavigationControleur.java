@@ -44,6 +44,9 @@ public class NavigationControleur  implements Initializable {
     private Tab tabCompte;
 
     @FXML
+    private Tab tabAPropos;
+
+    @FXML
     private Tab tabNouveauProduit;
 
     @FXML

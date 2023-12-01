@@ -99,7 +99,6 @@ public class CreationCompteControleur {
                     utilisateur = Utilisateur.builder().dateDeNaissance(dateNaissance.getValue()).nom(nomUtilisateur.getText()).critiqueList(new ArrayList<>()).type(Type.valueOf(dropDowntypes.getValue())).identifiant(identifiant.getText()).build();
                     db.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
                     session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
-                    System.out.println(session.getIdentifiantUtilisateur());
                     //lancement de l'événement de creation
                     ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estCreationCompteEvent(true).utilisateur(session).build();
                     applicationEventPublisher.publishEvent(applicationFXEvent);
