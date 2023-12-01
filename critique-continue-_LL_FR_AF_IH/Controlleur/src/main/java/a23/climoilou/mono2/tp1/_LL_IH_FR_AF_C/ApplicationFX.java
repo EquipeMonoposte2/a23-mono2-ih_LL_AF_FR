@@ -156,36 +156,6 @@ public class ApplicationFX extends Application  {
             //on lance un event spring
             applicationEventPublisher.publishEvent(new TabPaneEvent(newValue.getText()));
         });
-
-//        // Nouveau produit
-//        navigationControleur.getTabNouveauProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            //on lance un event spring
-//            applicationEventPublisher.publishEvent(new TabPaneEvent("Nouveau produit"));
-//        });
-//
-//        // Statistiques
-//        navigationControleur.getTabStatistique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            //on lance un event spring
-//            applicationEventPublisher.publishEvent(new TabPaneEvent("Statistiques"));
-//        });
-//
-//        // Visualisation produit
-//        navigationControleur.getTabVisualisationProduit().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            //on lance un event spring
-//            applicationEventPublisher.publishEvent(new TabPaneEvent("Visualisation produit"));
-//        });
-//
-//        // Compte
-//        navigationControleur.getTabCompte().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            //on lance un event spring
-//            applicationEventPublisher.publishEvent(new TabPaneEvent("Compte"));
-//        });
-//
-//        // A propos
-//        navigationControleur.getTabAPropos().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            //on lance un event spring
-//            applicationEventPublisher.publishEvent(new TabPaneEvent("A propos"));
-//        });
     }
 
     public void initBeanUtilisateurConnecte(Utilisateur utilisateur){

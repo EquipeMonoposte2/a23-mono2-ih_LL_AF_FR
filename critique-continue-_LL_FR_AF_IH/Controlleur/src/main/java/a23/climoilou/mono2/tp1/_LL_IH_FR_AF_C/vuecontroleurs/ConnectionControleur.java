@@ -53,13 +53,6 @@ public class ConnectionControleur {
     @FXML
     void connect(ActionEvent event) {
         calculAppreciation.calculeAppreciation();
-        //System.out.println(calculesSignifiance.signifiance());
-        //condition pour valider la connection
-        //user temporaire
-        // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
-        // bd.getUtilisateursService().sauvegarderUtilisateur(utilisateurTemporaire);
-//        System.out.println(bd.getUtilisateursService().retourLesUtilisateurs().get(0));
-//        Utilisateur utilisateur =bd.getUtilisateursService().retourLesUtilisateurs().get(0);
         Utilisateur utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
         if (utilisateur != null) {
             session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
