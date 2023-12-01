@@ -1,7 +1,9 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculAppreciation;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculCote;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesSignifiance;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  *
  */
@@ -22,11 +26,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConnectionControleur {
 
-    private CalculAppreciation calculAppreciation;
+    private CalculCote calculCote;
 
     @Autowired
-    public void setCalculAppreciation(CalculAppreciation calculAppreciation) {
-        this.calculAppreciation = calculAppreciation;
+    public void setCalculAppreciation(CalculCote calculCote) {
+        this.calculCote = calculCote;
     }
 
     private DB bd;
@@ -51,7 +55,12 @@ public class ConnectionControleur {
      */
     @FXML
     void connect(ActionEvent event) {
-        calculAppreciation.calculeAppreciation();
+        List<Produit> produits = bd.getProduitsService().retourLesProduits();
+        for(Produit produit : produits){
+            produit.setCote(calculCote.calculerCoteFinale(produit));
+            bd.getProduitsService().saveProduit(produit);
+        }
+
         //condition pour valider la connection
         //user temporaire
         // Utilisateur utilisateurTemporaire = new Utilisateur(Long.getLong("1"),"Tom","9989978",LocalDate.now(),Type.Utilisateur,new ArrayList<>());
