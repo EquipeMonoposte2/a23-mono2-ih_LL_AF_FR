@@ -1,7 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +17,7 @@ public interface Repo_produits extends CrudRepository<Produit, Long> {
     Produit findFirstByNom(@Param("nom") String nom);
 
     @Query("select P from Produit P order by P.nom asc ")
-    List<Produit> retourneProduitParDate();
+    List<Produit> RetourneProduitTrier();
 
 
 

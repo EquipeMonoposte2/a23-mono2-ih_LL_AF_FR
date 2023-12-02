@@ -1,22 +1,28 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.Service_ibrahim.ImageMoverService;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.CustomTreeCell;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.CustomTreeCellProduit;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.ProduitAlphabeltical;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.ProduitItemI;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.ProduitTreeItem;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.antlr.v4.runtime.tree.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 @Component
 @FxmlView("vueProduit.fxml")
-@PropertySource("classpath:application.properties")
 public class VisualisationProduitControleur {
 
     private DB bd;
@@ -32,9 +38,7 @@ public class VisualisationProduitControleur {
     public void setBd(DB bd) {
         this.bd = bd;
     }
-//
-//    @FXML
-//    private ListView<Produit> list_view_all_movies;
+
 
     @FXML
     private TreeView<ProduitItemI> tree_view_visualisation_prod;
@@ -70,10 +74,82 @@ public class VisualisationProduitControleur {
 
     public void creeTreeVire(TreeView<ProduitItemI> treeView){
 
+        TreeItem<ProduitItemI> root = new TreeItem<>(new ProduitAlphabeltical("Nos jeux"));
 
-
+        treeView.setRoot(root);
+        loadTreItem(bd.getProduitsService().getProduitRepository().RetourneProduitTrier(), root);
 
     }
+
+    public String loadTreItem(List<Produit> listeDeProduitSansRoot, TreeItem<ProduitItemI> root){
+        if(listeDeProduitSansRoot.isEmpty()){
+            System.out.println("its empty brother");
+
+        }
+
+        loadPureRec(listeDeProduitSansRoot, root, 0);
+
+
+
+        return "";
+
+    }
+
+    private void loadPureRec(List<Produit> liste, TreeItem<ProduitItemI> premierItem, int index){
+        if(index >= liste.size()){
+            return;
+        }
+
+        Produit produitCourant = liste.get(index);
+        char afficheLettre =  produitCourant.getNom().charAt(0);
+        TreeItem<ProduitItemI> lettreNode = findOrCreateLetterNode(premierItem, afficheLettre);
+
+        lettreNode.getChildren().add(new TreeItem<>(new ProduitTreeItem(produitCourant, new ImageView(new Image("file:images/controller.png",  30, 30, true, true)))));
+
+
+        loadPureRec(liste, premierItem, index +1);
+
+        this.tree_view_visualisation_prod.setCellFactory(x->new CustomTreeCellProduit());
+
+        this.tree_view_visualisation_prod.setOnMouseClicked(ae -> {
+            TreeItem<ProduitItemI> selected =  (TreeItem<ProduitItemI>) this.tree_view_visualisation_prod.getSelectionModel().getSelectedItem();
+            if(selected != null){
+                if (selected.getValue() instanceof ProduitTreeItem){
+                    afficheProduitSlected(((ProduitTreeItem) selected.getValue()).getInnerProduitTree());
+
+                }
+
+            }
+
+//            if(selected instanceof ProduitAlphabeltical){
+//                System.out.println("Alphabetical");
+//            }
+//
+//            if(selected instanceof ProduitTreeItem){
+//                System.out.println("the one we need");
+//            }
+        });
+    }
+
+
+    private TreeItem<ProduitItemI> findOrCreateLetterNode(TreeItem<ProduitItemI> premierItem, char letter) {
+        TreeItem<ProduitItemI> childTI = null;
+
+        for (TreeItem<ProduitItemI> child : premierItem.getChildren()) {
+            if (child.getValue() instanceof ProduitAlphabeltical && ((ProduitAlphabeltical) child.getValue()).getLettre() == letter) {
+                childTI = child;
+                break;
+            }
+        }
+
+        if (childTI == null) {
+            childTI = new TreeItem<>(new ProduitAlphabeltical("file:images/folder.jpg",letter));
+            premierItem.getChildren().add(childTI);
+        }
+
+        return childTI;
+    }
+
 
 
     public void selectItem(){
@@ -85,20 +161,20 @@ public class VisualisationProduitControleur {
     }
 
     public void afficheProduitSlected(Produit produitChoisi) {
-//        String path = "file:images/" + produitChoisi.getImage().toString();
-//        Image image = new Image(path);
-//        image_film.setImage(image);
-//        id_titre_film.setText(produitChoisi.getNom());
-//        description_film.setText(produitChoisi.getDescription());
-//        date_movie_id.setText(produitChoisi.getDateDeSortie().toString());
-//        imageMoverService.setCurrentX(image_film.getLayoutX());
-//        imageMoverService.setXMax(image_film.getLayoutBounds().getMaxX());
-//        imageMoverService.setXMin(image_film.getLayoutBounds().getMinX());
-//
-//
-//        imageMoverService.valueProperty().addListener((a, o, n) -> {
-//            image_film.setLayoutX(n);
-//        });
+        String path = "file:images/" + produitChoisi.getImage().toString();
+        Image image = new Image(path);
+        image_film.setImage(image);
+        id_titre_film.setText(produitChoisi.getNom());
+        description_film.setText(produitChoisi.getDescription());
+        date_movie_id.setText(produitChoisi.getDateDeSortie().toString());
+        imageMoverService.setCurrentX(image_film.getLayoutX());
+        imageMoverService.setXMax(image_film.getLayoutBounds().getMaxX());
+        imageMoverService.setXMin(image_film.getLayoutBounds().getMinX());
+
+
+        imageMoverService.valueProperty().addListener((a, o, n) -> {
+            image_film.setLayoutX(n);
+        });
     }
 
 
