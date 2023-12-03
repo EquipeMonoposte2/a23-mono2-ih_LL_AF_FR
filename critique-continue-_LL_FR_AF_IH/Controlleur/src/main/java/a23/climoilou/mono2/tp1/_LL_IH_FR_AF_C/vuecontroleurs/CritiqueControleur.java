@@ -1,7 +1,8 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.CustomCells.CritiqueListViewCell;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.CustomCells.IProduitClassement;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.CritiqueTreeViewNodeCompatible;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.CritiqueTreeViewNodeCompatibleFactory;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.CustomCells.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.ProduitClassement;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauProduitEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.SoumettreCritiqueEvent;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Predicate;
 
 @FxmlView("CritiqueVue.fxml")
 @Component
@@ -32,6 +34,7 @@ public class CritiqueControleur
     private DB db;
     private List<Produit> produitList;
     private ApplicationContext applicationContext;
+    private CritiqueTreeViewNodeCompatibleFactory critiqueTreeViewNodeCompatibleFactory;
 
     @FXML
     private Button ajouterJeuButton;
@@ -46,7 +49,7 @@ public class CritiqueControleur
     private DatePicker dateCritique;
 
     @FXML
-    private ListView<?> mesCritiquesAffiche;
+    private TreeView<ICritiqueTreeViewNode> mesCritiquesAffiche;
 
     @FXML
     private CheckBox neutreCheckbox;
@@ -66,11 +69,12 @@ public class CritiqueControleur
     }
 
     @Autowired
-    public CritiqueControleur(ApplicationEventPublisher applicationEventPublisher, DB db, ApplicationContext applicationContext)
+    public CritiqueControleur(ApplicationEventPublisher applicationEventPublisher, DB db, ApplicationContext applicationContext, CritiqueTreeViewNodeCompatibleFactory critiqueTreeViewNodeCompatibleFactory)
     {
         this.applicationEventPublisher = applicationEventPublisher;
         this.db = db;
         this.applicationContext = applicationContext;
+        this.critiqueTreeViewNodeCompatibleFactory = critiqueTreeViewNodeCompatibleFactory;
     }
 
     @FXML
@@ -96,6 +100,9 @@ public class CritiqueControleur
             }
             return retCell;
         });
+
+        // Setup du treeView
+        majMesCritiquesAffiche();
     }
 
     /**
@@ -190,6 +197,74 @@ public class CritiqueControleur
         if(choixJeuCritique.getItems().size() > 0)choixJeuCritique.setValue(choixJeuCritique.getItems().get(0));
     }
 
+    private void majMesCritiquesAffiche() {
+        utilisateurSession = applicationContext.getBean(UtilisateurSession.class);
+        Utilisateur utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(utilisateurSession.getSession().getIdentifiantUtilisateur());
+        List<CritiqueTreeViewNode> listeCritiqueTreeViewNode = db.getCritiquesService().getCritiquesTreeView(utilisateur);
+        List<CritiqueTreeViewNodeCompatible> listeCritiqueTreeViewNodeCompatible = new ArrayList<>();
+
+        for(CritiqueTreeViewNode critiqueTreeViewNode : listeCritiqueTreeViewNode){
+            listeCritiqueTreeViewNodeCompatible.add(critiqueTreeViewNodeCompatibleFactory.createCritiqueTreeViewNodeCompatible(critiqueTreeViewNode));
+        }
+
+        // Créer la cellule de rendu personnalisée
+        mesCritiquesAffiche.setCellFactory(treeView -> new CritiqueTreeCell());
+
+        // Créer la racine du TreeView
+        TreeItem<ICritiqueTreeViewNode> rootItem = new TreeItem(critiqueTreeViewNodeCompatibleFactory.createCritiqueTreeViewNodeCompatible(new CritiqueTreeViewNode(null, null)));
+        rootItem.setExpanded(true);
+
+        // Ajout des années, mois et critiques
+        for (CritiqueTreeViewNodeCompatible critiqueNode : listeCritiqueTreeViewNodeCompatible) {
+
+            // Ajouter la critique comme un nœud enfant du mois
+            TreeItem<ICritiqueTreeViewNode> critiqueItem = new TreeItem<>(critiqueNode);
+            rootItem.getChildren().add(critiqueItem);
+
+            // Ajouter les enfants de la critique comme des noeuds enfants de la critique
+            for (ICritiqueTreeViewNode childNode : critiqueNode.getChildren()) {
+                TreeItem<ICritiqueTreeViewNode> childItem = new TreeItem<>(childNode);
+                critiqueItem.getChildren().add(childItem);
+            }
+        }
+
+        // Mettre à jour le TreeView avec le nouveau modèle de données
+        mesCritiquesAffiche.setRoot(rootItem);
+    }
+
+    // Méthode utilitaire pour trouver ou créer un nœud pour une année donnée
+    private TreeItem<ICritiqueTreeViewNode> findOrCreateYearNode(TreeItem<ICritiqueTreeViewNode> root, int year) {
+        return findOrCreateNode(root, year, node -> node.getDateCritique() != null && node.getDateCritique().getYear() == year);
+    }
+
+    // Méthode utilitaire pour trouver ou créer un nœud pour un mois donné
+    private TreeItem<ICritiqueTreeViewNode> findOrCreateMonthNode(TreeItem<ICritiqueTreeViewNode> parent, int month) {
+        return findOrCreateNode(parent, month, node -> node.getDateCritique() != null && node.getDateCritique().getMonthValue() == month);
+    }
+
+    // Méthode générique pour trouver ou créer un noeud en fonction d'un prédicat
+    private TreeItem<ICritiqueTreeViewNode> findOrCreateNode(TreeItem<ICritiqueTreeViewNode> parent, int value, Predicate<ICritiqueTreeViewNode> condition) {
+        Optional<TreeItem<ICritiqueTreeViewNode>> existingNode = parent.getChildren().stream()
+                .filter(item -> condition.test(item.getValue()))
+                .findFirst();
+
+        if (existingNode.isPresent()) {
+            return existingNode.get();
+        } else {
+            CritiqueTreeViewNodeCompatible newNodeValue = critiqueTreeViewNodeCompatibleFactory.createCritiqueTreeViewNodeCompatible(new CritiqueTreeViewNode(null, null));
+            TreeItem<ICritiqueTreeViewNode> newNodeItem = new TreeItem<>(newNodeValue);
+
+            // Ajouter les enfants du parent au nouveau nœud
+            for (ICritiqueTreeViewNode childNode : parent.getValue().getChildren()) {
+                TreeItem<ICritiqueTreeViewNode> childItem = new TreeItem<>(childNode);
+                newNodeItem.getChildren().add(childItem);
+            }
+
+            parent.getChildren().add(newNodeItem);
+            return newNodeItem;
+        }
+    }
+
     // LES EVENTS LISTENER
 
     /**
@@ -199,5 +274,15 @@ public class CritiqueControleur
     @EventListener
     public void onNouveauProduitAjoute(NouveauProduitEvent event){
         majChoiceBoxProduits();
+    }
+
+    /**
+     * Lorsqu'une nouvelle critique est soumise, on met a jour la liste des critiques
+     * @param event
+     */
+    @EventListener
+    public void onSoumissionCritique(SoumettreCritiqueEvent event)
+    {
+        majMesCritiquesAffiche();
     }
 }
