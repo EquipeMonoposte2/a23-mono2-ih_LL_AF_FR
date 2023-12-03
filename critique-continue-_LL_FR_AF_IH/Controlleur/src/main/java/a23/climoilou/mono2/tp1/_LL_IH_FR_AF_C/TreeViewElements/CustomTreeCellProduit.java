@@ -40,7 +40,7 @@ public class CustomTreeCellProduit extends TextFieldTreeCell<ProduitItemI> {
                 return null;
             });
 
-           Optional reponse = dialog.showAndWait();
+           Optional<Color> reponse = dialog.showAndWait();
 
            reponse.ifPresent(couleur -> {
                colorChanged = couleur.toString();
@@ -69,25 +69,6 @@ public class CustomTreeCellProduit extends TextFieldTreeCell<ProduitItemI> {
             } else {
                 setTextFill(Color.BLUE);
             }
-
-
-//            if(produit instanceof ProduitAlphabeltical){
-//
-//                if(((ProduitAlphabeltical) produit).isRoot()){
-//                    setTextFill(Color.BROWN);
-//                }
-//
-//                setContextMenu(leafMenu);
-//
-//                if(this.colorChanged == null){
-//                    setTextFill(Color.BROWN);
-//                }else {
-//                    setTextFill(Paint.valueOf(this.colorChanged));
-//                }
-//
-//            }else{
-//                setTextFill(Color.BLUE);
-//            }
 
             setText(produit.Show());
         }

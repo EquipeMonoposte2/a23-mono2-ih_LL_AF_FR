@@ -40,4 +40,10 @@ public class Utilisateur {
     @ToString.Exclude
     private List<Critique> critiqueList = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "utilisateurParCategorie_id")
+    private UtilisateurParCategorie utilisateurParCategorie;
+
+
+
 }
