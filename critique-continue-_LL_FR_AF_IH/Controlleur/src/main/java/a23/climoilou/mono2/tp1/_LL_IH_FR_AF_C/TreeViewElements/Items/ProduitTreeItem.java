@@ -5,8 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class ProduitTreeItem implements ProduitItemI{
 
     @Getter
@@ -22,6 +25,10 @@ public class ProduitTreeItem implements ProduitItemI{
     @Getter
     @Setter
     private char lettre;
+
+
+    public ProduitTreeItem() {
+    }
 
     public ProduitTreeItem(Produit innerProduitTree) {
         this.innerProduitTree = innerProduitTree;

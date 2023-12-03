@@ -1,13 +1,14 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.Service_ibrahim;
 
 import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ImageMoverService extends ScheduledService<Double> {
+public class ImageMoverService extends Service<Double> {
 
 
     @Getter

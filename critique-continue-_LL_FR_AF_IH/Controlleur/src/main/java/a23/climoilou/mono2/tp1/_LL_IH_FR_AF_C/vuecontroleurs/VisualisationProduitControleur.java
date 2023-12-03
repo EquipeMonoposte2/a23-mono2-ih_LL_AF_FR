@@ -1,20 +1,20 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.Service_ibrahim.FlashingSearchService;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.Service_ibrahim.ImageMoverService;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.CustomTreeCell;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.CustomTreeCellProduit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.ProduitAlphabeltical;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.ProduitItemI;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.ProduitTreeItem;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.antlr.v4.runtime.tree.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +28,13 @@ public class VisualisationProduitControleur {
     private DB bd;
 
     private ImageMoverService imageMoverService;
+
+    private FlashingSearchService flashingSearchService;
+
+    @Autowired
+    public void setFlashingSearchService(FlashingSearchService flashingSearchService) {
+        this.flashingSearchService = flashingSearchService;
+    }
 
     @Autowired
     public void setImageMoverService(ImageMoverService imageMoverService) {
@@ -56,32 +63,42 @@ public class VisualisationProduitControleur {
     private Text date_movie_id;
 
     @FXML
-    public void initialize() {
-//         this.tree_view_visualisation_prod = new TreeView<Produit>();
+    private TextField text_input_recherche;
 
-//        System.out.println(bd.getProduitsService().getProduitRepository().retourneProduitParDate());
-//        if(imageMoverService.getState() == Worker.State.READY){
-//            imageMoverService.start();
-//        }
-//
-//        description_film.setEditable(false);
-//        ObservableList<Produit> listeProduits = FXCollections.observableArrayList(bd.getProduitsService().retourLesProduits());
-//        list_view_all_movies.setItems(listeProduits);
-//
-        creeTreeVire(this.tree_view_visualisation_prod);
-        selectItem();
+    @FXML
+    private Label label_recherche;
+
+    @FXML
+    private Button btn_lancer_recherche;
+
+
+
+    @FXML
+    public void initialize() {
+
+        if(imageMoverService.getState() == Worker.State.READY){
+            imageMoverService.start();
+        }
+
+        if(flashingSearchService.getState() == Worker.State.READY){
+            flashingSearchService.start();
+        }
+
+
+
+        creeTreeView(this.tree_view_visualisation_prod);
     }
 
-    public void creeTreeVire(TreeView<ProduitItemI> treeView){
+    public void creeTreeView(TreeView<ProduitItemI> treeView){
 
-        TreeItem<ProduitItemI> root = new TreeItem<>(new ProduitAlphabeltical("Nos jeux"));
+        TreeItem<ProduitItemI> root = new TreeItem<>(new ProduitAlphabeltical("Nos jeux"), new ImageView(new Image("file:images/controller.png",  30, 30, true, true)));
 
         treeView.setRoot(root);
-        loadTreItem(bd.getProduitsService().getProduitRepository().RetourneProduitTrier(), root);
+        loadTreeItem(bd.getProduitsService().getProduitRepository().RetourneProduitTrier(), root);
 
     }
 
-    public String loadTreItem(List<Produit> listeDeProduitSansRoot, TreeItem<ProduitItemI> root){
+    public void loadTreeItem(List<Produit> listeDeProduitSansRoot, TreeItem<ProduitItemI> root){
         if(listeDeProduitSansRoot.isEmpty()){
             System.out.println("its empty brother");
 
@@ -90,75 +107,55 @@ public class VisualisationProduitControleur {
         loadPureRec(listeDeProduitSansRoot, root, 0);
 
 
-
-        return "";
-
     }
 
-    private void loadPureRec(List<Produit> liste, TreeItem<ProduitItemI> premierItem, int index){
+    private void loadPureRec(List<Produit> liste, TreeItem<ProduitItemI> root, int index){
         if(index >= liste.size()){
+            this.tree_view_visualisation_prod.setCellFactory(x->new CustomTreeCellProduit());
+
+            this.tree_view_visualisation_prod.setOnMouseClicked(ae -> {
+                TreeItem<ProduitItemI> selected =  this.tree_view_visualisation_prod.getSelectionModel().getSelectedItem();
+                if(selected != null){
+                    if (selected.getValue() instanceof ProduitTreeItem){
+                        afficheProduitSlected(((ProduitTreeItem) selected.getValue()).getInnerProduitTree());
+                    }
+                }
+            });
             return;
         }
 
         Produit produitCourant = liste.get(index);
         char afficheLettre =  produitCourant.getNom().charAt(0);
-        TreeItem<ProduitItemI> lettreNode = findOrCreateLetterNode(premierItem, afficheLettre);
+        TreeItem<ProduitItemI> lettreNode = CreeOuTrouveProduitAlphabetical(root, afficheLettre);
 
-        lettreNode.getChildren().add(new TreeItem<>(new ProduitTreeItem(produitCourant, new ImageView(new Image("file:images/controller.png",  30, 30, true, true)))));
+        lettreNode.getChildren().add(new TreeItem<>(new ProduitTreeItem(produitCourant), new ImageView(new Image("file:images/controller.png",  30, 30, true, true))));
 
 
-        loadPureRec(liste, premierItem, index +1);
+        loadPureRec(liste, root, index +1);
 
-        this.tree_view_visualisation_prod.setCellFactory(x->new CustomTreeCellProduit());
 
-        this.tree_view_visualisation_prod.setOnMouseClicked(ae -> {
-            TreeItem<ProduitItemI> selected =  (TreeItem<ProduitItemI>) this.tree_view_visualisation_prod.getSelectionModel().getSelectedItem();
-            if(selected != null){
-                if (selected.getValue() instanceof ProduitTreeItem){
-                    afficheProduitSlected(((ProduitTreeItem) selected.getValue()).getInnerProduitTree());
-
-                }
-
-            }
-
-//            if(selected instanceof ProduitAlphabeltical){
-//                System.out.println("Alphabetical");
-//            }
-//
-//            if(selected instanceof ProduitTreeItem){
-//                System.out.println("the one we need");
-//            }
-        });
     }
 
 
-    private TreeItem<ProduitItemI> findOrCreateLetterNode(TreeItem<ProduitItemI> premierItem, char letter) {
+    private TreeItem<ProduitItemI> CreeOuTrouveProduitAlphabetical(TreeItem<ProduitItemI> root, char letter) {
         TreeItem<ProduitItemI> childTI = null;
 
-        for (TreeItem<ProduitItemI> child : premierItem.getChildren()) {
+        for (TreeItem<ProduitItemI> child : root.getChildren()) {
             if (child.getValue() instanceof ProduitAlphabeltical && ((ProduitAlphabeltical) child.getValue()).getLettre() == letter) {
                 childTI = child;
                 break;
             }
         }
 
+
         if (childTI == null) {
-            childTI = new TreeItem<>(new ProduitAlphabeltical("file:images/folder.jpg",letter));
-            premierItem.getChildren().add(childTI);
+            childTI = new TreeItem<>(new ProduitAlphabeltical(letter), new ImageView(new Image("file:/images/folder.jpg", 30, 30, true, true)));
+            root.getChildren().add(childTI);
         }
 
         return childTI;
     }
 
-
-
-    public void selectItem(){
-//                System.out.println(bd.getProduitsService().getProduitRepository().retourneProduitParDate());
-
-//        list_view_all_movies.setOnMouseClicked((event) -> {
-//            afficheProduitSlected(list_view_all_movies.getSelectionModel().getSelectedItem());
-//        });
-    }
 
     public void afficheProduitSlected(Produit produitChoisi) {
         String path = "file:images/" + produitChoisi.getImage().toString();
@@ -176,6 +173,49 @@ public class VisualisationProduitControleur {
             image_film.setLayoutX(n);
         });
     }
+
+    public void lancerRecherche(){
+        rechercheRec(this.tree_view_visualisation_prod.getRoot(), this.text_input_recherche.getText());
+
+    }
+
+    public TreeItem<ProduitItemI> rechercheRec(TreeItem<ProduitItemI> item, String nomRecherche){
+
+        this.flashingSearchService.valueProperty().addListener((a,o,n) -> {
+            if(n != null){
+                System.out.println(n);
+            }
+        });
+
+            if (item.getValue() instanceof ProduitAlphabeltical produitAlphabeltical){
+
+                if(produitAlphabeltical.getLettre() == nomRecherche.charAt(0)) {
+
+                    for (TreeItem<ProduitItemI> reponse : item.getChildren()){
+
+                        if(reponse.getValue() instanceof ProduitTreeItem produitTreeItem){
+
+                            if(produitTreeItem.getInnerProduitTree().getNom().equals(nomRecherche)){
+                                this.afficheProduitSlected(produitTreeItem.getInnerProduitTree());
+
+                            }
+                        }
+                    }
+
+                }
+
+                for (TreeItem<ProduitItemI> child : item.getChildren()) {
+                    TreeItem<ProduitItemI> foundItem = rechercheRec(child, nomRecherche);
+                    if (foundItem != null) {
+                        return foundItem;
+                    }
+                }
+            }
+
+        return null;
+
+    }
+
 
 
 

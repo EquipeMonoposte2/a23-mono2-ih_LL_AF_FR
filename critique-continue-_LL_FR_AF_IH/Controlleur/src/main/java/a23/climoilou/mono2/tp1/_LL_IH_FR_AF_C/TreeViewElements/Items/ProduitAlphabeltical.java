@@ -5,11 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProduitAlphabeltical implements ProduitItemI{
-    @Getter
-    @Setter
-    private ProduitTreeItem innerProduitTree;
+
 
     @Getter
     @Setter
@@ -29,17 +29,6 @@ public class ProduitAlphabeltical implements ProduitItemI{
     @Setter
     private boolean isRoot;
 
-    /**
-     * Pour les childs
-     * @param innerProduitTree
-     * @param lettre
-     */
-    public ProduitAlphabeltical(ProduitTreeItem innerProduitTree, char lettre) {
-        this.innerProduitTree = innerProduitTree;
-        this.lettre = lettre;
-        this.isRoot = false;
-
-    }
 
 
     /**
@@ -51,18 +40,14 @@ public class ProduitAlphabeltical implements ProduitItemI{
         this.isRoot = true;
     }
 
-    public ProduitAlphabeltical(String path, char lettre) {
-        this.image = new Image(path);
+    public ProduitAlphabeltical( char lettre) {
         this.lettre = lettre;
         this.isRoot = false;
-//        this.image.setImage(path);
     }
 
-//    public ProduitAlphabeltical(ProduitTreeItem innerProduitTree, char lettre) {
-//        this.innerProduitTree = innerProduitTree;
-//        this.lettre = lettre;
-//        this.isRoot = false;
-//    }
+
+    public ProduitAlphabeltical() {
+    }
 
     @Override
     public String toString() {
