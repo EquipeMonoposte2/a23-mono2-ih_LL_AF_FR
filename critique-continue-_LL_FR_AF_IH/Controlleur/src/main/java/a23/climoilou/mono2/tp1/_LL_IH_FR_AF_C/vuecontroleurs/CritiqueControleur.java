@@ -1,16 +1,15 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.CustomCells.CritiqueListViewCell;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.CustomCells.IProduitClassement;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.ProduitClassement;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauProduitEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.SoumettreCritiqueEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.*;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -55,7 +55,7 @@ public class CritiqueControleur
     private Text nomJeuCritique;
 
     @FXML
-    private ListView<String> nouvelleCritique;
+    private ListView<IProduitClassement> nouvelleCritique;
 
     @FXML
     private Button soumettreCritiqueButton;
@@ -85,6 +85,17 @@ public class CritiqueControleur
         //Setup liste de poids
         choixPoidsCritique.getItems().addAll(EnumEcart.values());
         if(choixPoidsCritique.getItems().size() > 0)choixPoidsCritique.setValue(choixPoidsCritique.getItems().get(0));
+
+        // Setup de la custom listview
+        nouvelleCritique.setCellFactory((a) -> {
+            ListCell<IProduitClassement> retCell = null;
+            try {
+                retCell = new CritiqueListViewCell();
+            } catch (IOException e) {
+                throw new RuntimeException("Null custom List Cell");
+            }
+            return retCell;
+        });
     }
 
     /**
@@ -119,7 +130,7 @@ public class CritiqueControleur
 
                 //Ajout
                 critique.ajouterJeu(jeu,poidsJeu,estNeutre);
-                nouvelleCritique.getItems().add(jeu.getNom() + " - Différence " + poidsJeu.toString() + " par rapport au jeu en dessous" + (estNeutre ? " - Neutre" : ""));
+                nouvelleCritique.getItems().add(new ProduitClassement(jeu.getNom(),poidsJeu.toString(),estNeutre));
             }
         }
     }
