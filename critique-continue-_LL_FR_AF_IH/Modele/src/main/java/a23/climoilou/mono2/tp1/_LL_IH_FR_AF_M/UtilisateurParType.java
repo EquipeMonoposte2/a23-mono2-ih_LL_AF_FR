@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Component
@@ -29,22 +30,21 @@ public class UtilisateurParType {
         this.type = type;
     }
 
+    public boolean RajouterChild(UtilisateurParType child){
+        return this.children.add(child);
+    }
 
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
+//    @ManyToOne(fetch = FetchType.LAZY)
+@ManyToOne
+@JoinColumn(name = "parent_id")
     private UtilisateurParType parent;
 
-    @OneToMany(mappedBy = "parent")
-    private List<UtilisateurParType> children;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)
+    private Set<UtilisateurParType> children;
 
     @Override
     public String toString() {
-        return "UtilisateurParType{" +
-                "type=" + type +
-                ", parent=" + parent +
-                ", children=" + children +
-                '}';
+        return this.type.toString();
     }
 }
