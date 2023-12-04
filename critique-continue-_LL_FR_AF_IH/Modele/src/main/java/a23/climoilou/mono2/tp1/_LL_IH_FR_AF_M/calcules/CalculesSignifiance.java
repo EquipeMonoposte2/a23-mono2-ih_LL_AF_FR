@@ -5,7 +5,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Classe de calcule de cote

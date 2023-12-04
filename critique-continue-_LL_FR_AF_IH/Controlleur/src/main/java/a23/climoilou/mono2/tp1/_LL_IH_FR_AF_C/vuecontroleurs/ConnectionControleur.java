@@ -2,6 +2,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.ApplicationFXEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculAppreciation;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculCote;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.CalculesSignifiance;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
@@ -21,14 +22,6 @@ import org.springframework.stereotype.Component;
 @FxmlView("ConnectionVue.fxml")
 @Component
 public class ConnectionControleur {
-
-    private CalculAppreciation calculAppreciation;
-
-    private CalculesSignifiance calculesSignifiance;
-    @Autowired
-    public void setCalculAppreciation(CalculAppreciation calculAppreciation) {
-        this.calculAppreciation = calculAppreciation;
-    }
 
     private DB bd;
     private UtilisateurSession session;
@@ -52,7 +45,6 @@ public class ConnectionControleur {
      */
     @FXML
     void connect(ActionEvent event) {
-        calculAppreciation.calculeAppreciation();
         Utilisateur utilisateur = bd.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(this.nomUtilisateurTextField.getText());
         if (utilisateur != null) {
             session = session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
@@ -78,10 +70,5 @@ public class ConnectionControleur {
     @FXML
     void ouvrirFormulaireCreationCompte(ActionEvent event) {
         applicationEventPublisher.publishEvent(ApplicationFXEvent.builder().estNouveauCompteEvent(true).build());
-    }
-
-    @Autowired
-    public void setCalculesSignifiance(CalculesSignifiance calculesSignifiance) {
-        this.calculesSignifiance = calculesSignifiance;
     }
 }
