@@ -94,6 +94,17 @@ public class NouveauProduitControleur {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
+    @FXML
+    void choisirCategorie(ActionEvent event) {
+        FxControllerAndView<CategorieControleur, AnchorPane> controllerAndView = fxWeaver.load(CategorieControleur.class);
+        Parent root = controllerAndView.getView().get();
+        categorieStage = new Stage();
+        categorieStage.setResizable(false);
+        categorieStage.initModality(Modality.APPLICATION_MODAL);
+        categorieStage.setScene(new Scene(root));
+        categorieStage.showAndWait();
+    }
+
     /**
      * Boutton creation de produit
      *
