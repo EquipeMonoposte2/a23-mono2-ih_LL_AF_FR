@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Scope("prototype")
 public class UtilisateurParType {
 
     @Id
@@ -26,6 +28,7 @@ public class UtilisateurParType {
     public UtilisateurParType(Type type) {
         this.type = type;
     }
+
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
