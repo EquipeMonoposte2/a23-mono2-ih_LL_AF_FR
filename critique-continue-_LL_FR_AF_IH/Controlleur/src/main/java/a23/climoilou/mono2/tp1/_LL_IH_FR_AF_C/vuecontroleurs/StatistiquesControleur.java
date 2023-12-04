@@ -102,9 +102,7 @@ public class StatistiquesControleur{
 
         this.bd.getUtilisateurParTypeService().AssocierLutilisateurAuType();
 
-        while(this.bd.getUtilisateurParTypeService().RetourneMesUtilisateurPerType().iterator().hasNext()){
-            System.out.println(this.bd.getUtilisateurParTypeService().RetourneMesUtilisateurPerType().iterator().next());
-        }
+
 
 
 

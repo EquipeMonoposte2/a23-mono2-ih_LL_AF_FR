@@ -30,10 +30,21 @@ public class UtilisateurParType {
     }
 
 
-    @ManyToOne
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private UtilisateurParType parent;
 
     @OneToMany(mappedBy = "parent")
     private List<UtilisateurParType> children;
+
+    @Override
+    public String toString() {
+        return "UtilisateurParType{" +
+                "type=" + type +
+                ", parent=" + parent +
+                ", children=" + children +
+                '}';
+    }
 }
