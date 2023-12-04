@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="fond-bleu-vert" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.NouveauProduitControleur">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="fond-bleu-vert" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.NouveauProduitControleur">
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
@@ -26,8 +26,8 @@
         <Label layoutX="72.0" layoutY="181.0" styleClass="creationCompteText" text="Date sortie : " />
         <TextField fx:id="lienImageMediaInput" layoutX="139.0" layoutY="217.0" />
         <Label layoutX="74.0" layoutY="221.0" styleClass="creationCompteText" text="Image lien : " />
-        <Button fx:id="buttonCreationInput" layoutX="268.0" layoutY="318.0" mnemonicParsing="false" onAction="#createMedia" styleClass="shadowed-button" text="Save" />
-        <Label fx:id="messageErreur" layoutX="139.0" layoutY="322.0" prefHeight="17.0" prefWidth="287.0" styleClass="errorMsg" />
+        <Button fx:id="buttonCreationInput" layoutX="268.0" layoutY="318.0" mnemonicParsing="false" onAction="#createMedia" prefHeight="25.0" prefWidth="53.0" styleClass="shadowed-button" text="Save" />
+        <Label fx:id="messageErreur" layoutX="200.0" layoutY="358.0" prefHeight="17.0" prefWidth="207.0" styleClass="errorMsg" />
         <fx:include source="ClockView.fxml" AnchorPane.bottomAnchor="329.6" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0" />
         <Button fx:id="buttonSaveFile1" layoutX="301.0" layoutY="217.0" mnemonicParsing="false" onAction="#uploadFile" styleClass="shadowed-button" text="Choisir un fichier" />
         <Label layoutX="77.0" layoutY="265.0" styleClass="creationCompteText" text="Catégorie :" />

@@ -80,6 +80,9 @@ public class VisualisationProduitControleur {
     @FXML
     private Button btn_lancer_recherche;
 
+    @FXML
+    private TextField text_display_note;
+
 
 
     @FXML
@@ -212,11 +215,13 @@ public class VisualisationProduitControleur {
         id_titre_film.setText(produitChoisi.getNom());
         description_film.setText(produitChoisi.getDescription());
         date_movie_id.setText(produitChoisi.getDateDeSortie().toString());
+        text_display_note.setText(String.valueOf(produitChoisi.getCote()));
+
+
         imageMoverService.setCurrentX(image_film.getLayoutX());
         imageMoverService.setXMax(image_film.getLayoutBounds().getMaxX());
         imageMoverService.setXMin(image_film.getLayoutBounds().getMinX());
 
-        System.out.println(produitChoisi.getCote());
 
 
         imageMoverService.valueProperty().addListener((a, o, n) -> {

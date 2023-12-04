@@ -45,6 +45,8 @@ import java.util.List;
 @FxmlView("NouveauProduitVue.fxml")
 @Component
 public class NouveauProduitControleur {
+
+
     FileChooser fileChooser = new FileChooser();
 
 
@@ -64,8 +66,15 @@ public class NouveauProduitControleur {
         this.bd = bd;
     }
 
+
     @FXML
-    private Button buttonCreationInput;
+    public Button buttonCategorie;
+
+    @FXML
+    public Button buttonSaveFile1;
+
+    @FXML
+    public Button buttonCreationInput;
 
     @FXML
     private DatePicker dateSortieMediaInput;
@@ -112,11 +121,15 @@ public class NouveauProduitControleur {
      */
     @FXML
     void createMedia(ActionEvent event) throws InterruptedException {
+        System.out.println("i am here");
 
         Produit produit;
         if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText(), null) != null) {
             produit = bd.getProduitsService().getProduitRepository().findFirstByNom(this.nomMediaInput.getText());
+
+            System.out.println("problem here");
             if (produit == null) {
+                System.out.println("issue here");
                 bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText(), categorieRepo.findByNom(categorieTextField.getText())));
                 messageErreur.getStyleClass().removeAll();
                 messageErreur.getStyleClass().add("validMsg");

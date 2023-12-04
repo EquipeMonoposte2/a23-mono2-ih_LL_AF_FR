@@ -10,18 +10,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane id="root_split_pane" dividerPositions="0.29797979797979796" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" stylesheets="@vueProduit.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.VisualisationProduitControleur">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.VisualisationProduitControleur">
   <items>
-      <TreeView id="tree_view" fx:id="tree_view_visualisation_prod" prefHeight="398.0" prefWidth="190.0" />
-    <AnchorPane id="RightAnchorPane" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="417.0" styleClass="vueProduitBackground">
+      <TreeView fx:id="tree_view_visualisation_prod" prefHeight="398.0" prefWidth="190.0" />
+    <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="417.0" styleClass="vueProduitBackground">
          <children>
-            <ImageView fx:id="image_film" fitHeight="150.0" fitWidth="290.0" layoutX="75.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" />
-            <Text fx:id="id_titre_film" layoutX="27.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titreProduitStyle" text="Titre du jeu" wrappingWidth="175.0" />
-            <TextArea fx:id="description_film" layoutX="72.0" layoutY="213.0" prefHeight="45.0" prefWidth="254.0" promptText="Description du jeu" styleClass="descriptionProduitStyle" />
-            <Text fx:id="date_movie_id" layoutX="218.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="DateProduitStyle" text="Date de sortie" wrappingWidth="186.13671875" />
-            <TextField fx:id="text_input_recherche" layoutX="143.0" layoutY="314.0" />
-            <Label fx:id="label_recherche" layoutX="27.0" layoutY="318.0" prefHeight="16.0" prefWidth="96.0" text="Rechercher un jeu" />
-            <Button fx:id="btn_lancer_recherche" layoutX="315.0" layoutY="314.0" mnemonicParsing="false" onAction="#lancerRecherche" prefHeight="25.0" prefWidth="64.0" text="Lancer" />
+            <ImageView fx:id="image_film" fitHeight="100.0" fitWidth="175.0" layoutX="114.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
+            <Text fx:id="id_titre_film" layoutX="27.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titreProduitStyle" text="Titre du film" wrappingWidth="134.13671875" />
+            <TextArea fx:id="description_film" layoutX="82.0" layoutY="192.0" prefHeight="45.0" prefWidth="254.0" promptText="Description du film" styleClass="descriptionProduitStyle" />
+            <Text fx:id="date_movie_id" layoutX="176.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="DateProduitStyle" text="Date de sortie" wrappingWidth="202.13671875" />
+            <TextField fx:id="text_input_recherche" layoutX="134.0" layoutY="349.0" />
+            <Label fx:id="label_recherche" layoutX="26.0" layoutY="353.0" prefHeight="16.0" prefWidth="96.0" text="Rechercher un jeu" />
+            <Button fx:id="btn_lancer_recherche" layoutX="306.0" layoutY="349.0" mnemonicParsing="false" onAction="#lancerRecherche" prefHeight="25.0" prefWidth="64.0" text="Lancer" />
+            <Label layoutX="39.0" layoutY="282.0" prefHeight="17.0" prefWidth="134.0" text="La note de nos experts :" />
+            <TextField fx:id="text_display_note" layoutX="176.0" layoutY="278.0" prefHeight="25.0" prefWidth="175.0" />
          </children>
       </AnchorPane>
   </items>
