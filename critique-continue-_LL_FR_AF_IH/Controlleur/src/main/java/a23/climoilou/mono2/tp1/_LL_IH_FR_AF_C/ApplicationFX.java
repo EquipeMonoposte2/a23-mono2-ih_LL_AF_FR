@@ -131,6 +131,7 @@ public class ApplicationFX extends Application {
             //lancement  main vue
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
+            appelerConnecteService();
         }
         //event pour envoyer vers la page pour créer le compte
         else if (applicationFXEvent.isEstNouveauCompteEvent()) {
@@ -156,7 +157,6 @@ public class ApplicationFX extends Application {
             //lancement connection
             lancementPageConnection();
         }
-        appelerConnecteService();
     }
 
     private void appelerConnecteService() {
