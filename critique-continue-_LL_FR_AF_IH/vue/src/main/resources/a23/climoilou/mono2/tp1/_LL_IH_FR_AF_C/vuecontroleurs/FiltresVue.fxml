@@ -7,30 +7,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.FiltresControleur">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="fond-bleu-vert" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.FiltresControleur">
    <children>
-      <Label alignment="CENTER" layoutX="294.0" layoutY="53.0" text="Filtres" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <Label alignment="CENTER" layoutX="294.0" layoutY="53.0" styleClass="creationCompteText" stylesheets="@styles.css" text="Filtres" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="confirmerButton" onAction="#confirmerFiltres" layoutX="357.0" layoutY="250.0" mnemonicParsing="false" text="Confirmer" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-      <Label layoutX="54.0" layoutY="114.0" text="Type d'utilisateur:">
+      <Button fx:id="confirmerButton" layoutX="357.0" layoutY="250.0" mnemonicParsing="false" onAction="#confirmerFiltres" styleClass="shadowed-button" stylesheets="@styles.css" text="Confirmer" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <Label layoutX="54.0" layoutY="114.0" styleClass="creationCompteText" stylesheets="@styles.css" text="Type d'utilisateur:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <CheckBox fx:id="influenceurCheckbox" layoutX="65.0" layoutY="192.0" mnemonicParsing="false" text="Influenceur" />
-      <CheckBox fx:id="expertChecbox" layoutX="64.0" layoutY="242.0" mnemonicParsing="false" text="Expert" />
-      <CheckBox fx:id="amateurCheckbox" layoutX="64.0" layoutY="153.0" mnemonicParsing="false" text="Amateur" />
-      <Label layoutX="442.0" layoutY="114.0" text="Dates">
+      <CheckBox fx:id="influenceurCheckbox" layoutX="65.0" layoutY="192.0" mnemonicParsing="false" styleClass="creationCompteText" stylesheets="@styles.css" text="Influenceur" />
+      <CheckBox fx:id="expertChecbox" layoutX="64.0" layoutY="242.0" mnemonicParsing="false" styleClass="creationCompteText" stylesheets="@styles.css" text="Expert" />
+      <CheckBox fx:id="amateurCheckbox" layoutX="64.0" layoutY="153.0" mnemonicParsing="false" styleClass="creationCompteText" stylesheets="@styles.css" text="Amateur" />
+      <Label layoutX="442.0" layoutY="114.0" styleClass="creationCompteText" stylesheets="@styles.css" text="Dates">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="397.0" layoutY="140.0" text="Entre le" />
-      <Label layoutX="397.0" layoutY="175.0" text="Et le" />
+      <Label layoutX="397.0" layoutY="140.0" styleClass="creationCompteText" stylesheets="@styles.css" text="Entre le" />
+      <Label layoutX="397.0" layoutY="175.0" styleClass="creationCompteText" stylesheets="@styles.css" text="Et le" />
       <DatePicker fx:id="debutDatePicker" layoutX="442.0" layoutY="136.0" prefHeight="25.0" prefWidth="93.0" />
       <DatePicker fx:id="finDatePicker" layoutX="442.0" layoutY="171.0" prefHeight="25.0" prefWidth="93.0" />
    </children>

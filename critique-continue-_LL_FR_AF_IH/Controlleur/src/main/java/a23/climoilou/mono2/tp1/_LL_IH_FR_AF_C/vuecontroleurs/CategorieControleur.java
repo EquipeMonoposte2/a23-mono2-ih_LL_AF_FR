@@ -47,6 +47,7 @@ public class CategorieControleur {
         parent.setNom("Catégories");
         TreeItem<Categorie> racine = new TreeItem<>(parent);
         racine.setExpanded(true);
+        racine.getChildren().forEach(categorieTreeItem -> categorieTreeItem.getGraphic().getStyleClass().add("fond-bleu-vert"));
 
         construireArbreCategoriesRec(categories, 0, racine);
 
