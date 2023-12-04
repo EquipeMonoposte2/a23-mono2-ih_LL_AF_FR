@@ -1,6 +1,7 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_critique_lien_produit;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,14 @@ public class DB {
     private ProduitsService produitsService;
 
     private UtilisateursService utilisateursService;
+
+    @Getter
+    private UtilisateurParTypeService utilisateurParTypeService;
+
+    @Autowired
+    public void setUtilisateurParTypeService(UtilisateurParTypeService utilisateurParTypeService) {
+        this.utilisateurParTypeService = utilisateurParTypeService;
+    }
 
     @Autowired
     public void setUtilisateursService(UtilisateursService utilisateursService) {

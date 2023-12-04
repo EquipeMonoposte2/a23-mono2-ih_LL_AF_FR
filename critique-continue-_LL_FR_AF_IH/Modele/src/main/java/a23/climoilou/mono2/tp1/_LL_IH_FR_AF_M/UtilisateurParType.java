@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.List;
 
 @Entity
@@ -14,16 +13,24 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UtilisateurParCategorie {
+public class UtilisateurParType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    public UtilisateurParType(Type type) {
+        this.type = type;
+    }
+
     @ManyToOne
     @JoinColumn(name = "parent_id")
-    private UtilisateurParCategorie parent;
+    private UtilisateurParType parent;
 
     @OneToMany(mappedBy = "parent")
-    private List<UtilisateurParCategorie> children;
+    private List<UtilisateurParType> children;
 }

@@ -2,13 +2,11 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -42,7 +40,9 @@ public class Utilisateur {
 
     @ManyToOne
     @JoinColumn(name = "utilisateurParCategorie_id")
-    private UtilisateurParCategorie utilisateurParCategorie;
+    @Getter
+    @Setter
+    private UtilisateurParType utilisateurParType;
 
 
 
