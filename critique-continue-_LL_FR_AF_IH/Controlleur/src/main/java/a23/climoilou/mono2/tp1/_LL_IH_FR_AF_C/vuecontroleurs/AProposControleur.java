@@ -9,7 +9,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items.TreeItemI;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.TypeParticipant;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.algosrecursifs.CalculeMoyenne;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.algosrecursifs.CalculeMoyenne;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -42,7 +42,6 @@ public class TreeItemUserType implements TreeItemI {
 
     @Override
     public String toString() {
-//        String innerUserShow = this.innerUser.toString().isEmpty() ? "Aucun Utilisateur avec ce type" : this.innerUser.toString();
         return  this.afficheRoot;
     }
 

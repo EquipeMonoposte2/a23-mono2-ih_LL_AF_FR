@@ -45,7 +45,6 @@ public class CritiquesService {
         List<Critique> critiques = critiqueRepo.getCritiquesByUtilisateur(utilisateur);
         Map<Integer, Map<Month, List<Critique>>> critiquesParMoisEtAnnees = new HashMap<>();
 
-        // Organisation des critiques par année et mois
         critiques.forEach(critique -> {
             int annee = critique.getDateCritique().getYear();
             Month mois = critique.getDateCritique().getMonth();

@@ -70,16 +70,4 @@ public class UtilisateurSession {
 
     }
 
-    /**
-     * Modification utilisateur
-     * @param utilisateur
-     */
-//    public void modificationSession(Utilisateur utilisateur){
-//
-//        //update session
-//        this.getUtilisateur().setType(utilisateur.getType());
-//        this.getUtilisateur().setNom(utilisateur.getNom());
-//        this.getUtilisateur().setDateDeNaissance(utilisateur.getDateDeNaissance());
-//        this.getUtilisateur().setCritiqueList(utilisateur.getCritiqueList());
-//    }
 }

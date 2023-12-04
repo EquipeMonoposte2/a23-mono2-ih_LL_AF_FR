@@ -40,7 +40,6 @@ public class CritiqueContinueLlFrAfIhApplication {
 
 
     public static void main(String[] args) {
-        //SpringApplication.run(CritiqueContinueLlFrAfIhApplication.class, args);
         Application.launch(ApplicationFX.class);
     }
 

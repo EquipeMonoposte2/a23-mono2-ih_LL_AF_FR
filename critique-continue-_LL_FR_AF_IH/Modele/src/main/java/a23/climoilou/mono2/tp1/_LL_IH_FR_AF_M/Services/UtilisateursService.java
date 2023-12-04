@@ -24,7 +24,6 @@ public class UtilisateursService {
     }
 
     public boolean validationCreationUtilisateur(LocalDate dateNaissance, Type type, String nomUtilisateur, String identifiant){
-        //validation et creation d'utilisateur
         boolean b = false;
         if(nomUtilisateur!="" && dateNaissance !=null && type!=null && identifiant!="") {
             b = true;

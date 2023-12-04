@@ -1,4 +1,4 @@
-package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.algosrecursifs;
+package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules.algosrecursifs;
 
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Developpeur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items.TreeItemI;

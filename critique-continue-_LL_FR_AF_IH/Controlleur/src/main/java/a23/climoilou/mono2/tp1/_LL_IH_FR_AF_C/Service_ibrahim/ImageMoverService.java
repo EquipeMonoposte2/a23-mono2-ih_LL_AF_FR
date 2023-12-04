@@ -29,10 +29,6 @@ public class ImageMoverService extends Service<Double> {
     @Getter
     private boolean versLeMax = true;
 
-
-
-
-
     @Override
     protected Task<Double> createTask() {
         return new Task<Double>() {

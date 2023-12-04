@@ -129,7 +129,6 @@ public class VisualisationProduitControleur {
      */
     public void loadTreeItem(List<Produit> listeDeProduitSansRoot, TreeItem<ProduitItemI> root){
         if(listeDeProduitSansRoot.isEmpty()){
-            System.out.println("its empty brother");
 
         }
 
@@ -163,7 +162,11 @@ public class VisualisationProduitControleur {
         char afficheLettre =  produitCourant.getNom().charAt(0);
         TreeItem<ProduitItemI> lettreNode = CreeOuTrouveProduitAlphabetical(root, afficheLettre);
 
-        lettreNode.getChildren().add(new TreeItem<>(new ProduitTreeItem(produitCourant), new ImageView(new Image("file:images/controller.png",  30, 30, true, true))));
+        lettreNode.getChildren()
+                .add(new TreeItem<>
+                        (new ProduitTreeItem(produitCourant),
+                                new ImageView(
+                                        new Image("file:images/controller.png",  30, 30, true, true))));
 
 
         loadPureRec(liste, root, index +1);
@@ -259,7 +262,6 @@ public class VisualisationProduitControleur {
                                 Produit produitNonTrouver = context.getBean(Produit.class);
                                 produitNonTrouver.setImage("file:images/404.png");
                                 produitNonTrouver.setNom("oh non ce produit n'existe pas");
-                                System.out.println(produitNonTrouver);
                                 this.afficheProduitSlected(produitNonTrouver);
                             }
                         }

@@ -35,9 +35,8 @@ public class UtilisateurParType {
     }
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-@ManyToOne
-@JoinColumn(name = "parent_id")
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
     private UtilisateurParType parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE)

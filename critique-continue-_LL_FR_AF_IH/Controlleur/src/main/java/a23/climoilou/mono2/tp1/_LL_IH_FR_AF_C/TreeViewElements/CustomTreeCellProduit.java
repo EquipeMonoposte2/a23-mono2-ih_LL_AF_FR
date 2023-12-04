@@ -63,7 +63,7 @@ public class CustomTreeCellProduit extends TextFieldTreeCell<ProduitItemI> {
             setGraphic(null);
         } else {
             if (produit instanceof ProduitAlphabeltical) {
-                setContextMenu(leafMenu); // Assuming isRoot() method exists
+                setContextMenu(leafMenu);
 
                 setTextFill(this.colorChanged != null ? Paint.valueOf(this.colorChanged): Color.BROWN);
             } else {
