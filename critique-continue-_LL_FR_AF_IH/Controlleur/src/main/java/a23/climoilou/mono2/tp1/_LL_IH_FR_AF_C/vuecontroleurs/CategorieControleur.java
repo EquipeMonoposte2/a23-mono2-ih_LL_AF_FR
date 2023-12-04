@@ -5,20 +5,15 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Categorie;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.CategorieService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.antlr.v4.runtime.tree.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Component
 @FxmlView("CategorieVue.fxml")
@@ -60,9 +55,10 @@ public class CategorieControleur {
 
     /**
      * Construit un arbre à partir d'une liste de Catégories
+     *
      * @param categories liste des catégories
-     * @param index index de la liste à itérer
-     * @param racine racine de l'arbre
+     * @param index      index de la liste à itérer
+     * @param racine     racine de l'arbre
      */
     private void construireArbreCategoriesRec(List<Categorie> categories, int index, TreeItem<Categorie> racine) {
         if (index < categories.size()) {
@@ -83,6 +79,7 @@ public class CategorieControleur {
 
     /**
      * Parcours l'arbre pour trouver le noeud parent de la Categorie
+     *
      * @param racine racine de l'arbre
      * @param parent Catégorie à trouver dans l'arbre
      * @return un noeud correspondant au parent
@@ -91,7 +88,7 @@ public class CategorieControleur {
         return chercherParentRec(racine, parent, 0);
     }
 
-    private TreeItem<Categorie> chercherParentRec(TreeItem<Categorie> racine, Categorie parent, int index){
+    private TreeItem<Categorie> chercherParentRec(TreeItem<Categorie> racine, Categorie parent, int index) {
         TreeItem<Categorie> found = null;
 
         if (index < racine.getChildren().size()) {
@@ -127,12 +124,19 @@ public class CategorieControleur {
             textInputDialogNouvelleCategorie.initModality(Modality.APPLICATION_MODAL);
             textInputDialogNouvelleCategorie.setHeaderText("Quelle catégorie souhaitez-vous ajouter dans '" +
                     selectedItem.getValue().getNom() + "'?");
-            String nomCategorie = textInputDialogNouvelleCategorie.showAndWait().get();
-
-            if (selectedItem.getParent() != null) aAjouter.setParent(selectedItem.getValue());
-            aAjouter.setNom(nomCategorie);
-            selectedItem.getChildren().add(new TreeItem<>(aAjouter));
-            categorieService.ajouterCategorie(aAjouter);
+            try {
+                String nomCategorie = textInputDialogNouvelleCategorie.showAndWait().get();
+                if (nomCategorie.length() > 2) {
+                    if (selectedItem.getParent() != null) aAjouter.setParent(selectedItem.getValue());
+                    aAjouter.setNom(nomCategorie);
+                    selectedItem.getChildren().add(new TreeItem<>(aAjouter));
+                    categorieService.ajouterCategorie(aAjouter);
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "La catégorie doit contenir au moins 3 caractères").showAndWait();
+                }
+            } catch (NoSuchElementException ignored) {
+                //aucun traitement
+            }
         } else {
             Alert erreur = new Alert(Alert.AlertType.ERROR,
                     "Vous devez sélectionner la catégorie dans laquelle en ajouter un nouvelle");
