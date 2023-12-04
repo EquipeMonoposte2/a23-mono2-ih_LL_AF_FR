@@ -92,6 +92,11 @@ public class NouveauProduitControleur {
         }
     }
 
+    /**
+     * Rajoute une image au jeux
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void uploadFile(ActionEvent event) throws IOException {
         File imageProduit = fileChooser.showOpenDialog(null);

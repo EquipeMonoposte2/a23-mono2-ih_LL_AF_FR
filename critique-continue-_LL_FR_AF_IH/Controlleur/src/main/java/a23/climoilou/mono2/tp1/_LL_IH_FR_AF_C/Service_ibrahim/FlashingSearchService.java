@@ -2,20 +2,20 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.Service_ibrahim;
 
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Component
-public class FlashingSearchService extends ScheduledService<String> {
-    private List<String> listeDecouleurs;
+public class FlashingSearchService extends ScheduledService<Color> {
+    private List<Color> listeDecouleurs;
 
 
-    public void setListeDecouleurs(String couleur) {
+    public void setListeDecouleurs(Color couleur) {
         this.listeDecouleurs.add(couleur);
     }
 
@@ -31,22 +31,22 @@ public class FlashingSearchService extends ScheduledService<String> {
 
 
     @Override
-    protected Task<String> createTask() {
-        this.setListeDecouleurs(Color.BLUE.toString());
-        this.setListeDecouleurs(Color.CYAN.toString());
-        this.setListeDecouleurs(Color.ORANGE.toString());
-        this.setListeDecouleurs(Color.orange.toString());
+    protected Task<Color> createTask() {
+        this.setListeDecouleurs(Color.BLUE);
+        this.setListeDecouleurs(Color.CYAN);
+        this.setListeDecouleurs(Color.ORANGE);
+        this.setListeDecouleurs(Color.ORANGE);
 
 
-        return new Task<String>() {
+        return new Task<Color>() {
             @Override
-            protected String call() throws Exception {
+            protected Color call() throws Exception {
                 Random random = new Random();
                 int indexCouleur = random.nextInt(listeDecouleurs.size());
-                String retourne = "";
+                Color retourne = null;
 
                 if(listeDecouleurs.get(indexCouleur) == null) {
-                    retourne = Color.PINK.toString();
+                    retourne = Color.PINK;
                     updateValue(retourne);
 
                 } else {

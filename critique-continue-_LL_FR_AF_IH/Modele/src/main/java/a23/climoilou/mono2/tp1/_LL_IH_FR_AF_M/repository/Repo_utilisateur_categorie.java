@@ -6,13 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface Repo_utilisateur_categorie extends CrudRepository<UtilisateurParType, Long> {
 
     @Query("SELECT u FROM UtilisateurParType u WHERE u.type = :type AND u.parent IS NULL")
-    UtilisateurParType RetourneLesIdParentsVide(Type type);
+    UtilisateurParType RetourneLesParentsNullOuVide(Type type);
 
 
 

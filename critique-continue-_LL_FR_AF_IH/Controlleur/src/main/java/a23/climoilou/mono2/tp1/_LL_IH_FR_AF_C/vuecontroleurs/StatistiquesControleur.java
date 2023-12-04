@@ -33,13 +33,6 @@ public class StatistiquesControleur{
 
     private FxWeaver fxWeaver;
 
-//    private UtilisateurParType utilisateurParType;
-//
-//    @Autowired
-//    public void setUtilisateurParType(UtilisateurParType utilisateurParType) {
-//        this.utilisateurParType = utilisateurParType;
-//    }
-
     private DB bd;
     @FXML
     private Hyperlink filtreHyperlink;
@@ -108,6 +101,17 @@ public class StatistiquesControleur{
         this.bd = bd;
     }
 
+
+    /**
+     * La TableView sert a afficher les utilisateurs selon leurs
+     * type.
+     *
+     * pour se faire il y a 3 traitements a faire dans cette function
+     * traiter les neouds parent (types)
+     * leurs noeuds enfants (UserType of types)
+     * Ainsi que les utilisateurs qui ont les memes types.
+     *
+     */
     public void afficherUtilisateurs() {
 
         TreeItem<TreeItemI> root = new TreeItem<>(new TreeItemUserType("Nos utilisateurs par catégorie"));
@@ -117,14 +121,14 @@ public class StatistiquesControleur{
         List<UtilisateurParType> allTypes = this.bd.getUtilisateurParTypeService().RetourneUtilisateurType();
         Map<Long, TreeItem<TreeItemI>> MapUserType = new HashMap<>();
 
-        for (UtilisateurParType utp : allTypes) {
-            if (utp.getParent() == null) {
-                TreeItem<TreeItemI> node = new TreeItem<>(new TreeItemUserType(utp.getType().toString()));
-                root.getChildren().add(node);
-                MapUserType.put(utp.getId(), node);
-            }
-        }
 
+        allTypes.stream()
+                .filter(utp -> utp.getParent() == null)
+                .forEach(utp -> {
+                    TreeItem<TreeItemI> noeudParent = new TreeItem<>(new TreeItemUserType(utp.getType().toString()));
+                    root.getChildren().add(noeudParent);
+                    MapUserType.put(utp.getId(), noeudParent);
+                });
 
 
         for (UtilisateurParType utp : allTypes) {
@@ -132,12 +136,6 @@ public class StatistiquesControleur{
             if (utp.getParent() != null) {
 
                 TreeItem<TreeItemI> UserTypeEnfant = new TreeItem<>(new TreeItemUserType(utp.getType().toString()));
-                for (Utilisateur util: this.bd.getUtilisateursService().retourLesUtilisateurs()) {
-                    if (util.getType().equals(utp.getParent().getType())){
-                        System.out.println(util);
-                    }
-
-                }
                 TreeItem<TreeItemI> UserTypeParent = MapUserType.get(utp.getParent().getId());
                 if (UserTypeParent != null) {
                     UserTypeParent.getChildren().add(UserTypeEnfant);
@@ -146,25 +144,36 @@ public class StatistiquesControleur{
             }
 
 
-            for (Utilisateur user : this.bd.getUtilisateursService().retourLesUtilisateurs()) {
-                if (user.getType().equals(utp.getType())) {
-                    TreeItem<TreeItemI> userNode = new TreeItem<>(new TreeItemUserType(user.getIdentifiant())); // Adjust as needed for user representation
-                    if (parentEnfantEnfant != null) {
-                        parentEnfantEnfant.getChildren().add(userNode);
-                    }
-                }
-            }
+            this.bd.getUtilisateursService().retourLesUtilisateurs().stream()
+                    .filter(user -> user.getType().equals(utp.getType()))
+                    .map(userFiltered -> new TreeItem<TreeItemI>(new TreeItemUserType(userFiltered.getIdentifiant())))
+                    .forEach(utilisateurPrType -> {
+                        if(parentEnfantEnfant != null ){
+                            parentEnfantEnfant.getChildren().add(utilisateurPrType);
+                        }
+                    });
         }
+    }
 
-        }
 
-
+    /**
+     * s'occupe de remplir la Table recursive a partir des utilisateurs.
+     * Elle a besoin d'une map avec Un cle Type et une liste d'utilisateur
+     *
+     * Pour bien suivre la recursion de la table, elle va commencer par les Parent (les types)
+     *
+     * TrouverOUCreerParent(Type type)
+     * Va retourner le parent.
+     *
+     * Une fois le parent trouver, la "loop" sur les utilisateur va recuperer tous les enfants qui ont le meme Type.
+     *
+     */
     public void RemplisLaDatbleRecursive(){
         List<Utilisateur> users = this.bd.getUtilisateursService().retourLesUtilisateurs();
-        Map<Type, List<Utilisateur>> usersByType = users.stream()
+        Map<Type, List<Utilisateur>> utilisateurParType = users.stream()
                 .collect(Collectors.groupingBy(Utilisateur::getType));
 
-        for (Map.Entry<Type, List<Utilisateur>> entry : usersByType.entrySet()) {
+        for (Map.Entry<Type, List<Utilisateur>> entry : utilisateurParType.entrySet()) {
             Type type = entry.getKey();
             List<Utilisateur> utilisateurParTypes = entry.getValue();
 
@@ -184,8 +193,19 @@ public class StatistiquesControleur{
     }
 
 
+    /**
+     * Revois un type, verifie dans la BD si l'objet UserParType a un parent.
+     * s'il n'est pas null, l'object existe deja et ne sera pas creer comme noeud parent.
+     * Sinon, ont creer le noeud comme Parent et ont lui attribut un null au parent. Cela fait en sorte que le prochain
+     * noeud avec le meme type ne sera pas le parent.
+     * @param type
+     * @return Sois un nouveau neouds parent, ou le noeud actuel.
+     */
     public UtilisateurParType TrouverOUCreerParent(Type type){
-        UtilisateurParType TypeParent = this.bd.getUtilisateurParTypeService().getRepo_utilisateur_categorie().RetourneLesIdParentsVide(type);
+        UtilisateurParType TypeParent = this.bd.getUtilisateurParTypeService().
+                getRepo_utilisateur_categorie().
+                RetourneLesParentsNullOuVide(type);
+
         if (TypeParent != null) {
             return TypeParent;
         }
@@ -197,6 +217,8 @@ public class StatistiquesControleur{
         return this.bd.getUtilisateurParTypeService().getRepo_utilisateur_categorie().save(NouveauParent);
 
     }
+
+
 
 
 }

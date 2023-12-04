@@ -57,22 +57,6 @@ public class UtilisateurParTypeService {
         this.repo_utilisateur_categorie.delete(u);
     }
 
-    public void AssocierLutilisateurAuType(){
-        for (Type type : Type.values()){
-            UtilisateurParType utilisateurParType = context.getBean(UtilisateurParType.class);
-            utilisateurParType.setType(type);
-            this.SaveUtilisateurCategorie(utilisateurParType);
-        }
-//        List<Utilisateur> tousLesUser = new ArrayList<>();
-//        repo_utilisateur.findAll().forEach(tousLesUser::add);
-//
-//        for (Utilisateur u : tousLesUser){
-//            UtilisateurParType utilisateurParType = context.getBean(UtilisateurParType.class);
-//
-//            utilisateurParType.setType(u.getType());
-//            this.SaveUtilisateurCategorie(utilisateurParType);
-//        }
-    }
 
     public void SupprimerLesUtilisateurType(){
         this.repo_utilisateur_categorie.deleteAll(this.RetourneUtilisateurType());
