@@ -45,9 +45,19 @@ import java.util.List;
 @FxmlView("NouveauProduitVue.fxml")
 @Component
 public class NouveauProduitControleur {
+    FileChooser fileChooser = new FileChooser();
+
+
     private FxWeaver fxWeaver;
 
     private DB bd;
+
+    private Repo_Categorie categorieRepo;
+
+    @Autowired
+    public void setCategorieRepo(Repo_Categorie categorieRepo) {
+        this.categorieRepo = categorieRepo;
+    }
 
     @Autowired
     public void setBd(DB bd) {
