@@ -93,10 +93,10 @@ public class NouveauProduitControleur {
     void createMedia(ActionEvent event) throws InterruptedException {
 
         Produit produit;
-        if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()) != null) {
+        if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText(), null) != null) {
             produit = bd.getProduitsService().getProduitRepository().findFirstByNom(this.nomMediaInput.getText());
             if (produit == null) {
-                bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
+                bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText(), categorieRepo.findByNom(categorieTextField.getText())));
                 messageErreur.getStyleClass().removeAll();
                 messageErreur.getStyleClass().add("validMsg");
                 messageErreur.setText("Produit créé.");
