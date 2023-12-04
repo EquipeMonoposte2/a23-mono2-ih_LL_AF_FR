@@ -1,20 +1,30 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.CategorieEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauProduitEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Categorie;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.CategorieService;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Categorie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxControllerAndView;
+import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.lang.model.element.ModuleElement;
+import java.util.List;
 
 
 /**
@@ -23,6 +33,7 @@ import javax.lang.model.element.ModuleElement;
 @FxmlView("NouveauProduitVue.fxml")
 @Component
 public class NouveauProduitControleur {
+    private FxWeaver fxWeaver;
     private DB bd;
 
     @Autowired
@@ -48,11 +59,37 @@ public class NouveauProduitControleur {
     @FXML
     private Label messageErreur;
 
+    @FXML
+    private TextField categorieTextField;
+
+    private Stage categorieStage;
+
     private ApplicationEventPublisher applicationEventPublisher;
 
+    private Repo_Categorie categorieRepo;
+
     @Autowired
-    public NouveauProduitControleur(ApplicationEventPublisher applicationEventPublisher){
+    public NouveauProduitControleur(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    @Autowired
+    public void setCategorieRepo(Repo_Categorie categorieRepo) {
+        this.categorieRepo = categorieRepo;
+    }
+
+    @FXML
+    private Button buttonCategorie;
+
+    @FXML
+    void choisirCategorie(ActionEvent event) {
+        FxControllerAndView<CategorieControleur, AnchorPane> controllerAndView = fxWeaver.load(CategorieControleur.class);
+        Parent root = controllerAndView.getView().get();
+        categorieStage = new Stage();
+        categorieStage.setResizable(false);
+        categorieStage.initModality(Modality.APPLICATION_MODAL);
+        categorieStage.setScene(new Scene(root));
+        categorieStage.showAndWait();
     }
 
     /**
@@ -64,10 +101,10 @@ public class NouveauProduitControleur {
     void createMedia(ActionEvent event) throws InterruptedException {
 
         Produit produit;
-        if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()) != null) {
+        if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText(), null) != null) {
             produit = bd.getProduitsService().getProduitRepository().findFirstByNom(this.nomMediaInput.getText());
             if (produit == null) {
-                bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
+                bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText(), categorieRepo.findByNom(categorieTextField.getText())));
                 messageErreur.getStyleClass().removeAll();
                 messageErreur.getStyleClass().add("validMsg");
                 messageErreur.setText("Produit créé.");
@@ -78,5 +115,18 @@ public class NouveauProduitControleur {
         } else {
             messageErreur.setText("Erreur tous les champs doivent être remplis.");
         }
+    }
+
+    @EventListener
+    public void mettreAJourCategorie(CategorieEvent event) {
+        if (event.getNouvelleCategorie() == null && event.getChoix() != null) {
+            categorieTextField.setText(event.getChoix().getNom());
+            categorieStage.close();
+        }
+    }
+
+    @Autowired
+    public void setFxWeaver(FxWeaver fxWeaver) {
+        this.fxWeaver = fxWeaver;
     }
 }

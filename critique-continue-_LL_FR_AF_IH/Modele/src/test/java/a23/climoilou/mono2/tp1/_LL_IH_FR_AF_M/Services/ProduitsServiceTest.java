@@ -75,7 +75,7 @@ class ProduitsServiceTest {
         String image = "image.jpg";
 
         //Act
-        Produit produit = produitsService.creationValidationProduit(nom, description, dateSortie, image);
+        Produit produit = produitsService.creationValidationProduit(nom, description, dateSortie, image, null);
 
         //Assert
         assertNotNull(produit);
