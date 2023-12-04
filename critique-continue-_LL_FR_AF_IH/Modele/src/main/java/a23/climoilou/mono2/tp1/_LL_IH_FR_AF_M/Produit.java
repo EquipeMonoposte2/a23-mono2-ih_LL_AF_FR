@@ -18,7 +18,6 @@ import java.util.List;
 @ToString
 @Builder
 @Table(name = "Produit")
-@Scope("protoype")
 public class Produit {
 
 

@@ -216,6 +216,8 @@ public class VisualisationProduitControleur {
         imageMoverService.setXMax(image_film.getLayoutBounds().getMaxX());
         imageMoverService.setXMin(image_film.getLayoutBounds().getMinX());
 
+        System.out.println(produitChoisi.getCote());
+
 
         imageMoverService.valueProperty().addListener((a, o, n) -> {
             image_film.setLayoutX(n);
