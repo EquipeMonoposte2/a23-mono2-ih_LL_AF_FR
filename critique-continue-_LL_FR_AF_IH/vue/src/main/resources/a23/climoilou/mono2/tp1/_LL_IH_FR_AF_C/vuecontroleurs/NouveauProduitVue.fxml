@@ -29,6 +29,7 @@
         <Button fx:id="buttonCreationInput" layoutX="268.0" layoutY="318.0" mnemonicParsing="false" onAction="#createMedia" styleClass="shadowed-button" text="Save" />
         <Label fx:id="messageErreur" layoutX="139.0" layoutY="322.0" prefHeight="17.0" prefWidth="287.0" styleClass="errorMsg" />
         <fx:include source="ClockView.fxml" AnchorPane.bottomAnchor="329.6" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0" />
+        <Button fx:id="buttonSaveFile1" layoutX="301.0" layoutY="217.0" mnemonicParsing="false" onAction="#uploadFile" styleClass="shadowed-button" text="Choisir un fichier" />
         <Label layoutX="77.0" layoutY="265.0" styleClass="creationCompteText" text="Catégorie :" />
         <Button fx:id="buttonCategorie" layoutX="300.0" layoutY="261.0" mnemonicParsing="false" onAction="#choisirCategorie" styleClass="shadowed-button" text="Choisir" />
         <TextField fx:id="categorieTextField" editable="false" layoutX="139.0" layoutY="261.0" />
