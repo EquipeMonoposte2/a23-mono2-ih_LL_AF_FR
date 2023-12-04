@@ -45,6 +45,8 @@ import java.util.List;
 @FxmlView("NouveauProduitVue.fxml")
 @Component
 public class NouveauProduitControleur {
+    private FxWeaver fxWeaver;
+
     private DB bd;
 
     @Autowired
@@ -69,6 +71,11 @@ public class NouveauProduitControleur {
 
     @FXML
     private Label messageErreur;
+    @FXML
+    private TextField categorieTextField;
+
+
+    private Stage categorieStage;
 
     private ApplicationEventPublisher applicationEventPublisher;
 
