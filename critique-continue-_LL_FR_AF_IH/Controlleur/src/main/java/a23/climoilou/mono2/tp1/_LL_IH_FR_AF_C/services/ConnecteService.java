@@ -30,7 +30,6 @@ public class ConnecteService extends ScheduledService<Void> {
         return new Task<>() {
             @Override
             protected Void call() {
-                // Toggle window between normal and expanded size
                 SlowHelper.slow(1000);
                 if (flash) {
                     stage.setWidth(largeur);
