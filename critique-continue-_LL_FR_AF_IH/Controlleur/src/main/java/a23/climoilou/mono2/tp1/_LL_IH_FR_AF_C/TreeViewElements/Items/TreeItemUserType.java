@@ -1,5 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items.TreeItemI;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurParType;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TreeItemUserType implements TreeItemI{
+public class TreeItemUserType implements TreeItemI {
 
     private Utilisateur innerUser;
 

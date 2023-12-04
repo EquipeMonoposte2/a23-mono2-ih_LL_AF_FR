@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.AProposControleur">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs.AProposControleur">
   <children>
     <Text layoutX="272.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="À propos">
       <font>
@@ -18,5 +18,7 @@
     <Text fx:id="textNomProjet" layoutX="104.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
     <Text fx:id="textNomProf" layoutX="104.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
     <TreeView fx:id="treeView" layoutX="51.0" layoutY="62.0" prefHeight="239.0" prefWidth="511.0" />
+      <Button fx:id="calculeMoyenne" layoutX="395.0" layoutY="327.0" mnemonicParsing="false" onAction="#calculeMoyenne" text="Calcule" />
+      <Label fx:id="moyenne" layoutX="322.0" layoutY="331.0" />
   </children>
 </AnchorPane>

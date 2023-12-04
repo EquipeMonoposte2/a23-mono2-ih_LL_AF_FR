@@ -1,26 +1,38 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.TreeItemI;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.CustomListViewCell;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.TreeViewElements.Items.TreeItemUserType;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items.ListItemI;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items.TreeItemI;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Items.UtilisateurItem;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurParType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxControllerAndView;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +40,7 @@ import java.util.stream.Collectors;
 
 @Component
 @FxmlView("StatistiqueVue.fxml")
-public class StatistiquesControleur{
+public class StatistiquesControleur {
     private ConfigurableApplicationContext context;
 
     private FxWeaver fxWeaver;
@@ -37,8 +49,6 @@ public class StatistiquesControleur{
     @FXML
     private Hyperlink filtreHyperlink;
 
-//    @FXML
-//    private ListView<String> utilisateurListView;
     @FXML
     private TreeView<TreeItemI> utilisateurTreeView;
 
@@ -114,7 +124,7 @@ public class StatistiquesControleur{
      */
     public void afficherUtilisateurs() {
 
-        TreeItem<TreeItemI> root = new TreeItem<>(new TreeItemUserType("Nos utilisateurs par catégorie"));
+        TreeItem<TreeItemI> root = new TreeItem<TreeItemI>(new TreeItemUserType("Nos utilisateurs par catégorie"));
 
         this.utilisateurTreeView.setRoot(root);
 
@@ -125,7 +135,7 @@ public class StatistiquesControleur{
         allTypes.stream()
                 .filter(utp -> utp.getParent() == null)
                 .forEach(utp -> {
-                    TreeItem<TreeItemI> noeudParent = new TreeItem<>(new TreeItemUserType(utp.getType().toString()));
+                    TreeItem<TreeItemI> noeudParent = new TreeItem<TreeItemI>(new TreeItemUserType(utp.getType().toString()));
                     root.getChildren().add(noeudParent);
                     MapUserType.put(utp.getId(), noeudParent);
                 });
@@ -135,7 +145,7 @@ public class StatistiquesControleur{
             TreeItem<TreeItemI> parentEnfantEnfant = MapUserType.get(utp.getId());
             if (utp.getParent() != null) {
 
-                TreeItem<TreeItemI> UserTypeEnfant = new TreeItem<>(new TreeItemUserType(utp.getType().toString()));
+                TreeItem<TreeItemI> UserTypeEnfant = new TreeItem<TreeItemI>(new TreeItemUserType(utp.getType().toString()));
                 TreeItem<TreeItemI> UserTypeParent = MapUserType.get(utp.getParent().getId());
                 if (UserTypeParent != null) {
                     UserTypeParent.getChildren().add(UserTypeEnfant);

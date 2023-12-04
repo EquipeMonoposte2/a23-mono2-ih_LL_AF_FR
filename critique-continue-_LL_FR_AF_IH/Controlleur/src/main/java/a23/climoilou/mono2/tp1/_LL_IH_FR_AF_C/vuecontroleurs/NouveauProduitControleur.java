@@ -1,10 +1,22 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.CategorieEvent;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.events.NouveauProduitEvent;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Categorie;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.CategorieService;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services.DB;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Categorie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxControllerAndView;
+import net.rgielen.fxweaver.core.FxWeaver;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -14,6 +26,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.lang.model.element.ModuleElement;
@@ -23,6 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 
 /**
@@ -33,8 +47,6 @@ import java.nio.file.StandardCopyOption;
 public class NouveauProduitControleur {
     private DB bd;
 
-    FileChooser fileChooser = new FileChooser();
-
     @Autowired
     public void setBd(DB bd) {
         this.bd = bd;
@@ -43,8 +55,6 @@ public class NouveauProduitControleur {
     @FXML
     private Button buttonCreationInput;
 
-    @FXML
-    private Button buttonSaveFile1;
     @FXML
     private DatePicker dateSortieMediaInput;
 
@@ -76,7 +86,7 @@ public class NouveauProduitControleur {
     void createMedia(ActionEvent event) throws InterruptedException {
 
         Produit produit;
-        if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText().toUpperCase(), descriptionMediaInput.getText().toUpperCase(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()) != null) {
+        if (bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()) != null) {
             produit = bd.getProduitsService().getProduitRepository().findFirstByNom(this.nomMediaInput.getText());
             if (produit == null) {
                 bd.getProduitsService().saveProduit(bd.getProduitsService().creationValidationProduit(nomMediaInput.getText(), descriptionMediaInput.getText(), dateSortieMediaInput.getValue(), lienImageMediaInput.getText()));
@@ -118,5 +128,18 @@ public class NouveauProduitControleur {
 
 
 
+    }
+
+    @EventListener
+    public void mettreAJourCategorie(CategorieEvent event) {
+        if (event.getNouvelleCategorie() == null && event.getChoix() != null) {
+            categorieTextField.setText(event.getChoix().getNom());
+            categorieStage.close();
+        }
+    }
+
+    @Autowired
+    public void setFxWeaver(FxWeaver fxWeaver) {
+        this.fxWeaver = fxWeaver;
     }
 }
