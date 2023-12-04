@@ -240,7 +240,7 @@ public class ApplicationFX extends Application {
                 break;
             case "NouveauProduit":
                 System.out.println("NouveauProduit");
-                height = 400;
+                height = 450;
                 break;
             case "VisualisationProduit":
                 System.out.println("VisualisationProduit");

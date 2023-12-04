@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
@@ -37,7 +38,7 @@
             </Text>
          </children>
       </Pane>
-      <Text  layoutX="47.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date du jour :" AnchorPane.bottomAnchor="619.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="1160.91796875" AnchorPane.topAnchor="84.0" >
+      <Text layoutX="47.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date du jour :" AnchorPane.bottomAnchor="619.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="1160.91796875" AnchorPane.topAnchor="84.0">
          <fill>
             <Color red="1.0" green="0.780" blue="0.271" />
          </fill>
@@ -52,7 +53,7 @@
                   <Color red="1.0" green="0.780" blue="0.271" />
                </fill>
             </Text>
-            <ListView fx:id="mesCritiquesAffiche" layoutX="35.0" layoutY="73.0" prefHeight="395.0" prefWidth="507.0" />
+            <TreeView fx:id="mesCritiquesAffiche" layoutX="35.0" layoutY="73.0" prefHeight="395.0" prefWidth="507.0" />
          </children>
       </Pane>
       <Pane layoutX="691.0" layoutY="210.0" prefHeight="496.0" prefWidth="575.0">
@@ -66,14 +67,13 @@
                </fill>
             </Text>
             <ListView fx:id="nouvelleCritique" layoutX="35.0" layoutY="143.0" prefHeight="290.0" prefWidth="507.0" />
-            <Button fx:id="soumettreCritiqueButton" styleClass="shadowed-button" layoutX="436.0" layoutY="443.0" mnemonicParsing="false" onAction="#soumettreCritique" prefHeight="39.0" prefWidth="106.0" text="Soumettre" />
-            <ChoiceBox fx:id="choixPoidsCritique" styleClass="shadowed-button" layoutX="288.0" layoutY="87.0" prefWidth="150.0" />
-            <Button fx:id="ajouterJeuButton" styleClass="shadowed-button" layoutX="461.0" layoutY="84.0" mnemonicParsing="false" onAction="#ajouterJeu" prefHeight="32.0" prefWidth="81.0" text="Ajouter jeu" />
-            <CheckBox styleClass="creationCompteText" fx:id="neutreCheckbox" layoutX="474.0" layoutY="57.0" mnemonicParsing="false" text="neutre" />
-            <ChoiceBox fx:id="choixJeuCritique" styleClass="shadowed-button" layoutX="35.0" layoutY="87.0" prefHeight="25.0" prefWidth="228.0" />
+            <Button fx:id="soumettreCritiqueButton" layoutX="436.0" layoutY="443.0" mnemonicParsing="false" onAction="#soumettreCritique" prefHeight="39.0" prefWidth="106.0" styleClass="shadowed-button" text="Soumettre" />
+            <ChoiceBox fx:id="choixPoidsCritique" layoutX="288.0" layoutY="87.0" prefWidth="150.0" styleClass="shadowed-button" />
+            <Button fx:id="ajouterJeuButton" layoutX="461.0" layoutY="84.0" mnemonicParsing="false" onAction="#ajouterJeu" prefHeight="32.0" prefWidth="81.0" styleClass="shadowed-button" text="Ajouter jeu" />
+            <CheckBox fx:id="neutreCheckbox" layoutX="474.0" layoutY="57.0" mnemonicParsing="false" styleClass="creationCompteText" text="neutre" />
+            <ChoiceBox fx:id="choixJeuCritique" layoutX="35.0" layoutY="87.0" prefHeight="25.0" prefWidth="228.0" styleClass="shadowed-button" />
          </children>
       </Pane>
-      <DatePicker styleClass="shadowed-button" fx:id="dateCritique" layoutX="121.0" layoutY="80.0" />
+      <DatePicker fx:id="dateCritique" layoutX="121.0" layoutY="80.0" styleClass="shadowed-button" />
    </children>
 </AnchorPane>
-
