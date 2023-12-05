@@ -1,11 +1,9 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
 
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.UtilisateurParType;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Utilisateur;
-import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_utilisateur_categorie;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_utilisateur_type;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class UtilisateurParTypeService {
     private Repo_Utilisateur repo_utilisateur;
 
     @Getter
-    private Repo_utilisateur_categorie repo_utilisateur_categorie;
+    private Repo_utilisateur_type repo_utilisateur_type;
 
     @Autowired
     public void setContext(ApplicationContext context) {
@@ -35,31 +33,31 @@ public class UtilisateurParTypeService {
     }
 
     @Autowired
-    public void setRepo_utilisateur_categorie(Repo_utilisateur_categorie repo_utilisateur_categorie) {
-        this.repo_utilisateur_categorie = repo_utilisateur_categorie;
+    public void setRepo_utilisateur_type(Repo_utilisateur_type repo_utilisateur_type) {
+        this.repo_utilisateur_type = repo_utilisateur_type;
     }
 
     @Transactional
     public void SaveUtilisateurCategorie(UtilisateurParType s){
-        this.repo_utilisateur_categorie.save(s);
+        this.repo_utilisateur_type.save(s);
     }
 
     @Transactional
     public List<UtilisateurParType> RetourneUtilisateurType(){
 
         List<UtilisateurParType> tousLesUser = new ArrayList<>();
-        this.repo_utilisateur_categorie.findAll().forEach(tousLesUser::add);
+        this.repo_utilisateur_type.findAll().forEach(tousLesUser::add);
         return  tousLesUser;
     }
 
     @Transactional
     public void SupprimerLaBD(UtilisateurParType u){
-        this.repo_utilisateur_categorie.delete(u);
+        this.repo_utilisateur_type.delete(u);
     }
 
 
     public void SupprimerLesUtilisateurType(){
-        this.repo_utilisateur_categorie.deleteAll(this.RetourneUtilisateurType());
+        this.repo_utilisateur_type.deleteAll(this.RetourneUtilisateurType());
 
     }
 
