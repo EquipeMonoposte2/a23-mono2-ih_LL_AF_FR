@@ -28,8 +28,6 @@ public class CustomTreeCell extends TextFieldTreeCell<TreeItemI> {
     private DB db;
     private ContextMenu leafMenu;
 
-
-
     @Autowired
     public CustomTreeCell(DB db) {
         this.db =db;

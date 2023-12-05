@@ -2,13 +2,11 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -39,5 +37,13 @@ public class Utilisateur {
     @Builder.Default
     @ToString.Exclude
     private List<Critique> critiqueList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "utilisateurParCategorie_id")
+    @Getter
+    @Setter
+    private UtilisateurParType utilisateurParType;
+
+
 
 }

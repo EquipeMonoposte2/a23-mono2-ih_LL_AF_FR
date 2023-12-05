@@ -15,7 +15,6 @@ public class CategorieService {
         this.categorieRepository = categorieRepository;
     }
 
-    // Méthode pour récupérer et afficher la structure d'arbre des catégories
     public void displayCategoryTree() {
         List<Categorie> categories = categorieRepository.findByParentIsNull();
         for (Categorie categorie : categories) {
@@ -24,7 +23,6 @@ public class CategorieService {
         }
     }
 
-    // Méthode récursive pour afficher les sous-catégories
     private void displaySubCategories(Categorie categorie, int depth) {
         List<Categorie> subCategories = categorieRepository.findByParent(categorie);
         for (Categorie subCategory : subCategories) {

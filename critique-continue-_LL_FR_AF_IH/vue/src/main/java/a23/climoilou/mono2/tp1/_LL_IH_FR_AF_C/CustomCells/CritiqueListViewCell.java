@@ -32,7 +32,6 @@ public class CritiqueListViewCell extends ListCell<IProduitClassement>
         } else {
             nom.setText(produitClassement.getNom() + " " + (produitClassement.estNeutre()? "\t*": ""));
             difference.setText(produitClassement.getDifference());
-            //setText(null);
             setGraphic(cellroot);
         }
     }

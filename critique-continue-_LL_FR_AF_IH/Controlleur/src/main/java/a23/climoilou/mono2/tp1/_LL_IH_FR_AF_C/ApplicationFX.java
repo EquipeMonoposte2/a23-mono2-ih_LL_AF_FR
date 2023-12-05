@@ -61,23 +61,18 @@ public class ApplicationFX extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        System.out.println("javafx init");
-        //init du primary stage
         ApplicationFX.primaryStage = primaryStage;
         fxWeaver = context.getBean(FxWeaver.class);
 
-        //lance l'application
         lancementPageConnection();
     }
 
     public void lancementPageConnection() {
         try {
-            //affiche page connexion
             FxControllerAndView<ConnectionControleur, TabPane> connectionControleurTabPaneFxControllerAndView = fxWeaver.load(ConnectionControleur.class);
             Parent rootConn = connectionControleurTabPaneFxControllerAndView.getView().get();
             ConnectionControleur controleur = connectionControleurTabPaneFxControllerAndView.getController();
 
-            //lancement connexion vue
             primaryStage.setScene(new Scene(rootConn));
             primaryStage.show();
         } catch (Exception e) {
@@ -96,26 +91,22 @@ public class ApplicationFX extends Application {
         UtilisateurSession session = context.getBean(UtilisateurSession.class);
 
         if (applicationFXEvent.isEstConnectionEvent()) {
-            //init session connecté
+
             session.connection(applicationFXEvent.getUtilisateur().getIdentifiantUtilisateur(), applicationFXEvent.getUtilisateur().getPermission());
 
 
-            //main vue (navigation)
             FxControllerAndView<NavigationControleur, TabPane> controllerAndViewNav = fxWeaver.load(NavigationControleur.class);
             Parent root = controllerAndViewNav.getView().get();
             NavigationControleur navigationControleur = controllerAndViewNav.getController();
-            //ajout de l'utilisateur dans la navigation
 
-            //ajout du contenu aux tabs
-            navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver)); //produit vue
-            navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver)); //
-            navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver)); //
-            navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class, fxWeaver)); //
+            navigationControleur.getTabNouveauProduit().setContent(fabriquerRoot(NouveauProduitControleur.class, fxWeaver));
+            navigationControleur.getTabStatistique().setContent(fabriquerRoot(StatistiquesControleur.class, fxWeaver));
+            navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
+            navigationControleur.getTabCompte().setContent(fabriquerRoot(CompteControleur.class, fxWeaver));
             navigationControleur.getTabNouvelleCritique().setContent(fabriquerRoot(CritiqueControleur.class, fxWeaver));
             navigationControleur.getTabVisualisationProduit().setContent(fabriquerRoot(VisualisationProduitControleur.class, fxWeaver));
             navigationControleur.getTabAPropos().setContent(fabriquerRoot(AProposControleur.class, fxWeaver));
 
-            //ici nous allons pouvoir vérifier le type d'utilisateur et décider les vues à ne pas afficher (plus tard)
             if (session.getSession().getPermission() != Type.Expert) {
                 System.out.println(session.getSession().getPermission());
                 navigationControleur.getTabNouvelleCritique().setDisable(true);
@@ -123,36 +114,27 @@ public class ApplicationFX extends Application {
                 navigationControleur.getTabNouvelleCritique().setClosable(false);
             }
 
-            // Lancement d un event spring lors du changement de tab
             ajoutListenerTabPane(navigationControleur);
 
-            //lancement  main vue
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
             appelerConnecteService();
         }
-        //event pour envoyer vers la page pour créer le compte
         else if (applicationFXEvent.isEstNouveauCompteEvent()) {
             primaryStage.setScene(new Scene(fabriquerRoot(CreationCompteControleur.class, fxWeaver)));
-            //on peut ajouter listener si on ferme la window top right X
             primaryStage.setOnCloseRequest(closeEvent -> {
-                System.err.println("vue fermer top right");
             });
             primaryStage.show();
         }
-        //event pour envoyer à la navigation après création de compte
         else if (applicationFXEvent.isEstCreationCompteEvent()) {
             FxControllerAndView<SuccesCreationCompteControleur, TabPane> succesCreationCompteControleur = fxWeaver.load(SuccesCreationCompteControleur.class);
             Parent succesRoot = succesCreationCompteControleur.getView().get();
-            //init session connecté
             session.connection(applicationFXEvent.getUtilisateur().getIdentifiantUtilisateur(), applicationFXEvent.getUtilisateur().getPermission());
 
             primaryStage.setScene(new Scene(succesRoot));
             primaryStage.show();
         } else if (applicationFXEvent.isEstDeconnectionEvent()) {
-            //detruire bean session
             session.deconnection();
-            //lancement connection
             lancementPageConnection();
         }
     }
@@ -165,25 +147,13 @@ public class ApplicationFX extends Application {
             Node node = (Node) event.getSource();
 
             connecteService.cancel();
-            // Supprimer l'EventHandler pour ce nœud spécifique
             node.setOnMouseClicked(null);
         };
 
         primaryStage.getScene().getRoot().getChildrenUnmodifiable().forEach(node -> node.setOnMouseClicked(clickHandler[0]));
 
 
-        //primaryStage.getScene().getRoot().getChildrenUnmodifiable().forEach(node -> node.setOnMouseClicked(event -> {
-        //    System.out.println("allo");
-        //    ((Node)event.getSource()).removeEventHandler(MouseEvent.MOUSE_CLICKED, event);
-        //    connecteService.cancel();
-        //}));
-        //primaryStage.getScene().setOnMouseClicked(event -> {
-        //    connecteService.cancel();
-        //    Scene source = (Scene) event.getSource();
-        //    source.getRoot().getChildrenUnmodifiable().forEach(node -> node.setOnMouseClicked(event1 -> connecteService.cancel()));
-        //});
 
-        //primaryStage.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, this::stopService);
         connecteService.restart();
     }
 
@@ -193,9 +163,7 @@ public class ApplicationFX extends Application {
     }
 
     private void ajoutListenerTabPane(NavigationControleur navigationControleur) {
-        // Nouvelle critique
         navigationControleur.getTabNouvelleCritique().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            //on lance un event spring
             applicationEventPublisher.publishEvent(new TabPaneEvent(newValue.getText()));
         });
     }
@@ -237,11 +205,9 @@ public class ApplicationFX extends Application {
                 height = 800;
                 break;
             case "NouveauProduit":
-                System.out.println("NouveauProduit");
                 height = 450;
                 break;
             case "VisualisationProduit":
-                System.out.println("VisualisationProduit");
                 width = 600;
                 height = 470;
                 break;
@@ -249,11 +215,9 @@ public class ApplicationFX extends Application {
                 break;
         }
 
-        // Récupérer la taille de l'écran
         double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
         double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
-        // Calculer les nouvelles coordonnées pour maintenir la fenêtre centrée
         double newX = (screenWidth - width) / 2;
         double newY = (screenHeight - height) / 2;
 
@@ -274,16 +238,13 @@ public class ApplicationFX extends Application {
     @Override
     public void init() throws Exception {
         String[] args = getParameters().getRaw().toArray(new String[0]);
-        //creation explicite du contexte de l'application
         this.context = new SpringApplicationBuilder().sources(CritiqueContinueLlFrAfIhApplication.class).run(args);
     }
 
     @Override
     public void stop() throws Exception {
-        //destruction du contexte
         this.context.stop();
 
-        //fermeture javafx
         Platform.exit();
     }
 }

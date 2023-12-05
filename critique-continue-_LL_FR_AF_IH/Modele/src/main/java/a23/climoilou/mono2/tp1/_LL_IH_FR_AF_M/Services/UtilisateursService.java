@@ -4,6 +4,7 @@ import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Critique;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Type;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_Utilisateur;
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_utilisateur_categorie;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,13 @@ import java.util.List;
 public class UtilisateursService {
   private Repo_Utilisateur utilisateurRepo;
 
-  @Autowired
+
+    @Autowired
     public void setUtilisateurRepo(Repo_Utilisateur utilisateurRepo) {
         this.utilisateurRepo = utilisateurRepo;
     }
 
     public boolean validationCreationUtilisateur(LocalDate dateNaissance, Type type, String nomUtilisateur, String identifiant){
-        //validation et creation d'utilisateur
         boolean b = false;
         if(nomUtilisateur!="" && dateNaissance !=null && type!=null && identifiant!="") {
             b = true;
@@ -54,6 +55,11 @@ public class UtilisateursService {
             utilisateursList.add(util);
         }
         return utilisateursList;
+    }
+
+    @Transactional
+    public List<Utilisateur> TrouverUtilisateurParType(Type type){
+      return this.utilisateurRepo.findByType(type);
     }
 
   public Repo_Utilisateur getUtilisateurRepo() {

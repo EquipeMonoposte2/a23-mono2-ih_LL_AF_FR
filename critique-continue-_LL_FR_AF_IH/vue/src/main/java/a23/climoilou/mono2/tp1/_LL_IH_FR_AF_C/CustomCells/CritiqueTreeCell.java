@@ -12,9 +12,7 @@ public class CritiqueTreeCell extends TextFieldTreeCell<ICritiqueTreeViewNode>
     public CritiqueTreeCell() {
         MenuItem supprimer_critiqueItem = new MenuItem("Supprimer critique");
 
-        // Action du menu contextuel
         supprimer_critiqueItem.setOnAction(event -> {
-            // TODO vrai suppression de la critique
             getTreeItem().getParent().getChildren().remove(getTreeItem());
             this.getTreeView().refresh();
         });

@@ -12,7 +12,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//where annotation @EqualsAndHashCode.Include est présente
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Builder

@@ -32,7 +32,6 @@ public class RedimensionnementService extends ScheduledService<Redimensionnement
                 actuelle.largeur = intrapole(souhaitee.largeur, actuelle.largeur);
                 actuelle.longueur = intrapole(souhaitee.longueur, actuelle.longueur);
 
-                // condition d'arrêt
                 if (actuelle.equals(souhaitee)) {
                     this.cancel();
                 }

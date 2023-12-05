@@ -76,7 +76,6 @@ public class CreationCompteControleur {
 
     @FXML
     void creerClick(ActionEvent event) {
-        //validation et creation d'utilisateur
         Utilisateur utilisateur = null;
         if (dropDowntypes.getValue() != null && db.getUtilisateursService().validationCreationUtilisateur(dateNaissance.getValue(), Type.valueOf(dropDowntypes.getValue()), nomUtilisateur.getText(), identifiant.getText())) {
             utilisateur = db.getUtilisateursService().getUtilisateurRepo().findFirstByIdentifiant(identifiant.getText());
@@ -85,17 +84,15 @@ public class CreationCompteControleur {
                 utilisateur.setNom(nomUtilisateur.getText());
                 utilisateur.setType(Type.valueOf(dropDowntypes.getValue()));
                 utilisateur.setIdentifiant(session.getSession().getIdentifiantUtilisateur());
-                //utilisateur update
-                System.out.println("id = "+identifiant.getText());
+
                 db.getUtilisateursService().updateUtilisateur(utilisateur);
                 session.getSession().setPermission(utilisateur.getType());
             }
             else if(utilisateur==null) {
-                    //sauvegarder utilisateur et instancier utilisateur
                     utilisateur = Utilisateur.builder().dateDeNaissance(dateNaissance.getValue()).nom(nomUtilisateur.getText()).critiqueList(new ArrayList<>()).type(Type.valueOf(dropDowntypes.getValue())).identifiant(identifiant.getText()).build();
                     db.getUtilisateursService().sauvegarderUtilisateur(utilisateur);
                     session.connection(utilisateur.getIdentifiant(), utilisateur.getType());
-                    //lancement de l'événement de creation
+
                     ApplicationFXEvent applicationFXEvent = ApplicationFXEvent.builder().estCreationCompteEvent(true).utilisateur(session).build();
                     applicationEventPublisher.publishEvent(applicationFXEvent);
 

@@ -3,6 +3,7 @@ package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.context.annotation.Scope;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,10 +35,9 @@ public class Produit {
     private LocalDate dateDeSortie;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categorie_id") // Nom de la colonne dans la table Produit pour la clé étrangère vers Categorie
+    @JoinColumn(name = "categorie_id")
     private Categorie categorie;
 
-    //Pour l'instant c'est un string, pour le path, s'il y a une meilleure facon ont changera.
     private String image;
 
     @Override

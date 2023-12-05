@@ -48,10 +48,8 @@ public class ConnecteService extends ScheduledService<Void> {
     }
 
     public void centrerFenetre() {
-        // Récupérer les coordonnées de l'écran
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
-        // Recentrer la fenêtre après redimensionnement
         double newX = screenBounds.getMinX() + (screenBounds.getWidth() - stage.getWidth()) / 2;
         double newY = screenBounds.getMinY() + (screenBounds.getHeight() - stage.getHeight()) / 2;
         stage.setX(newX);

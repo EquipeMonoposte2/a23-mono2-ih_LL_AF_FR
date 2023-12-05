@@ -18,7 +18,10 @@ import java.util.List;
 @Repository
 public interface Repo_Utilisateur extends CrudRepository<Utilisateur, Long> {
 
-    //trouve l'utilisateur selon l'identifiant passé en paramètre
+    List<Utilisateur> findByType(Type type);
+
+
+
     @Query("select U from Utilisateur U where U.identifiant = :identifiant")
     Utilisateur findFirstByIdentifiant(@Param("identifiant") String identifiant);
 

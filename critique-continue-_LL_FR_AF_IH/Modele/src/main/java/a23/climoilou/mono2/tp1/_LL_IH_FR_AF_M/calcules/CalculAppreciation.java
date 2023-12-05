@@ -34,10 +34,8 @@ public class CalculAppreciation {
                 List<CritiqueLienProduit> critiqueLienProduits = critiqueActuelle.getCritiqueLienProduits();
                 Collections.sort(critiqueLienProduits);
 
-                //On obtient l indice du neutre dans la liste
                 int indiceNeutre = critiqueActuelle.obtenirIndiceNeutre() - 1;
 
-                //On obtient la map de pointage
                 HashMap<Produit, Float> mapProduitAppreciation = obtenirMapPointageCalcule(critiqueLienProduits, indiceNeutre);
 
                 //TODO : On calcule l'appreciation
@@ -66,63 +64,6 @@ public class CalculAppreciation {
         return moyenneGlobaleDuProduit;
     }
 
-    /**
-     * Calcule l'appreciation de chaque produit
-     */
-    /*public void calculeAppreciation() {
-        List<Produit> produits = db.getProduitsService().retourLesProduits();
-        List<Utilisateur> utilisateurs = db.getUtilisateursService().retourLesUtilisateurs();
-        Map<Utilisateur, List<Map<Produit, Float>>> appreciationsUtilisateur = new HashMap<>();
-        for (Utilisateur utilisateur : utilisateurs) {
-
-            List<Critique> critiquesUtilisateurs = utilisateur.getCritiqueList();
-            List<Map<Produit, Float>> appreciationUtilisateurActuelle = new ArrayList<>();
-
-            for (Critique critiqueActuelle : critiquesUtilisateurs) {
-
-                List<CritiqueLienProduit> critiqueLienProduits = critiqueActuelle.getCritiqueLienProduits();
-                Collections.sort(critiqueLienProduits);
-
-                //On obtient l indice du neutre dans la liste
-                int indiceNeutre = critiqueActuelle.obtenirIndiceNeutre() - 1;
-
-                //On obtient la map de pointage
-                HashMap<Produit, Float> mapProduitAppreciation = obtenirMapPointageCalcule(critiqueLienProduits, indiceNeutre);
-
-                //TODO : On calcule l'appreciation
-                //Les divisions
-                List<Float> pointages = mapProduitAppreciation.values().stream().sorted().toList();
-                float plusForteAppreciation = pointages.get(mapProduitAppreciation.size() - 1);
-                float plusFaibleAppreciation = pointages.get(0);
-                diviserAppreciation(plusForteAppreciation, plusFaibleAppreciation, mapProduitAppreciation);
-
-                appreciationUtilisateurActuelle.add(mapProduitAppreciation);
-            }
-            appreciationsUtilisateur.put(utilisateur, appreciationUtilisateurActuelle);
-        }
-
-        for (Produit produitActuel : produits) {
-            Map<Utilisateur, List<Map<Produit, Float>>> appreciationsExpert = new HashMap<>();
-            Map<Utilisateur, List<Map<Produit, Float>>> appreciationsAmateur = new HashMap<>();
-            Map<Utilisateur, List<Map<Produit, Float>>> appreciationsInfluenceur = new HashMap<>();
-
-            for (Map.Entry<Utilisateur, List<Map<Produit, Float>>> entry : appreciationsUtilisateur.entrySet()) {
-                switch (entry.getKey().getType()) {
-                    case Expert -> appreciationsExpert.put(entry.getKey(), entry.getValue());
-                    case AMATEUR -> appreciationsAmateur.put(entry.getKey(), entry.getValue());
-                    case Influencer -> appreciationsInfluenceur.put(entry.getKey(), entry.getValue());
-                }
-            }
-
-            float moyenneExpert = calculerMoyenne(appreciationsExpert, produitActuel);
-            float moyenneInfluenceur = calculerMoyenne(appreciationsInfluenceur, produitActuel);
-            float moyenneAmateur = calculerMoyenne(appreciationsAmateur, produitActuel);
-            float moyenneGlobaleDuProduit = additionnerMoyennes(moyenneAmateur, moyenneInfluenceur, moyenneExpert);
-            produitActuel.setCote(5 + moyenneGlobaleDuProduit *  calculeSignifiance.calculeSignifiance(produitActuel) * 5);
-            db.getProduitsService().saveProduit(produitActuel);
-        }
-
-    }*/
 
     /**
      * Additionne les 3 moyennes selon leur pondération
@@ -185,10 +126,8 @@ public class CalculAppreciation {
     public HashMap<Produit, Float> obtenirMapPointageCalcule(List<CritiqueLienProduit> critiqueLienProduits, int indiceNeutre) {
         HashMap<Produit, Float> mapProduitAppreciation = new HashMap<>();
 
-        //On ajoute le neutre
         mapProduitAppreciation.put(critiqueLienProduits.get(indiceNeutre).getProduitActuel(), 0f);
 
-        //On ajoute les autres
         pointageNegatif(critiqueLienProduits, indiceNeutre, mapProduitAppreciation);
         pointagePositif(critiqueLienProduits, indiceNeutre, mapProduitAppreciation);
 
@@ -203,7 +142,6 @@ public class CalculAppreciation {
      * @param mapProduitAppreciation Map de produits et de leur pointage dans laquel mettre les pointage positifs
      */
     public void pointagePositif(List<CritiqueLienProduit> critiqueLienProduits, int indiceNeutre, HashMap<Produit, Float> mapProduitAppreciation) {
-        //Positifs
         float pointageActuel = 0f;
         for (int i = indiceNeutre + 1; i < critiqueLienProduits.size(); i++) {
 
@@ -213,7 +151,6 @@ public class CalculAppreciation {
                 case GRAND -> pointageActuel += 3f;
             }
 
-            //On ajoute le produit actuel
             mapProduitAppreciation.put(critiqueLienProduits.get(i).getProduitActuel(), pointageActuel);
         }
     }
@@ -225,7 +162,6 @@ public class CalculAppreciation {
      * @param mapProduitAppreciation Map de produits et de leur pointage dans laquel mettre les pointage négatifs
      */
     public void pointageNegatif(List<CritiqueLienProduit> critiqueLienProduits, int indiceNeutre, HashMap<Produit, Float> mapProduitAppreciation) {
-        //Negatifs
         float pointageActuel = 0f;
         for (int i = indiceNeutre - 1; i >= 0; i--) {
 
@@ -235,7 +171,6 @@ public class CalculAppreciation {
                 case GRAND -> pointageActuel -= 3f;
             }
 
-            //On ajoute le produit actuel
             mapProduitAppreciation.put(critiqueLienProduits.get(i).getProduitActuel(), pointageActuel);
         }
     }
