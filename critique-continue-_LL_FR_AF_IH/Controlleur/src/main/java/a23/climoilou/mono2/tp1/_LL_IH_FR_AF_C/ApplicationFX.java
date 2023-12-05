@@ -75,8 +75,6 @@ public class ApplicationFX extends Application {
 
 
             primaryStage.setScene(new Scene(rootConn));
-            System.out.println(primaryStage);
-            System.out.println(primaryStage.getWidth());
             primaryStage.show();
         } catch (Exception e) {
             System.err.println(e.getMessage() + "    -    " + Arrays.toString(e.getStackTrace()));
