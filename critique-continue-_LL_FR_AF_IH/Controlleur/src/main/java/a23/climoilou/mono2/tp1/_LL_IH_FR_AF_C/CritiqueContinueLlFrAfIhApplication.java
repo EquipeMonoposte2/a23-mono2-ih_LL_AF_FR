@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,15 +29,17 @@ import java.util.ArrayList;
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.vuecontroleurs",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.calcules",
+        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_C.services",
+        "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.algosrecursifs",
         "net.rgielen.fxweaver.spring.boot.autoconfigure"})
 @EntityScan(basePackages = {
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF_M",
         "a23.climoilou.mono2.tp1._LL_IH_FR_AF"})
+@PropertySource("classpath:application.properties")
 public class CritiqueContinueLlFrAfIhApplication {
 
 
     public static void main(String[] args) {
-        //SpringApplication.run(CritiqueContinueLlFrAfIhApplication.class, args);
         Application.launch(ApplicationFX.class);
     }
 

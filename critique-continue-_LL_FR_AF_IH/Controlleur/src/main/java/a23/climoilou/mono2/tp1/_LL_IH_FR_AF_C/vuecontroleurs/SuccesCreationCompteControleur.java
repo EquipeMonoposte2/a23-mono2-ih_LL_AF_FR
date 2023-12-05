@@ -39,7 +39,6 @@ public class SuccesCreationCompteControleur implements Initializable {
     public void setSession(UtilisateurSession session) {
         this.session = session;
 
-        //affiche le nom de l'utilisateur
         if (session.TrouverUtilisateurConnecter()!=null){
             nomUtilisateur.setText(session.TrouverUtilisateurConnecter().getNom());}
     }
@@ -55,7 +54,6 @@ public class SuccesCreationCompteControleur implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //affiche le nom de l'utilisateur
         if (session.TrouverUtilisateurConnecter()!=null){
             nomUtilisateur.setText(session.TrouverUtilisateurConnecter().getNom());
         }

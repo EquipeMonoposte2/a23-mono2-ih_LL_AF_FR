@@ -1,5 +1,6 @@
 package a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Services;
 
+import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Categorie;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Produit;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.Utilisateur;
 import a23.climoilou.mono2.tp1._LL_IH_FR_AF_M.repository.Repo_produits;
@@ -35,11 +36,11 @@ public class ProduitsService {
         return produitRepository;
     }
 
-    public Produit creationValidationProduit(String nom, String description, LocalDate dateSortie, String image){
+    public Produit creationValidationProduit(String nom, String description, LocalDate dateSortie, String image, Categorie categorie){
         Produit produitRet = null;
 
         if(nom!=""&&description!=""&&dateSortie!=null){
-            produitRet = Produit.builder().nom(nom).dateDeSortie(dateSortie).description(description).image(image).build();
+            produitRet = Produit.builder().nom(nom).dateDeSortie(dateSortie).description(description).image(image).categorie(categorie).build();
         }
 
         return produitRet;

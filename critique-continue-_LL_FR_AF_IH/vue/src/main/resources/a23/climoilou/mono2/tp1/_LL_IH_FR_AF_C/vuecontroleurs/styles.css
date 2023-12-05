@@ -1,0 +1,25 @@
+
+.errorMsg{
+    -fx-text-fill: red;
+}
+
+.validMsg{
+    -fx-text-fill: green;
+}
+
+.creationCompteText{
+    -fx-text-fill: #FFC745;
+}
+
+.fond-bleu-vert{
+    -fx-background-color: #004746;
+}
+
+.shadowed-button {
+    -fx-effect: dropshadow(three-pass-box, #000000, 10, 0.5, 4, 4);
+}
+
+#clock{
+    -fx-background-color: white;
+}
+
