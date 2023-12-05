@@ -73,8 +73,10 @@ public class ApplicationFX extends Application {
             Parent rootConn = connectionControleurTabPaneFxControllerAndView.getView().get();
             ConnectionControleur controleur = connectionControleurTabPaneFxControllerAndView.getController();
 
+
             primaryStage.setScene(new Scene(rootConn));
-            primaryStage.setResizable(false);
+            System.out.println(primaryStage);
+            System.out.println(primaryStage.getWidth());
             primaryStage.show();
         } catch (Exception e) {
             System.err.println(e.getMessage() + "    -    " + Arrays.toString(e.getStackTrace()));
